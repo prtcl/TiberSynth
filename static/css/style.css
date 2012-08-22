@@ -1,0 +1,86 @@
+
+* { margin: 0; padding: 0; }
+
+html, body {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    font: 10px/14px 'Droid Sans Mono', 'Monaco', monospace;
+    color: white;
+    z-index: 0;
+    overflow: hidden;
+}
+
+a {
+    color: white;
+}
+
+h1, h2, h3, h4 {
+    font-weight: normal;
+    color: #96DBE5;
+    text-shadow: 1px 1px 1px black;
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+}
+
+#tibersynth {
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    overflow: hidden;
+/*    position: absolute;
+    top: 0;
+    left: 100%;*/
+}
+
+#controls {
+    width: 15%;
+    height: 100%;
+    background-color: #1c1c1c;
+    /*background-image: linear-gradient(left , rgb(28,28,28) 1%, rgb(26,26,26) 94%);*/
+    /*background-image: -webkit-linear-gradient(left , rgb(28,28,28) 1%, rgb(26,26,26) 94%);*/
+    float: left;
+    overflow: auto;
+}
+
+#controls section {
+    padding: 1em;
+}
+
+#controls section h1,
+#controls section h2 {
+    font-size: 1.1em;
+}
+
+#controls p {
+    margin: 0.75em 0;
+}
+
+#space {
+    width: 85%;
+    height: 100%;
+    background-color: #ececec;
+    float: left;
+    overflow: hidden;
+}
+
+#not-supported {
+    margin: 15px 0 0 -20%;
+    padding: 12px;
+    width: 40%;
+    background-color: #ff2200;
+    border: 2px solid #333;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: bold;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+    display: none;
+}

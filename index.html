@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tibersynth v0.1</title>
+    <meta charset="utf-8">
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="static/css/style.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="static/js/tibersynth.js"></script>
+</head>
+<body>
+<div id="container">
+    <div id="tibersynth">
+        <div id="controls">
+            <section>
+                <h1>TiberSynth v0.1</h1>
+                <p>Real-time audio synthesis and many-to-many vector mapping in the web browser! Uses <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html">Web Audio API</a> for synthesis and <a href="http://raphaeljs.com/">Raphaël</a> for interface.</p>
+                <p>Click or drag on the control surface to play. Spacebar toggles play/pause. The "R" key generates a new sound-space to explore.</p>
+                <p>Source code on <a href="https://github.com/prtcl/tibersynth">GitHub</a>.</p>
+                <p class="copyright">&copy; 2012 <a href="http://prtcl.cc">Cory O'Brien</a></p>
+            </section>
+        </div>
+        <div id="space"></div>
+    </div>
+    <div id="not-supported">
+        <p>Gah!! TiberSynth only works in web browsers that support the <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html">Web Audio API</a>! Currently this means recent versions of Google Chrome and Safari 6.</p>
+    </div>
+</div>
+</body>
+</html>
