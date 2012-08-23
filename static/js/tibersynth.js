@@ -5,7 +5,6 @@
     © 2012 Cory O'Brien http://prtcl.cc
 */
 
-
 (function ($, Raphael) {
 
     var context = null;
@@ -95,11 +94,11 @@
             var x = (this.position.x - space.position.x),
                 y = (this.position.y - space.position.y);
             return Math.sqrt((x * x) + (y * y)) / 2.01;
-        }
+        };
 
         this.value = function(){
-            return this._value * (this.distance() - 2 + 1) * -1;
-        }
+            return this._value * scale(this.distance(), 0, 1, 1, 0);
+        };
     }
 
     function Space (args) {
@@ -214,13 +213,18 @@
 
         var drawInterface = function () {
             self.space.points.forEach(function(point, i){
-                var circle = self.spacePoints[i];
+                var circle = self.spacePoints[i],
+                    v = scale(point.value(), 0, 1, 0, 22),
+                    r = (v >= 0 ? v : 0),
+                    fillOpacity = scale(point.distance(), 1.5, 0, 0, 1),
+                    strokeOpacity = scale(point.distance(), 1.5, 0, 1, 0);
+
                 circle.attr({
-                    'r': scale(point.value(), 0, 1, 0, 20),
-                    'fill-opacity': scale(point.distance(), 1, 0, 0, 1),
-                    'stroke-opacity': point.distance()
+                    'r': r,
+                    'fill-opacity': fillOpacity,
+                    'stroke-opacity': strokeOpacity
                 });
-            });           
+            });
         };
 
         setInterval(drawInterface, parseInt(1000 / fps));
@@ -328,7 +332,7 @@
             this.oscGainC.gain.value = scale(points[14].value(), 0, 1, 0, 0.75);
             
             this.hipass.frequency.value = scale(points[15].value(), 0, 1, 5, 10000);
-            this.lowpass.frequency.value = scale(points[16].value(), 0, 1, 30, 6000);
+            this.lowpass.frequency.value = scale(points[16].value(), 0, 1, 30, 5000);
             
             this.feedback.delayTime.value = scale(points[17].value(), 0, 1, 0, 0.5);
             this.feedbackGain.gain.value = scale(points[18].value(), 0, 1, 0.5, 1);
