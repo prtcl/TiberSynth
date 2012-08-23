@@ -60,6 +60,15 @@
         return delay;
     }
 
+    function createCompressor (ratio, threshold, attack, release) {
+        var comp = context.createDynamicsCompressor();
+        comp.threshold.value = threshold; // -24
+        comp.ratio.value = ratio; // 12
+        comp.attack.value = attack; // 0.003000000026077032
+        comp.release.value = release; // 0.25
+        return comp;
+    }
+
     function Events () {
         var self = this,
             _callbacks = {};
@@ -265,8 +274,10 @@
         
         this.feedback = createDelayNode(rand(0, 1));
         this.feedbackGain = createGainNode(0);
+        this.feedbackCompressor = createCompressor(10, 0, 0.0005, 0.0005);
         
         this.output = createGainNode(0);
+        this.outputCompressor = createCompressor(1.5, -1, 0.1, 0.25);
 
         // route nodes
         this.oscB.connect(this.xmodGainA);
@@ -307,10 +318,12 @@
 
         this.lowpass.connect(this.feedback);
         this.feedback.connect(this.feedbackGain);
-        this.feedbackGain.connect(this.hipass);
+        this.feedbackGain.connect(this.feedbackCompressor);
+        this.feedbackCompressor.connect(this.hipass);
         this.feedbackGain.connect(this.output);
 
-        this.output.connect(context.destination);
+        this.output.connect(this.outputCompressor);
+        this.outputCompressor.connect(context.destination);
 
         this.update = function(points){
             this.oscA.detune.value = scale(points[0].value(), 0, 1, -500, 500);
