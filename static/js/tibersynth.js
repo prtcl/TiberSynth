@@ -180,7 +180,7 @@
         if (!args) throw new Error("Need data!");
 
         var self = this,
-            fps = args.fps || 30,
+            fps = args.fps || 25,
             _window = $(window);
 
         self.space = args.space;
