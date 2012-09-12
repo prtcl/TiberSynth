@@ -244,12 +244,12 @@
     function Synth () {
 
         // create nodes
-        this.oscA = createOscillator('sqaure', rand(0, 150));
+        this.oscA = createOscillator('square', rand(0, 150));
         this.oscB = createOscillator('sine', rand(0, 1500));
         this.oscC = createOscillator('saw', rand(0, 150));
         this.oscD = createOscillator('saw', rand(0, 1500));
         this.oscE = createOscillator('sine', rand(0, 150));
-        this.oscF = createOscillator('sqaure', rand(0, 15000));
+        this.oscF = createOscillator('square', rand(0, 15000));
 
         this.xmodGainA = createGainNode(0);
         this.xmodGainB = createGainNode(0);
