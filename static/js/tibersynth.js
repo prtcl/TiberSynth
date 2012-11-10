@@ -69,47 +69,72 @@
         return comp;
     }
 
-    function Point (space) {
-        if (!space) throw new Error('Where am I?');
-
-        this._value = rand(0, 1);
-        this.position = {
-            x: rand(-1, 1),
-            y: rand(-1, 1)
-        };
-
-        this.distance = function(){
-            var x = (this.position.x - space.position.x),
-                y = (this.position.y - space.position.y);
-            return Math.sqrt((x * x) + (y * y)) / 2.01;
-        };
-
-        this.value = function(){
-            return this._value * scale(this.distance(), 0, 1, 1, 0);
-        };
+    function Point (args) {
+        var self = this;
+        this.args = args || (args = {});
+        this.space = this.args.space;
+        this.attrs = {};
+        this.position = {};
+        this.randomize();
+        this.space.on('move', function(){
+            self.calculateDistance();
+        });
     }
+
+    $.extend(Point.prototype, {
+        attrs: null,
+        space: null,
+        position: null,
+        value: function () {
+            return this.attrs.value * scale(this.attrs.distance, 0, 1, 1, 0);
+        },
+        distance: function () {
+            return this.attrs.distance;
+        },
+        calculateDistance: function () {
+            var x = (this.position.x - this.space.position.x),
+                y = (this.position.y - this.space.position.y);
+            this.attrs.distance = Math.sqrt((x * x) + (y * y)) / 2.01;
+            this.trigger('change');
+            return this;
+        },
+        randomize: function () {
+            this.attrs.value = rand(0, 1);
+            this.position.x = rand(-1, 1);
+            this.position.y = rand(-1, 1);
+            this.calculateDistance();
+            this.trigger('randomize');
+            return this;
+        }
+    });
+
+    $.EventEmitter.extend(Point);
 
     function Space (args) {
-        if (!args) args = {};
-
-        var n_points = args.points || 20;
-
+        this.args = args || (args = {});
         this.position = { x: 0, y: 0 };
-
-        this.generate = function(){
-            this.points = [];
-            for (var i = 0; i < n_points; i++) {
-                this.points.push(new Point(this));   
-            }
-        };
-
-        this.move = function(mouse){
-            this.position.x = mouse.x * 2 - 1;
-            this.position.y = mouse.y * 2 - 1;
-        };
-
         this.generate();
     }
+
+    $.extend(Space.prototype, {
+        generate: function () {
+            var n = this.args.points || 20;
+            this.points = [];
+            for (var i = 0; i < n; i++) {
+                this.points.push(new Point({ space: this }));   
+            }
+            this.trigger('generate');
+            return this;
+        },
+        move: function (mouse) {
+            this.position.x = mouse.x * 2 - 1;
+            this.position.y = mouse.y * 2 - 1;
+            this.trigger('move');
+            return this;
+        }
+    });
+
+    $.EventEmitter.extend(Space);
 
     function InputTracking () {
         var self = this,
