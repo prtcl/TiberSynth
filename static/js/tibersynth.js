@@ -69,27 +69,6 @@
         return comp;
     }
 
-    function Events () {
-        var self = this,
-            _callbacks = {};
-
-        self.on = function (name, callback) {
-            if (typeof name == 'string' && typeof callback == 'function'){
-                _callbacks[name] = _callbacks[name] || [];
-                _callbacks[name].push(callback);
-            }
-            return self;
-        };
-
-        self.trigger = function (name) {
-            _callbacks[name] = _callbacks[name] || [];
-            _callbacks[name].forEach(function(callback){
-                callback.apply(self);
-            });
-            return self;
-        };
-    }
-
     function Point (space) {
         if (!space) throw new Error('Where am I?');
 
@@ -133,7 +112,7 @@
     }
 
     function InputTracking () {
-        var self = $.extend(this, new Events()),
+        var self = this,
             state = { spacebar: false },
             _window = $(window);
 
@@ -175,6 +154,8 @@
                 self.trigger('move');
             });
     }
+
+    $.EventEmitter.extend(InputTracking);
 
     function Interface (args) {
         if (!args) throw new Error("Need data!");
