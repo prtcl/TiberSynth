@@ -16,13 +16,22 @@
         context = new webkitAudioContext();
     }
 
-    function rand (min, max) {
-        return Math.random() * (max - min) + min;
-    }
+    // function rand (min, max) {
+    //     return Math.random() * (max - min) + min;
+    // }
 
-    function scale (x, a1, a2, b1, b2) {
-        return b1 + (x - a1) * (b2 - b1) / (a2 - a1);
-    }
+    // function scale (x, a1, a2, b1, b2) {
+    //     return b1 + (x - a1) * (b2 - b1) / (a2 - a1);
+    // }
+
+    var Utils = {
+        rand: function (min, max) {
+            return Math.random() * (max - min) + min;
+        },
+        scale: function (x, a1, a2, b1, b2) {
+            return b1 + (x - a1) * (b2 - b1) / (a2 - a1);
+        }
+    };
 
     function createOscillator (type, freq) {
         var osc = context.createOscillator(),
@@ -87,7 +96,7 @@
         space: null,
         position: null,
         value: function () {
-            return this.attrs.value * scale(this.attrs.distance, 0, 1, 1, 0);
+            return this.attrs.value * Utils.scale(this.attrs.distance, 0, 1, 1, 0);
         },
         distance: function () {
             return this.attrs.distance;
@@ -100,9 +109,9 @@
             return this;
         },
         randomize: function () {
-            this.attrs.value = rand(0, 1);
-            this.position.x = rand(-1, 1);
-            this.position.y = rand(-1, 1);
+            this.attrs.value = Utils.rand(0, 1);
+            this.position.x = Utils.rand(-1, 1);
+            this.position.y = Utils.rand(-1, 1);
             this.calculateDistance();
             this.trigger('randomize');
             return this;
@@ -213,8 +222,8 @@
             self.spacePoints = [];
             self.spacePaper.clear();
             self.space.points.forEach(function(point, i){
-                var x = scale(point.position.x, -1, 1, 0, self.spaceContainer.width()),
-                    y = scale(point.position.y, 1, -1, 0, self.spaceContainer.height()),
+                var x = Utils.scale(point.position.x, -1, 1, 0, self.spaceContainer.width()),
+                    y = Utils.scale(point.position.y, 1, -1, 0, self.spaceContainer.height()),
                     circle = self.spacePaper.circle(x, y, 1);
                 circle.attr({
                     'fill': 'rgba(0, 0, 0, 0.15)',
@@ -228,10 +237,10 @@
         var drawInterface = function () {
             self.space.points.forEach(function(point, i){
                 var circle = self.spacePoints[i],
-                    v = scale(point.value(), 0, 1, 0, 22),
+                    v = Utils.scale(point.value(), 0, 1, 0, 22),
                     r = (v >= 0 ? v : 0),
-                    fillOpacity = scale(point.distance(), 1.5, 0, 0, 1),
-                    strokeOpacity = scale(point.distance(), 1.5, 0, 1, 0);
+                    fillOpacity = Utils.scale(point.distance(), 1.5, 0, 0, 1),
+                    strokeOpacity = Utils.scale(point.distance(), 1.5, 0, 1, 0);
 
                 circle.attr({
                     'r': r,
@@ -249,12 +258,12 @@
     function Synth () {
 
         // create nodes
-        this.oscA = createOscillator('square', rand(0, 150));
-        this.oscB = createOscillator('sine', rand(0, 1500));
-        this.oscC = createOscillator('saw', rand(0, 150));
-        this.oscD = createOscillator('saw', rand(0, 1500));
-        this.oscE = createOscillator('sine', rand(0, 150));
-        this.oscF = createOscillator('square', rand(0, 15000));
+        this.oscA = createOscillator('square', Utils.rand(0, 150));
+        this.oscB = createOscillator('sine', Utils.rand(0, 1500));
+        this.oscC = createOscillator('saw', Utils.rand(0, 150));
+        this.oscD = createOscillator('saw', Utils.rand(0, 1500));
+        this.oscE = createOscillator('sine', Utils.rand(0, 150));
+        this.oscF = createOscillator('square', Utils.rand(0, 15000));
 
         this.xmodGainA = createGainNode(0);
         this.xmodGainB = createGainNode(0);
@@ -277,7 +286,7 @@
         this.hipass = createFilter('hipass', 5);
         this.lowpass = createFilter('lowpass', 10000);
         
-        this.feedback = createDelayNode(rand(0, 1));
+        this.feedback = createDelayNode(Utils.rand(0, 1));
         this.feedbackGain = createGainNode(0);
         this.feedbackCompressor = createCompressor(10, 0, 0.0005, 0.0005);
         
@@ -331,12 +340,12 @@
         this.outputCompressor.connect(context.destination);
 
         this.update = function(points){
-            this.oscA.detune.value = scale(points[0].value(), 0, 1, -500, 500);
-            this.oscB.detune.value = scale(points[1].value(), 0, 1, -125, 125);
-            this.oscC.detune.value = scale(points[2].value(), 0, 1, -250, 250);
-            this.oscD.detune.value = scale(points[3].value(), 0, 1, -250, 250);
-            this.oscE.detune.value = scale(points[4].value(), 0, 1, -250, 250);
-            this.oscF.detune.value = scale(points[5].value(), 0, 1, -500, 500);
+            this.oscA.detune.value = Utils.scale(points[0].value(), 0, 1, -500, 500);
+            this.oscB.detune.value = Utils.scale(points[1].value(), 0, 1, -125, 125);
+            this.oscC.detune.value = Utils.scale(points[2].value(), 0, 1, -250, 250);
+            this.oscD.detune.value = Utils.scale(points[3].value(), 0, 1, -250, 250);
+            this.oscE.detune.value = Utils.scale(points[4].value(), 0, 1, -250, 250);
+            this.oscF.detune.value = Utils.scale(points[5].value(), 0, 1, -500, 500);
 
             this.xmodGainA.gain.value = points[6].value() * 100000;
             this.xmodGainB.gain.value = points[7].value() * 100000;
@@ -345,24 +354,24 @@
             this.xmodGainE.gain.value = points[10].value() * 100000;
             this.xmodGainF.gain.value = points[11].value() * 100000;
             
-            this.oscGainA.gain.value = scale(points[12].value(), 0, 1, 0.5, 1);
-            this.oscGainB.gain.value = scale(points[13].value(), 0, 1, 0.5, 1);
-            this.oscGainC.gain.value = scale(points[14].value(), 0, 1, 0, 0.75);
+            this.oscGainA.gain.value = Utils.scale(points[12].value(), 0, 1, 0.5, 1);
+            this.oscGainB.gain.value = Utils.scale(points[13].value(), 0, 1, 0.5, 1);
+            this.oscGainC.gain.value = Utils.scale(points[14].value(), 0, 1, 0, 0.75);
             
-            this.hipass.frequency.value = scale(points[15].value(), 0, 1, 5, 10000);
-            this.lowpass.frequency.value = scale(points[16].value(), 0, 1, 30, 5000);
+            this.hipass.frequency.value = Utils.scale(points[15].value(), 0, 1, 5, 10000);
+            this.lowpass.frequency.value = Utils.scale(points[16].value(), 0, 1, 30, 5000);
             
-            this.feedback.delayTime.value = scale(points[17].value(), 0, 1, 0, 0.5);
-            this.feedbackGain.gain.value = scale(points[18].value(), 0, 1, 0.5, 1);
+            this.feedback.delayTime.value = Utils.scale(points[17].value(), 0, 1, 0, 0.5);
+            this.feedbackGain.gain.value = Utils.scale(points[18].value(), 0, 1, 0.5, 1);
         };
 
         this.newTones = function(){
-            this.oscA.frequency.value = rand(0, 150);
-            this.oscB.frequency.value = rand(0, 1500);
-            this.oscC.frequency.value = rand(0, 150);
-            this.oscD.frequency.value = rand(0, 1500);
-            this.oscE.frequency.value = rand(0, 150);
-            this.oscF.frequency.value = rand(0, 15000);
+            this.oscA.frequency.value = Utils.rand(0, 150);
+            this.oscB.frequency.value = Utils.rand(0, 1500);
+            this.oscC.frequency.value = Utils.rand(0, 150);
+            this.oscD.frequency.value = Utils.rand(0, 1500);
+            this.oscE.frequency.value = Utils.rand(0, 150);
+            this.oscF.frequency.value = Utils.rand(0, 15000);
         };
 
         this.play = function(){
