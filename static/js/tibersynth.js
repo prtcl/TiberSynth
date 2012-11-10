@@ -8,21 +8,58 @@
 (function ($, Raphael) {
 
     var _window = $(window);
-    var context = null;
 
-    if (typeof AudioContext != 'undefined'){
-        context = new AudioContext();
-    } else if (typeof webkitAudioContext != 'undefined'){
-        context = new webkitAudioContext();
-    }
-
-    // function rand (min, max) {
-    //     return Math.random() * (max - min) + min;
-    // }
-
-    // function scale (x, a1, a2, b1, b2) {
-    //     return b1 + (x - a1) * (b2 - b1) / (a2 - a1);
-    // }
+    var Nodes = {
+        context: (function(){
+            var context;
+            if (typeof AudioContext != 'undefined'){
+                context = new AudioContext();
+            } else if (typeof webkitAudioContext != 'undefined'){
+                context = new webkitAudioContext();
+            }
+            return context;
+        })(),
+        createOscillator: function (type, freq) {
+            var osc = this.context.createOscillator(),
+                types = { sine: osc.SINE, square: osc.SQUARE, saw: osc.SAWTOOTH };
+            osc.type = type && types[type] || types['sine'];
+            osc.frequency.value = freq || 440;
+            osc.noteOn && osc.noteOn(0);
+            return osc;
+        },
+        createGainNode: function (gain) {
+            var gainNode = this.context.createGainNode();
+            gainNode.gain.value = gain || 0;
+            return gainNode;
+        },
+        createPanner: function (x, y, z) {
+            var pan = this.context.createPanner();
+            pan.setPosition(x || 0, y || 0, z || 0);
+            return pan;
+        },
+        createFilter: function (type, freq, q) {
+            var filter = this.context.createBiquadFilter(),
+                types = { hipass: 1, lowpass: 0 };
+            filter.type = type && types[type] || type['lowpass'];
+            filter.frequency.value = freq || 1000;
+            filter.Q.value = q || 0;
+            filter.gain.value = 0;
+            return filter;        
+        },
+        createDelayNode: function (time) {
+            var delay = this.context.createDelayNode();
+            delay.delayTime.value = time || 0;
+            return delay;
+        },
+        createCompressor: function (ratio, threshold, attack, release) {
+            var comp = this.context.createDynamicsCompressor();
+            comp.threshold.value = threshold; // -24
+            comp.ratio.value = ratio; // 12
+            comp.attack.value = attack; // 0.003000000026077032
+            comp.release.value = release; // 0.25
+            return comp;
+        }
+    };
 
     var Utils = {
         rand: function (min, max) {
@@ -32,52 +69,6 @@
             return b1 + (x - a1) * (b2 - b1) / (a2 - a1);
         }
     };
-
-    function createOscillator (type, freq) {
-        var osc = context.createOscillator(),
-            types = { sine: osc.SINE, square: osc.SQUARE, saw: osc.SAWTOOTH };
-        osc.type = type && types[type] || types['sine'];
-        osc.frequency.value = freq || 440;
-        osc.noteOn && osc.noteOn(0);
-        return osc;
-    }
-
-    function createGainNode (gain) {
-        var gainNode = context.createGainNode();
-        gainNode.gain.value = gain || 0;
-        return gainNode;
-    }
-
-    function createPanner (x, y, z) {
-        var pan = context.createPanner();
-        pan.setPosition(x || 0, y || 0, z || 0);
-        return pan;
-    }
-
-    function createFilter (type, freq, q) {
-        var filter = context.createBiquadFilter(),
-            types = { hipass: 1, lowpass: 0 };
-        filter.type = type && types[type] || type['lowpass'];
-        filter.frequency.value = freq || 1000;
-        filter.Q.value = q || 0;
-        filter.gain.value = 0;
-        return filter;        
-    }
-
-    function createDelayNode (time) {
-        var delay = context.createDelayNode();
-        delay.delayTime.value = time || 0;
-        return delay;
-    }
-
-    function createCompressor (ratio, threshold, attack, release) {
-        var comp = context.createDynamicsCompressor();
-        comp.threshold.value = threshold; // -24
-        comp.ratio.value = ratio; // 12
-        comp.attack.value = attack; // 0.003000000026077032
-        comp.release.value = release; // 0.25
-        return comp;
-    }
 
     function Point (args) {
         var self = this;
@@ -257,41 +248,43 @@
 
     function Synth () {
 
-        // create nodes
-        this.oscA = createOscillator('square', Utils.rand(0, 150));
-        this.oscB = createOscillator('sine', Utils.rand(0, 1500));
-        this.oscC = createOscillator('saw', Utils.rand(0, 150));
-        this.oscD = createOscillator('saw', Utils.rand(0, 1500));
-        this.oscE = createOscillator('sine', Utils.rand(0, 150));
-        this.oscF = createOscillator('square', Utils.rand(0, 15000));
+        this.context = Nodes.context;
 
-        this.xmodGainA = createGainNode(0);
-        this.xmodGainB = createGainNode(0);
-        this.xmodGainC = createGainNode(0);
-        this.xmodGainD = createGainNode(0);
-        this.xmodGainE = createGainNode(0);
-        this.xmodGainF = createGainNode(0);
+        // create nodes
+        this.oscA = Nodes.createOscillator('square', Utils.rand(0, 150));
+        this.oscB = Nodes.createOscillator('sine', Utils.rand(0, 1500));
+        this.oscC = Nodes.createOscillator('saw', Utils.rand(0, 150));
+        this.oscD = Nodes.createOscillator('saw', Utils.rand(0, 1500));
+        this.oscE = Nodes.createOscillator('sine', Utils.rand(0, 150));
+        this.oscF = Nodes.createOscillator('square', Utils.rand(0, 15000));
+
+        this.xmodGainA = Nodes.createGainNode(0);
+        this.xmodGainB = Nodes.createGainNode(0);
+        this.xmodGainC = Nodes.createGainNode(0);
+        this.xmodGainD = Nodes.createGainNode(0);
+        this.xmodGainE = Nodes.createGainNode(0);
+        this.xmodGainF = Nodes.createGainNode(0);
         
-        this.oscGainA = createGainNode(0);
-        this.oscGainB = createGainNode(0);
-        this.oscGainC = createGainNode(0);
+        this.oscGainA = Nodes.createGainNode(0);
+        this.oscGainB = Nodes.createGainNode(0);
+        this.oscGainC = Nodes.createGainNode(0);
         
-        this.oscPanA = createPanner(-0.5, 0.1, 0);
-        this.oscPanB = createPanner(0.5, 0.1, 0);
-        this.oscPanC = createPanner(-0.005, -0.1, 0);
-        this.oscPanD = createPanner(0.005, -0.1, 0);
-        this.oscPanE = createPanner(-0.05, -0.5, 0);
-        this.oscPanF = createPanner(0.05, -0.5, 0);
+        this.oscPanA = Nodes.createPanner(-0.5, 0.1, 0);
+        this.oscPanB = Nodes.createPanner(0.5, 0.1, 0);
+        this.oscPanC = Nodes.createPanner(-0.005, -0.1, 0);
+        this.oscPanD = Nodes.createPanner(0.005, -0.1, 0);
+        this.oscPanE = Nodes.createPanner(-0.05, -0.5, 0);
+        this.oscPanF = Nodes.createPanner(0.05, -0.5, 0);
         
-        this.hipass = createFilter('hipass', 5);
-        this.lowpass = createFilter('lowpass', 10000);
+        this.hipass = Nodes.createFilter('hipass', 5);
+        this.lowpass = Nodes.createFilter('lowpass', 10000);
         
-        this.feedback = createDelayNode(Utils.rand(0, 1));
-        this.feedbackGain = createGainNode(0);
-        this.feedbackCompressor = createCompressor(10, 0, 0.0005, 0.0005);
+        this.feedback = Nodes.createDelayNode(Utils.rand(0, 1));
+        this.feedbackGain = Nodes.createGainNode(0);
+        this.feedbackCompressor = Nodes.createCompressor(10, 0, 0.0005, 0.0005);
         
-        this.output = createGainNode(0);
-        this.outputCompressor = createCompressor(1.5, -1, 0.1, 0.25);
+        this.output = Nodes.createGainNode(0);
+        this.outputCompressor = Nodes.createCompressor(1.5, -1, 0.1, 0.25);
 
         // route nodes
         this.oscB.connect(this.xmodGainA);
@@ -337,7 +330,7 @@
         this.feedbackGain.connect(this.output);
 
         this.output.connect(this.outputCompressor);
-        this.outputCompressor.connect(context.destination);
+        this.outputCompressor.connect(this.context.destination);
 
         this.update = function(points){
             this.oscA.detune.value = Utils.scale(points[0].value(), 0, 1, -500, 500);
@@ -375,11 +368,11 @@
         };
 
         this.play = function(){
-            this.output.gain.setTargetValueAtTime(1, context.currentTime, 0.01);
+            this.output.gain.setTargetValueAtTime(1, this.context.currentTime, 0.01);
         };
 
         this.stop = function(){
-            this.output.gain.setTargetValueAtTime(0, context.currentTime, 0.1);
+            this.output.gain.setTargetValueAtTime(0, this.context.currentTime, 0.1);
         };
 
     }
@@ -413,7 +406,7 @@
     }
 
     $(function(){
-        if (!context) setTimeout(function(){ $('#not-supported').fadeIn('slow'); }, 500);
+        if (!Nodes.context) setTimeout(function(){ $('#not-supported').fadeIn('slow'); }, 500);
         $('#tibersynth').length && new TiberSynth();
     });
 
