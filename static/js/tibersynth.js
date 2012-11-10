@@ -7,6 +7,7 @@
 
 (function ($, Raphael) {
 
+    var _window = $(window);
     var context = null;
 
     if (typeof AudioContext != 'undefined'){
@@ -138,8 +139,7 @@
 
     function InputTracking () {
         var self = this,
-            state = { spacebar: false },
-            _window = $(window);
+            state = { spacebar: false };
 
         self.spaceContainer = $('#tibersynth #space');
         self.controlsContainer = $('#tibersynth #controls');
@@ -186,8 +186,7 @@
         if (!args) throw new Error("Need data!");
 
         var self = this,
-            fps = args.fps || 25,
-            _window = $(window);
+            fps = args.fps || 25;
 
         self.space = args.space;
         self.container = $('#tibersynth');
