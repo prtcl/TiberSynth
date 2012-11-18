@@ -19,6 +19,7 @@
     tibersynth.keyboard = {};
     tibersynth.mouse = { x: 0, y: 0, down: false };
 
+    $.EventEmitter.extend(tibersynth.viewport);
     $.EventEmitter.extend(tibersynth.mouse);
     $.EventEmitter.extend(tibersynth.keyboard);
 
@@ -34,6 +35,7 @@
                         tibersynth.viewport.width = space.width();
                         tibersynth.viewport.height = space.height();
                         tibersynth.viewport.offset = space.offset();
+                        tibersynth.viewport.trigger('resize');
                     }, 100);
                 };
             })(),
