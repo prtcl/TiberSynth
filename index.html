@@ -9,7 +9,17 @@
     <script src="/static/lib/jquery-1.8.2.js"></script>
     <script src="/static/lib/jquery.eventemitter.js"></script>
     <script src="/static/lib/raphael.js"></script>
-    <script src="/static/js/tibersynth.js"></script>
+    <script src="/static/js/init.js"></script>
+    <script src="/static/js/utils.js"></script>
+    <script src="/static/js/space.js"></script>
+    <script src="/static/js/input.js"></script>
+    <script src="/static/js/nodes.js"></script>
+    <script>
+    $(function(){
+        if (!tibersynth.context) $('#not-supported').fadeIn();
+        tibersynth.run();
+    });
+    </script>
 </head>
 <body>
 <div id="container">
