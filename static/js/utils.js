@@ -50,6 +50,14 @@
             comp.attack.value = options.attack;
             comp.release.value = options.release;
             return comp;
+        },
+        analyser: function (args) {
+            var options = $.extend({ size: 1024, max: -10, min: -100 }, args),
+                analyser = context.createAnalyser();
+            analyser.fftSize = options.size;
+            analyser.maxDecibels = options.max;
+            analyser.minDecidels = options.min;
+            return analyser
         }
     };
 
