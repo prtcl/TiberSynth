@@ -15,6 +15,7 @@
 
         function setup () {
             ps.frameRate(30);
+            ps.background(236, 236, 236);
         }
 
         function drawPoint (point, i) {
