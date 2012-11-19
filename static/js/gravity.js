@@ -4,7 +4,7 @@
     var tibersynth = this,
         utils = tibersynth.utils;
 
-    function gravitySketch (processing) {
+    var gravitySketch = new Processing.Sketch(function (processing) {
 
         var ps = processing,
             sketch = this;
@@ -46,7 +46,9 @@
         ps.setup = setup;
         ps.draw = draw;
 
-    }
+    });
+
+    gravitySketch.options.pauseOnBlur = true;
 
     tibersynth.inits.push(function(){
         var canvas = $('#space canvas#gravity');
