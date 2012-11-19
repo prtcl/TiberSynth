@@ -12,6 +12,6 @@ tibersynth.context = (function(){
 })();
 
 tibersynth.run = function () {
-    this.inits.forEach(function(fn){ fn.apply(this); });
+    this.inits.forEach(function(fn){ fn.apply(tibersynth); });
     return this;
 };
