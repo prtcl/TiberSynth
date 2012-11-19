@@ -142,6 +142,16 @@
             var currentTime = tibersynth.context.currentTime;
             nodes.output.gain.setTargetValueAtTime(0, currentTime, 0.1);
         });
+        tibersynth.keyboard.on('down', function(key){
+            if (key === 'R'){
+                nodes.oscA.frequency.value = utils.rand(0, 150);
+                nodes.oscB.frequency.value = utils.rand(0, 1500);
+                nodes.oscC.frequency.value = utils.rand(0, 150);
+                nodes.oscD.frequency.value = utils.rand(0, 1500);
+                nodes.oscE.frequency.value = utils.rand(0, 150);
+                nodes.oscF.frequency.value = utils.rand(0, 15000);
+            }
+        })
     });
 
 }).apply(tibersynth);

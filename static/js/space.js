@@ -32,6 +32,13 @@
             this.attrs.distance = utils.constrain(distance);
             this.trigger('change');
             return this;
+        },
+        randomize: function () {
+            this.attrs.value = utils.rand(0, 1);
+            this.position.x = utils.rand(-1, 1);
+            this.position.y = utils.rand(-1, 1);
+            this.calculateDistance();
+            return this;
         }
     });
 
@@ -62,6 +69,9 @@
                 y = utils.scale(this.y, 0, 1, -1, 1);
             tibersynth.space.move(x, y);
             // console.log(tibersynth.space.position.x, tibersynth.space.position.y);
+        });
+        tibersynth.keyboard.on('down', function(key){
+            if (key === 'R') tibersynth.space.points.forEach(function(point){ point.randomize(); });
         });
     });
 
