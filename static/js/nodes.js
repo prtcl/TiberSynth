@@ -34,7 +34,7 @@
     nodes.feedbackCompressor = utils.createNode('compressor', { ratio: 10, threshold: 0, attack: 0.0005, release: 0.00005 });
     nodes.outputCompressor = utils.createNode('compressor', { ratio: 1.5, threshold: -1, attack: 0.1, release: 0.25 });
     nodes.output = utils.createNode('gain');
-    nodes.analyser = utils.createNode('analyser', { size: 512, max: 0 });
+    // nodes.analyser = utils.createNode('analyser', { size: 512, max: 0 });
 
     nodes.oscB.connect(nodes.xmodGainA);
     nodes.xmodGainA.connect(nodes.oscA.frequency);
@@ -71,8 +71,8 @@
     nodes.feedbackCompressor.connect(nodes.hipass);
     nodes.feedbackGain.connect(nodes.output);
     nodes.output.connect(nodes.outputCompressor);
-    nodes.outputCompressor.connect(nodes.analyser);
-    nodes.analyser.connect(tibersynth.context.destination);
+    nodes.outputCompressor.connect(tibersynth.context.destination);
+    // nodes.analyser.connect(tibersynth.context.destination);
 
     tibersynth.inits.push(function(){
         var space = tibersynth.space;

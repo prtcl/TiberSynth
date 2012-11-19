@@ -9,9 +9,9 @@
         var ps = processing,
             sketch = this;
 
-        var analyser = tibersynth.nodes.analyser,
-            analyserData = new Uint8Array(analyser.frequencyBinCount),
-            analyserRange = analyser.frequencyBinCount;
+        // var analyser = tibersynth.nodes.analyser,
+        //     analyserData = new Uint8Array(analyser.frequencyBinCount),
+        //     analyserRange = analyser.frequencyBinCount;
 
         function setup () {
             ps.frameRate(30);
@@ -39,7 +39,7 @@
             setTimeout(function(){
                 ps.background(236, 236, 236);
                 tibersynth.space.points.forEach(drawPoint);
-                analyser.getByteFrequencyData(analyserData);
+                // analyser.getByteFrequencyData(analyserData);
             }, 0);
         }
 
