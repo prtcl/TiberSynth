@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Tibersynth v0.1</title>
+    <title>Tibersynth v0.3</title>
     <meta name="description" content="Real-time audio synthesis and many-to-many vector mapping in the web browser" />
     <link rel="stylesheet" href="static/css/style.css" />
     <script src="/static/lib/jquery-1.8.2.js"></script>
@@ -41,8 +41,8 @@
             <canvas id="gravity"></canvas>
         </div>
     </div>
-    <div id="info-view">
-        <div class="info-center">
+    <div id="info-view" class="vertical-center-container">
+        <div class="vertical-center">
             <div class="copy-container">
                 <div class="copy">
                     <h1>TiberSynth v0.3</h1>
@@ -54,8 +54,15 @@
             </div>
         </div>
     </div>
-    <div id="not-supported">
-        <p>Gah!! TiberSynth only works in web browsers that support the <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html">Web Audio API</a>! Currently this means recent versions of Google Chrome and Safari 6.</p>
+    <div id="not-supported" class="vertical-center-container">
+        <div class="vertical-center">
+            <div class="copy-container">
+                <div class="copy">
+                    <h2 class="error">Browser Not Supported</h2>
+                    <p>TiberSynth only works in web browsers that support the <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html">Web Audio API</a>. Currently, this means recent versions of Google Chrome and Safari 6.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
