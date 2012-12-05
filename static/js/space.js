@@ -29,7 +29,7 @@
             var x = (this.position.x - this.space.position.x),
                 y = (this.position.y - this.space.position.y),
                 distance = Math.sqrt((x * x) + (y * y)) / 2.01;
-            this.attrs.distance = utils.constrain(distance);
+            this.attrs.distance = utils.constrain(distance, 0, 1);
             this.trigger('change');
             return this;
         },
@@ -68,7 +68,6 @@
             var x = utils.scale(this.x, 0, 1, -1, 1),
                 y = utils.scale(this.y, 0, 1, -1, 1);
             tibersynth.space.move(x, y);
-            // console.log(tibersynth.space.position.x, tibersynth.space.position.y);
         });
         tibersynth.keyboard.on('down', function(key){
             if (key === 'R') tibersynth.space.points.forEach(function(point){ point.randomize(); });
