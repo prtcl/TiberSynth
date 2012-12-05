@@ -27,13 +27,18 @@
     nodes.oscPanD = utils.createNode('panner', { x: 0.005, y: -0.1, z: 0 });
     nodes.oscPanE = utils.createNode('panner', { x: -0.05, y: -0.5, z: 0 });
     nodes.oscPanF = utils.createNode('panner', { x: 0.05, y: -0.5, z: 0 });
-    nodes.hipass = utils.createNode('filter', { type: 'hipass', frequency: 5 });
-    nodes.lowpass = utils.createNode('filter', { type: 'lowpass', frequency: 10000 });
+    nodes.preFilterCompressor = utils.createNode('compressor', { ratio: 15, threshold: -2, attack: 0.1, release: 0.25 });
+    nodes.hipass = utils.createNode('filter', { type: 'hipass', frequency: 5, q: 0.95 });
+    nodes.lowpass = utils.createNode('filter', { type: 'lowpass', frequency: 10000, q: 0.95 });
     nodes.feedback = utils.createNode('delay', { time: utils.rand(0, 1) });
     nodes.feedbackGain = utils.createNode('gain');
-    nodes.feedbackCompressor = utils.createNode('compressor', { ratio: 10, threshold: 0, attack: 0.0005, release: 0.00005 });
-    nodes.outputCompressor = utils.createNode('compressor', { ratio: 1.5, threshold: -1, attack: 0.1, release: 0.25 });
+    nodes.feedbackCompressor = utils.createNode('compressor', { ratio: 20, threshold: -2, attack: 0.001, release: 0.001 });
     nodes.output = utils.createNode('gain');
+    nodes.eqLow = utils.createNode('filter', { type: 'lowshelf', frequency: 80, q: 1, gain: -2 });
+    nodes.eqLowMid = utils.createNode('filter', { type: 'peak', frequency: 350, q: 2.5, gain: -5 });
+    nodes.eqHighMid = utils.createNode('filter', { type: 'peak', frequency: 4500, q: 0.5, gain: 1 });
+    nodes.eqHigh = utils.createNode('filter', { type: 'highshelf', frequency: 8000, q: 1, gain: 15 });
+    nodes.outputCompressor = utils.createNode('compressor', { ratio: 20, threshold: -10, attack: 0.1, release: 0.25 });
     // nodes.analyser = utils.createNode('analyser', { size: 512, max: 0 });
 
     nodes.oscB.connect(nodes.xmodGainA);
@@ -60,17 +65,21 @@
     nodes.oscPanD.connect(nodes.oscGainB);
     nodes.oscPanE.connect(nodes.oscGainC);
     nodes.oscPanF.connect(nodes.oscGainC);
-    nodes.oscGainA.connect(nodes.hipass);
-    nodes.oscGainB.connect(nodes.hipass);
-    nodes.oscGainC.connect(nodes.hipass);
+    nodes.oscGainA.connect(nodes.preFilterCompressor);
+    nodes.oscGainB.connect(nodes.preFilterCompressor);
+    nodes.oscGainC.connect(nodes.preFilterCompressor);
+    nodes.preFilterCompressor.connect(nodes.hipass);
     nodes.hipass.connect(nodes.lowpass);
     nodes.lowpass.connect(nodes.output);
     nodes.lowpass.connect(nodes.feedback);
     nodes.feedback.connect(nodes.feedbackGain);
     nodes.feedbackGain.connect(nodes.feedbackCompressor);
     nodes.feedbackCompressor.connect(nodes.hipass);
-    nodes.feedbackGain.connect(nodes.output);
-    nodes.output.connect(nodes.outputCompressor);
+    nodes.output.connect(nodes.eqLow);
+    nodes.eqLow.connect(nodes.eqLowMid);
+    nodes.eqLowMid.connect(nodes.eqHighMid);
+    nodes.eqHighMid.connect(nodes.eqHigh);
+    nodes.eqHigh.connect(nodes.outputCompressor);
     nodes.outputCompressor.connect(tibersynth.context.destination);
     // nodes.analyser.connect(tibersynth.context.destination);
 
@@ -95,48 +104,54 @@
             nodes.oscF.detune.value = utils.scale(this.value(), 0, 1, -500, 500);
         });
         space.addPoint().on('change', function(){
-            nodes.xmodGainA.gain.value = this.value() * 100000;
+            nodes.xmodGainA.gain.value = this.value() * 50000;
         });
         space.addPoint().on('change', function(){
-            nodes.xmodGainB.gain.value = this.value() * 100000;
+            nodes.xmodGainB.gain.value = this.value() * 50000;
         });
         space.addPoint().on('change', function(){
-            nodes.xmodGainC.gain.value = this.value() * 100000;
+            nodes.xmodGainC.gain.value = this.value() * 50000;
         });
         space.addPoint().on('change', function(){
-            nodes.xmodGainD.gain.value = this.value() * 100000;
+            nodes.xmodGainD.gain.value = this.value() * 50000;
         });
         space.addPoint().on('change', function(){
-            nodes.xmodGainE.gain.value = this.value() * 100000;
+            nodes.xmodGainE.gain.value = this.value() * 50000;
         });
         space.addPoint().on('change', function(){
-            nodes.xmodGainF.gain.value = this.value() * 100000;
+            nodes.xmodGainF.gain.value = this.value() * 50000;
         });
         space.addPoint().on('change', function(){
-            nodes.oscGainA.gain.value = utils.scale(this.value(), 0, 1, 0.5, 1);
+            nodes.oscGainA.gain.value = utils.scale(utils.exp(this.value()), 0, 1, 0.5, 0.8);
         });
         space.addPoint().on('change', function(){
-            nodes.oscGainB.gain.value = utils.scale(this.value(), 0, 1, 0.5, 1);
+            nodes.oscGainB.gain.value = utils.scale(utils.exp(this.value()), 0, 1, 0.5, 0.8);
         });
         space.addPoint().on('change', function(){
-            nodes.oscGainC.gain.value = utils.scale(this.value(), 0, 1, 0, 0.75);
+            nodes.oscGainC.gain.value = utils.scale(utils.exp(this.value()), 0, 1, 0.2, 0.6);
         });
         space.addPoint().on('change', function(){
             nodes.hipass.frequency.value = utils.scale(this.value(), 0, 1, 5, 10000);
         });
         space.addPoint().on('change', function(){
+            nodes.hipass.Q.value = utils.scale(this.value(), 0, 1, 0.7, 1.2);
+        });
+        space.addPoint().on('change', function(){
             nodes.lowpass.frequency.value = utils.scale(this.value(), 0, 1, 30, 5000);
         });
         space.addPoint().on('change', function(){
-            nodes.feedback.delayTime.value = utils.scale(this.value(), 0, 1, 0, 0.5);
+            nodes.lowpass.Q.value = utils.scale(this.value(), 0, 1, 0.7, 1.2);
         });
         space.addPoint().on('change', function(){
-            nodes.feedbackGain.gain.value = utils.scale(this.value(), 0, 1, 0.5, 1);
+            nodes.feedback.delayTime.value = utils.scale(utils.exp(this.value()), 0, 1, 0.001, 0.5);
+        });
+        space.addPoint().on('change', function(){
+            nodes.feedbackGain.gain.value = utils.scale(utils.exp(this.value()), 0, 1, 0.4, 0.85);
         });
 
         tibersynth.mouse.on('down', function(){
             var currentTime = tibersynth.context.currentTime;
-            nodes.output.gain.setTargetValueAtTime(1, currentTime, 0.01);
+            nodes.output.gain.setTargetValueAtTime(0.4, currentTime, 0.01);
         });
         tibersynth.mouse.on('up', function(){
             var currentTime = tibersynth.context.currentTime;
