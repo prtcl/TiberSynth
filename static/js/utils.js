@@ -27,13 +27,20 @@
             return pan;
         },
         filter: function (args) {
-            var options = $.extend({ type: 'lowpass', frequency: 1000, q: 0 }, args),
+            var options = $.extend({ type: 'lowpass', frequency: 1000, q: 0.0001, gain: 0 }, args),
                 filter = context.createBiquadFilter(),
-                types = { hipass: 1, lowpass: 0 };
+                types = {
+                    hipass: filter.HIGHPASS,
+                    lowpass: filter.LOWPASS,
+                    allpass: filter.ALLPASS,
+                    highshelf: filter.HIGHSHELF,
+                    lowshelf: filter.LOWSHELF,
+                    peak: filter.PEAKING
+                };
             filter.type = types[options.type];
             filter.frequency.value = options.frequency;
             filter.Q.value = options.q;
-            filter.gain.value = 0;
+            filter.gain.value = options.gain;
             return filter;        
         },
         delay: function (args) {
@@ -65,16 +72,14 @@
         rand: function (min, max) {
             return Math.random() * (max - min) + min;
         },
-        scale: function (x, a1, a2, b1, b2) {
-            return b1 + (x - a1) * (b2 - b1) / (a2 - a1);
+        exp: function (val) {
+            return Math.pow(val, Math.E);
+        },
+        scale: function (val, minIn, maxIn, minOut, maxOut) {
+            return (((val - minIn) / (minIn - maxIn)) * (minOut - maxOut)) + minOut;
         },
         constrain: function (val, min, max) {
-            var retval = val;
-            min || (min = 0);
-            max || (max = 1);
-            if (val < min) retval = min;
-            if (val > max) retval = max;
-            return retval;
+            return Math.min(Math.max(val, min), max);
         },
         createNode: function (type, args) {
             if (!(type in nodeHelpers)) return null;
