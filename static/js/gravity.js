@@ -23,11 +23,11 @@
                 d = point.distance(),
                 x = utils.scale(point.position.x, -1, 1, 0, ps.width),
                 y = utils.scale(point.position.y, 1, -1, 0, ps.height),
-                r = utils.scale(Math.pow(value, Math.log(8)), 0, 1, 1, 80),
-                fo = utils.scale(d, 1, 0, 0, 255),
-                so = d * 150;
+                r = utils.scale(utils.exp(value), 0, 1, 3, 90),
+                fo = utils.exp(utils.scale(d, 1, 0, 0.35, 1)) * 255,
+                so = utils.exp(d) * 255;
             ps.fill(0, 0, 0, fo);
-            ps.stroke(0, 0, 0, so);
+            ps.stroke(200, 219, 229, so);
             ps.ellipse(x, y, r, r);
             if (d < value && tibersynth.mouse.down){
                 ps.stroke(255, 255, 255, fo);
