@@ -5,7 +5,7 @@ define(function (require) {
         Patch = require('models/patch');
 
     return Backbone.Model.extend({
-        defaults: { x: 0, y: 0 },
+        defaults: { x: 0, y: 0, playing: false },
         constructor: function () {
             this.points = new GravityPoints();
             this.patch = new Patch();

@@ -13,12 +13,15 @@ define(function (require) {
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.update, this);
+            this.listenTo(viewport, 'resize', this.resize, this);
             this.draw();
         },
         mouseDown: function () {
+            this.model.set('playing', true);
             this.trigger('play');
         },
         mouseUp: function () {
+            this.model.set('playing', false);
             this.trigger('stop');
         },
         trackMousePosition: function (e) {
@@ -32,13 +35,22 @@ define(function (require) {
             this.model.move(x, y);
             return this;
         },
+        resize: function () {
+            var width = this.$el.width(),
+                height = this.$el.height();
+            this.svg
+                .attr('width', width)
+                .attr('height', height);
+            this.x.range([0, width]);
+            this.y.range([height, 0]);
+            this.update();
+            return this;
+        },
         draw: function () {
             var width = this.$el.width(),
                 height = this.$el.height();
             this.dl = d3.select(this.el);
             this.svg = this.dl.append('svg')
-                .attr('width', width)
-                .attr('height', height)
               .append('g')
                 .attr('class', 'plot-container');
             this.svg.style('opacity', 0)
@@ -57,6 +69,7 @@ define(function (require) {
         },
         update: function () {
             var data = this.model.points.toJSON(),
+                currentlyPlaying = this.model.get('playing'),
                 x = this.x, y = this.y, z = this.z,
                 points;
             points = this.svg.selectAll('.gravity-point')
@@ -74,7 +87,7 @@ define(function (require) {
             points
                 .attr('r', r)
                 .style('opacity', opacity)
-              .transition().duration(150)
+              .transition().duration(50)
                 .attr('cx', cx)
                 .attr('cy', cy);
             points.exit()

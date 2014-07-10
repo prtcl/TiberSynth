@@ -3,7 +3,8 @@ define(function (require) {
 
     var isCompatibleBrowser = require('utils/is-compatible-browser');
 
-    var synthEngine = require('instances/synth-engine');
+    var keyboard = require('instances/keyboard'),
+        synthEngine = require('instances/synth-engine');
 
     var Space = require('models/space');
 
@@ -47,6 +48,9 @@ define(function (require) {
             playingSurface
                 .on('play', synthEngine.play, synthEngine)
                 .on('stop', synthEngine.stop, synthEngine);
+            keyboard.on('keydown', function (key) {
+                this.model.regenerate();
+            }, this);
             return this;
         },
         failWithUnsupported: function () {
