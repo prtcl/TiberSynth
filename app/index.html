@@ -4,32 +4,20 @@
     <meta charset="utf-8">
     <title>Tibersynth v1.0</title>
     <meta name="description" content="Real-time audio synthesis and many-to-many vector mapping in the web browser" />
-    <link rel="stylesheet" href="/css/style.css" />
+    <meta name="author" content="Cory O'Brien">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/style.css">
     <script src="/components/jquery/dist/jquery.js"></script>
+    <script src="/components/underscore/underscore.js"></script>
+    <script src="/components/backbone/backbone.js"></script>
     <script src="/components/plonk/plonk.js"></script>
     <script src="/components/processing/processing.js"></script>
     <script src="/components/requirejs/require.js"></script>
-    <script src="/static/js/init.js"></script>
-    <script src="/static/js/utils.js"></script>
-    <script src="/static/js/space.js"></script>
-    <script src="/static/js/input.js"></script>
-    <script src="/static/js/nodes.js"></script>
-    <script src="/static/js/gravity.js"></script>
-    <script src="/static/js/info-view.js"></script>
     <script>
-    /*
-        TiberSynth v1.0
-        Real-time audio synthesis and many-to-many vector mapping in the web browser
-        https://github.com/prtcl/tibersynth
-        © 2014 Cory O'Brien http://prtcl.cc
-    */
-    $(function(){
-        if (tibersynth.context){
-            tibersynth.run();
-        } else {
-            $('#not-supported').fadeIn();
-        }
-    });
+        require.config({ baseUrl: '/app' });
+        require(['app'], function (app) {
+            window.app = app.run();
+        });
     </script>
 </head>
 <body>
