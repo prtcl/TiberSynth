@@ -173,7 +173,6 @@ define(function (require) {
             var next = this.history.at(this._historyIndex + 1),
                 data;
             if (!next) return this;
-            console.log(this._historyIndex, this.history.length - 1);
             this._historyIndex = plonk.constrain(this._historyIndex + 1, 0, this.history.length);
             data = next.toJSON();
             this.set(this.parse(data));
