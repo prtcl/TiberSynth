@@ -10,7 +10,10 @@ define(function (require) {
         '18': 'alt',
         '27': 'escape',
         '32': 'spacebar',
-        '82': 'R'
+        '82': 'R',
+        '85': 'U',
+        '89': 'Y',
+        '90': 'Z'
     };
 
 });

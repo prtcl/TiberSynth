@@ -5,13 +5,16 @@ define(function (require) {
         Patch = require('models/patch');
 
     return Backbone.Model.extend({
-        defaults: { x: 0, y: 0, playing: false },
+        defaults: { created: 0, x: 0, y: 0, playing: false },
         constructor: function () {
             this.points = new GravityPoints();
             this.patch = new Patch();
+            this.history = new Backbone.Collection();
             return Backbone.Model.apply(this, arguments);
         },
         initialize: function (args) {
+            this._historyIndex = 0;
+            this.set('created', Date.now());
             this.mapPointsToPatch();
         },
         mapPointsToPatch: function () {
@@ -127,6 +130,13 @@ define(function (require) {
             attrs.patch = this.patch.toJSON();
             return attrs;
         },
+        parse: function (data) {
+            this.points.set(data.points);
+            this.patch.set(data.patch);
+            delete data.points;
+            delete data.patch;
+            return data;
+        },
         move: function (posX, posY) {
             this.set({ x: posX, y: posY });
             this.points.each(function (point) {
@@ -146,6 +156,27 @@ define(function (require) {
             this.points.each(function (point) {
                 point.randomize();
             });
+            this.history.add(this.toJSON());
+            this._historyIndex = (this.history.length - 1);
+            return this;
+        },
+        undo: function () {
+            var previous = this.history.at(this._historyIndex - 1),
+                data;
+            if (!previous) return this;
+            this._historyIndex = plonk.constrain(this._historyIndex - 1, 0, this.history.length);
+            data = previous.toJSON();
+            this.set(this.parse(data));
+            return this;
+        },
+        redo: function () {
+            var next = this.history.at(this._historyIndex + 1),
+                data;
+            if (!next) return this;
+            console.log(this._historyIndex, this.history.length - 1);
+            this._historyIndex = plonk.constrain(this._historyIndex + 1, 0, this.history.length);
+            data = next.toJSON();
+            this.set(this.parse(data));
             return this;
         }
     });

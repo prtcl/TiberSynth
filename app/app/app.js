@@ -48,9 +48,16 @@ define(function (require) {
             playingSurface
                 .on('play', synthEngine.play, synthEngine)
                 .on('stop', synthEngine.stop, synthEngine);
-            keyboard.on('keydown', function (key) {
-                this.model.regenerate();
-            }, this);
+            keyboard
+                .on('keydown', function (key) {
+                    if (key === 'R') {
+                        this.model.regenerate();
+                    } else if (key === 'Z') {
+                        this.model.undo();
+                    } else if (key === 'Y') {
+                        this.model.redo();
+                    }
+                }, this);
             return this;
         },
         failWithUnsupported: function () {
