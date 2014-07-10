@@ -7,7 +7,7 @@ define(function (require) {
     }
 
     return Backbone.Model.extend({
-        defaults: { x: 0, y: 0, weight: 0, value: 0, distance: 0 },
+        defaults: { label: '', x: 0, y: 0, weight: 0, value: 0, distance: 0 },
         randomize: function () {
             this.set({
                 x: plonk.rand(-1, 1),
