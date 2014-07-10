@@ -1,6 +1,6 @@
 ## TiberSynth
 
-The original TiberSynth was a real-time performance synthesizer built with Max/MSP, 3Dconnextion SpaceNavigator and Wacom Tablet. With the advent of the [Web Audio API](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html), and the performance improvments of JavaScript in recent WebKit browsers, it's now possible to port the synthesizer to the web browser.
+The original TiberSynth was a real-time performance synthesizer built with Max/MSP, 3Dconnextion SpaceNavigator and Wacom Tablet. With the advent of the [Web Audio API](http://webaudio.github.io/web-audio-api/), and the performance improvments of JavaScript in recent WebKit browsers, it's now possible to port the synthesizer to the web browser.
 
 ## Controller Mapping and Performance
 
