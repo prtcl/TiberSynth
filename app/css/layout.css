@@ -30,7 +30,7 @@ a:hover {
 }
 
 #tibersynth {
-    padding: 0 0 100px 30px;
+    padding: 0 0 0 30px;
     height: 100%;
     z-index: 10;
     overflow: hidden;

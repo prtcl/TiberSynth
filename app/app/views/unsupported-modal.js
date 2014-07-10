@@ -6,12 +6,13 @@ define(function (require) {
     return Backbone.View.extend({
         className: 'unsupported-modal',
         template: Handlebars.compile(template),
+        initialize: function () { this.render(); },
         render: function () {
             var html = this.template({});
             this.$el
                 .hide()
                 .html(html)
-                .fadeIn(250);
+                .fadeIn(350);
             return this;
         }
     });
