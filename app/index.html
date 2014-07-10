@@ -2,12 +2,13 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Tibersynth v0.4</title>
+    <title>Tibersynth v1.0</title>
     <meta name="description" content="Real-time audio synthesis and many-to-many vector mapping in the web browser" />
-    <link rel="stylesheet" href="static/css/style.css" />
-    <script src="/static/lib/jquery-1.8.2.js"></script>
-    <script src="/static/lib/jquery.eventemitter.js"></script>
-    <script src="/static/lib/processing-1.4.1.js"></script>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="/components/jquery/dist/jquery.js"></script>
+    <script src="/components/plonk/plonk.js"></script>
+    <script src="/components/processing/processing.js"></script>
+    <script src="/components/requirejs/require.js"></script>
     <script src="/static/js/init.js"></script>
     <script src="/static/js/utils.js"></script>
     <script src="/static/js/space.js"></script>
@@ -17,10 +18,10 @@
     <script src="/static/js/info-view.js"></script>
     <script>
     /*
-        TiberSynth v0.4
+        TiberSynth v1.0
         Real-time audio synthesis and many-to-many vector mapping in the web browser
         https://github.com/prtcl/tibersynth
-        © 2012 Cory O'Brien http://prtcl.cc
+        © 2014 Cory O'Brien http://prtcl.cc
     */
     $(function(){
         if (tibersynth.context){
@@ -35,7 +36,7 @@
 <div id="container">
     <div id="tibersynth">
         <div id="controls">
-            <div id="label"><h1>TiberSynth v0.4</h1></div>
+            <div id="label"><h1>TiberSynth v1.0</h1></div>
         </div>
         <div id="space">
             <canvas id="gravity"></canvas>
@@ -45,7 +46,7 @@
         <div class="vertical-center">
             <div class="copy-container">
                 <div class="copy">
-                    <h1>TiberSynth v0.4</h1>
+                    <h1>TiberSynth v1.0</h1>
                     <p>TiberSynth is a real-time audio synthesizer that runs in your web browser. By "real-time" we mean that the sound is actually being synthesized as you play. The synth uses many-to-many vector mapping to enable complex gestural control using only your mouse. The accompanying visualization represents the placement and relationship of paramters that populate the current sound-space.</p>
                     <p>Clicking or dragging on the control surface plays a sound. Pressing the 'R' key on your keyboard generates a new random sound-space to explore. Click 'play' below to get started, or head to the <a href="https://github.com/prtcl/tibersynth">GitHub page</a> to get technical.</p>
                     <button class="play">Play</button>

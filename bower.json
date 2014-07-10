@@ -1,0 +1,25 @@
+{
+  "name": "tibersynth",
+  "version": "1.0.0",
+  "homepage": "https://github.com/prtcl/tibersynth",
+  "authors": [
+    "Cory O'Brien <cory@prtcl.cc>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone": "~1.1.2",
+    "jquery": "~2.1.1",
+    "plonk": "*",
+    "processing": "~1.4.8",
+    "require": "*"
+  }
+}
