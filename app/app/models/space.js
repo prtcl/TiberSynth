@@ -138,10 +138,10 @@ define(function (require) {
             return data;
         },
         move: function (posX, posY) {
-            this.set({ x: posX, y: posY });
             this.points.each(function (point) {
                 point.calculateDistance(posX, posY);
             });
+            this.set({ x: posX, y: posY });
             return this;
         },
         regenerate: function () {

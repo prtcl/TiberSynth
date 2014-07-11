@@ -73,4 +73,5 @@
 
 .playing-surface .gravity-point {
     fill: black;
+    stroke-width: 0;
 }

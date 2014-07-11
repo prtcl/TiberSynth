@@ -40,7 +40,7 @@ a:hover {
     padding: 5px;
     height: 100%;
     background-color: #1c1c1c;
-    background: linear-gradient(left, #1c1c1c, #000);
+    background: -webkit-linear-gradient(left, #1c1c1c, #000);
     float: left;
     overflow: auto;
     position: absolute;
