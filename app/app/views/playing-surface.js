@@ -54,7 +54,7 @@ define(function (require) {
               .append('g')
                 .attr('class', 'plot-container');
             this.svg.style('opacity', 0)
-              .transition().duration(1000)
+              .transition().duration(1350)
                 .style('opacity', 1);
             this.x = d3.scale.linear()
                 .domain([-1, 1])

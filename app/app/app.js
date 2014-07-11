@@ -15,6 +15,7 @@ define(function (require) {
     var app = {
         ui: {
             container: '#container',
+            sidebar: '#sidebar',
             playingSurface: '#playing-surface',
             modal: '#modal-container'
         },
@@ -58,6 +59,7 @@ define(function (require) {
                         this.model.redo();
                     }
                 }, this);
+            this.ui.sidebar.fadeIn(250);
             return this;
         },
         failWithUnsupported: function () {

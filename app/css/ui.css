@@ -7,6 +7,12 @@
     left: 0;
 }
 
+.modal-container,
+.modal-container a {
+    color: white;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+}
+
 .modal-container .vertical-center {
     width: 100%;
     height: 100%;
@@ -21,22 +27,20 @@
 
 .modal-container .modal {
     margin: 0 auto;
-    padding: 1.5em;
+    padding: 1em;
     width: 50%;
-    background-color: rgba(0, 0, 0, 0.75);
-    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
-    text-shadow: 1px 1px 0 black;
+    max-width: 420px;
+    background-color: rgba(0, 1, 4, 0.65);
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.35);
     text-align: left;
 }
 
 .info-modal .play {
     margin: 0.5em 0;
-    padding: 0.5em;
-    background-color: red;
-    border: 1px solid white;
-    font: bold 16px/16px 'Helvetica Neue', sans-serif;
-    color: white;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    padding: 0.65em;
+    width: 100%;
+    background-color: rgba(1, 3, 7, 0.25);
+    color: #bce2e5;
     cursor: pointer;
 }
 
@@ -72,6 +76,6 @@
 }
 
 .playing-surface .gravity-point {
-    fill: black;
+    fill: rgba(2, 3, 7, 1);
     stroke-width: 0;
 }
