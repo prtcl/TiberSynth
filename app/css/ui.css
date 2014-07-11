@@ -79,3 +79,20 @@
     fill: rgba(2, 3, 7, 1);
     stroke-width: 0;
 }
+
+.control-bar {
+    margin: 0 0 20px 0;
+    width: 330px;
+    height: 250px;
+    background-color: rgba(1,3,7,0.75);
+    position: relative;
+}
+
+.control-bar .toggle-slide {
+    width: 25px;
+    height: 100%;
+    color: white;
+    position: absolute;
+    top: 0;
+    right: 0;
+}

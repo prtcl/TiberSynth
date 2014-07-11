@@ -10,13 +10,15 @@ define(function (require) {
 
     var InfoModal = require('views/info-modal'),
         UnsupportedModal = require('views/unsupported-modal'),
-        PlayingSurface = require('views/playing-surface');
+        PlayingSurface = require('views/playing-surface'),
+        ControlBar = require('views/control-bar');
 
     var app = {
         ui: {
             container: '#container',
             sidebar: '#sidebar',
             playingSurface: '#playing-surface',
+            controls: '#controls',
             modal: '#modal-container'
         },
         inits: $.Callbacks('once memory'),
@@ -49,6 +51,10 @@ define(function (require) {
             playingSurface
                 .on('play', synthEngine.play, synthEngine)
                 .on('stop', synthEngine.stop, synthEngine);
+            var controlBar = new ControlBar({
+                model: this.model,
+                el: this.ui.controls
+            });
             keyboard
                 .on('keydown', function (key) {
                     if (key === 'R') {
@@ -59,7 +65,8 @@ define(function (require) {
                         this.model.redo();
                     }
                 }, this);
-            this.ui.sidebar.fadeIn(250);
+            this.ui.sidebar.fadeIn(500);
+            this.ui.controls.fadeIn(500);
             return this;
         },
         failWithUnsupported: function () {
