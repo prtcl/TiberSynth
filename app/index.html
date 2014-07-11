@@ -27,13 +27,21 @@
 <body>
 <div id="container">
     <div id="tibersynth">
-        <div id="sidebar">
+        <div id="sidebar" class="fade-in">
             <div class="header">
                 <h1>TiberSynth v1.0</h1>
             </div>
         </div>
+        <div id="keyboard-legend" class="fade-in keyboard-legend">
+            <ul class="legend">
+                <li class="item">Regenerate: <strong>R</strong></li>
+                <li class="item">Back/Undo: <strong>Z</strong></li>
+                <li class="item">Next/Redo: <strong>Y</strong></li>
+                <li class="item">Play: <strong>Mouse</strong></li>
+            </ul>
+        </div>
         <div id="playing-surface" class="playing-surface"></div>
-        <div id="controls" class="control-bar hidden"></div>
+        <div id="controls" class="fade-in control-bar"></div>
     </div>
     <div id="modal-container"></div>
 </div>

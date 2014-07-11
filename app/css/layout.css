@@ -1,7 +1,7 @@
 
 html, body {
     background-color: black;
-    color: #1c1c1c;
+    color: white;
 }
 
 h1, h2, h3, h4 {
@@ -14,7 +14,7 @@ p {
 }
 
 a {
-    color: #1c1c1c;
+    color: white;
     text-decoration: underline;
 }
 
@@ -33,7 +33,7 @@ a:hover {
 #tibersynth {
     padding: 0 0 0 25px;
     height: 100%;
-    z-index: 10;
+    z-index: 0;
     overflow: hidden;
 }
 
@@ -46,6 +46,7 @@ a:hover {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 10;
     display: none;
 }
 
@@ -64,11 +65,26 @@ a:hover {
     -webkit-transform: rotate(90deg);
 }
 
+#keyboard-legend {
+    padding: 1em;
+    width: 100px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 0;
+    opacity: 0.95;
+    display: none;
+}
+
 #playing-surface {
-    width: 100%;
+    margin: 0 0 0 25px;
     height: 100%;
     float: left;
     overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
 }
 
 #controls {
@@ -76,6 +92,7 @@ a:hover {
     left: -305px;
     bottom: 0;
     display: none;
+    z-index: 100;
     -webkit-transition: left 0.1s;
     -moz-transition: left 0.1s;
     -o-transition: left 0.1s;
@@ -85,3 +102,5 @@ a:hover {
 #controls.slide-out {
     left: 0;
 }
+
+#modal-container {}

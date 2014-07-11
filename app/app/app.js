@@ -19,7 +19,9 @@ define(function (require) {
             sidebar: '#sidebar',
             playingSurface: '#playing-surface',
             controls: '#controls',
-            modal: '#modal-container'
+            keyboardLegend: '#keyboard-legend',
+            modal: '#modal-container',
+            fadeIns: '.fade-in'
         },
         inits: $.Callbacks('once memory'),
         run: function (options) {
@@ -65,8 +67,7 @@ define(function (require) {
                         this.model.redo();
                     }
                 }, this);
-            this.ui.sidebar.fadeIn(500);
-            this.ui.controls.fadeIn(500);
+            this.ui.fadeIns.fadeIn(500);
             return this;
         },
         failWithUnsupported: function () {

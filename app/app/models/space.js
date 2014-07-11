@@ -156,6 +156,7 @@ define(function (require) {
             this.points.each(function (point) {
                 point.randomize();
             });
+            this.set('_updated', Date.now());
             this.history.add(this.toJSON());
             this._historyIndex = (this.history.length - 1);
             return this;
