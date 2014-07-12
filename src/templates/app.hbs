@@ -6,21 +6,30 @@
     <meta name="description" content="Real-time audio synthesis and many-to-many vector mapping in the web browser" />
     <meta name="author" content="Cory O'Brien">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/css/main.css">
-    <script src="/components/jquery/dist/jquery.js"></script>
-    <script src="/components/underscore/underscore.js"></script>
-    <script src="/components/backbone/backbone.js"></script>
-    <script src="/components/plonk/plonk.js"></script>
-    <script src="/components/d3/d3.js"></script>
-    <script src="/components/handlebars/handlebars.js"></script>
-    <script src="/components/requirejs/require.js"></script>
+    {{#each cssFiles}}
+    <link rel="stylesheet" href="{{.}}">
+    {{/each}}
+    {{#each scripts}}
+    <script src="{{.}}"></script>
+    {{/each}}
+    {{#if prod}}
     <script>
         require.config({
-            baseUrl: '/app',
-            paths: { 'text': '../components/requirejs-text/text' }
+            baseUrl: '/static/app'
         });
+    </script>
+    {{else}}
+    <script>
+        require.config({
+            baseUrl: '/static/app',
+            paths: { 'text': '../lib/text' }
+        });
+    </script>
+    {{/if}}
+    <script>
         require(['app'], function (app) {
-            window.app = app.run();
+            window.tibersynth = app;
+            app.run();
         });
     </script>
 </head>
