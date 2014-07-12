@@ -76,7 +76,7 @@ define(function (require) {
             function r (d) { return z(plonk.log(d.value)); }
             function opacity (d) { return plonk.log(plonk.scale(d.distance, 1, 0, 0.35, 0.8)); }
             points = this.svg.selectAll('.gravity-point')
-                .data(data, function (d) { return d.label; });
+                .data(data, function (d) { return d.id; });
             points.enter()
               .append('circle')
                 .attr('class', 'gravity-point')
