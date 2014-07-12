@@ -91,136 +91,51 @@ define(function (require) {
         this.nodes.eqHighMid.connect(this.nodes.eqHigh);
         this.nodes.eqHigh.connect(this.nodes.outputCompressor);
         this.nodes.outputCompressor.connect(audioContext.destination);
-
-        // this.nodes.hipass.connect(this.nodes.output);
-        // this.nodes.outputCompressor.connect(audioContext.destination);
-
-
         this._ready = true;
         return this;
     };
 
-    synthEngine.bindPatchRouting = function (model) {
-        model
-            .on('change:oscA_frequency', function () {
-                var value = model.get('oscA_frequency');
-                this.nodes.oscA.frequency.value = value;
-            }, this)
-            .on('change:oscB_frequency', function () {
-                var value = model.get('oscB_frequency');
-                this.nodes.oscB.frequency.value = value;
-            }, this)
-            .on('change:oscC_frequency', function () {
-                var value = model.get('oscC_frequency');
-                this.nodes.oscC.frequency.value = value;
-            }, this)
-            .on('change:oscD_frequency', function () {
-                var value = model.get('oscD_frequency');
-                this.nodes.oscD.frequency.value = value;
-            }, this)
-            .on('change:oscE_frequency', function () {
-                var value = model.get('oscE_frequency');
-                this.nodes.oscE.frequency.value = value;
-            }, this)
-            .on('change:oscF_frequency', function () {
-                var value = model.get('oscF_frequency');
-                this.nodes.oscF.frequency.value = value;
-            }, this)
-            .on('change:oscA_detune', function () {
-                var value = model.get('oscA_detune');
-                this.nodes.oscA.detune.value = value;
-            }, this)
-            .on('change:oscB_detune', function () {
-                var value = model.get('oscB_detune');
-                this.nodes.oscB.detune.value = value;
-            }, this)
-            .on('change:oscC_detune', function () {
-                var value = model.get('oscC_detune');
-                this.nodes.oscC.detune.value = value;
-            }, this)
-            .on('change:oscD_detune', function () {
-                var value = model.get('oscD_detune');
-                this.nodes.oscD.detune.value = value;
-            }, this)
-            .on('change:oscE_detune', function () {
-                var value = model.get('oscE_detune');
-                this.nodes.oscE.detune.value = value;
-            }, this)
-            .on('change:oscF_detune', function () {
-                var value = model.get('oscF_detune');
-                this.nodes.oscF.detune.value = value;
-            }, this)
-            .on('change:xmodGainA_gain', function () {
-                var value = model.get('xmodGainA_gain');
-                this.nodes.xmodGainA.gain.value = value;
-            }, this)
-            .on('change:xmodGainB_gain', function () {
-                var value = model.get('xmodGainB_gain');
-                this.nodes.xmodGainB.gain.value = value;
-            }, this)
-            .on('change:xmodGainC_gain', function () {
-                var value = model.get('xmodGainC_gain');
-                this.nodes.xmodGainC.gain.value = value;
-            }, this)
-            .on('change:xmodGainD_gain', function () {
-                var value = model.get('xmodGainD_gain');
-                this.nodes.xmodGainD.gain.value = value;
-            }, this)
-            .on('change:xmodGainE_gain', function () {
-                var value = model.get('xmodGainE_gain');
-                this.nodes.xmodGainE.gain.value = value;
-            }, this)
-            .on('change:xmodGainF_gain', function () {
-                var value = model.get('xmodGainF_gain');
-                this.nodes.xmodGainF.gain.value = value;
-            }, this)
-            .on('change:oscGainA_gain', function () {
-                var value = model.get('oscGainA_gain');
-                this.nodes.oscGainA.gain.value = value;
-            }, this)
-            .on('change:oscGainB_gain', function () {
-                var value = model.get('oscGainB_gain');
-                this.nodes.oscGainB.gain.value = value;
-            }, this)
-            .on('change:oscGainC_gain', function () {
-                var value = model.get('oscGainC_gain');
-                this.nodes.oscGainC.gain.value = value;
-            }, this)
-            .on('change:hipass_frequency', function () {
-                var value = model.get('hipass_frequency');
-                this.nodes.hipass.frequency.value = value;
-            }, this)
-            .on('change:hipass_Q', function () {
-                var value = model.get('hipass_Q');
-                this.nodes.hipass.Q.value = value;
-            }, this)
-            .on('change:lowpass_frequency', function () {
-                var value = model.get('lowpass_frequency');
-                this.nodes.lowpass.frequency.value = value;
-            }, this)
-            .on('change:lowpass_Q', function () {
-                var value = model.get('lowpass_Q');
-                this.nodes.lowpass.Q.value = value;
-            }, this)
-            .on('change:feedback_delay', function () {
-                var value = model.get('feedback_delay');
-                this.nodes.feedback.delayTime.value = value;
-            }, this)
-            .on('change:feedbackGain', function () {
-                var value = model.get('feedbackGain');
-                this.nodes.feedbackGain.gain.value = value;
-            }, this);
+    synthEngine.update = function (data) {
+        data || (data = {});
+        this.nodes.oscA.frequency.value = data.oscA_frequency;
+        this.nodes.oscB.frequency.value = data.oscB_frequency;
+        this.nodes.oscC.frequency.value = data.oscC_frequency;
+        this.nodes.oscD.frequency.value = data.oscD_frequency;
+        this.nodes.oscE.frequency.value = data.oscE_frequency;
+        this.nodes.oscF.frequency.value = data.oscF_frequency;
+        this.nodes.oscA.detune.value = data.oscA_detune;
+        this.nodes.oscB.detune.value = data.oscB_detune;
+        this.nodes.oscC.detune.value = data.oscC_detune;
+        this.nodes.oscD.detune.value = data.oscD_detune;
+        this.nodes.oscE.detune.value = data.oscE_detune;
+        this.nodes.oscF.detune.value = data.oscF_detune;
+        this.nodes.xmodGainA.gain.value = data.xmodGainA_gain;
+        this.nodes.xmodGainB.gain.value = data.xmodGainB_gain;
+        this.nodes.xmodGainC.gain.value = data.xmodGainC_gain;
+        this.nodes.xmodGainD.gain.value = data.xmodGainD_gain;
+        this.nodes.xmodGainE.gain.value = data.xmodGainE_gain;
+        this.nodes.xmodGainF.gain.value = data.xmodGainF_gain;
+        this.nodes.oscGainA.gain.value = data.oscGainA_gain;
+        this.nodes.oscGainB.gain.value = data.oscGainB_gain;
+        this.nodes.oscGainC.gain.value = data.oscGainC_gain;
+        this.nodes.hipass.frequency.value = data.hipass_frequency;
+        this.nodes.hipass.Q.value = data.hipass_Q;
+        this.nodes.lowpass.frequency.value = data.lowpass_frequency;
+        this.nodes.lowpass.Q.value = data.lowpass_Q;
+        this.nodes.feedback.delayTime.value = data.feedback_delay;
+        this.nodes.feedbackGain.gain.value = data.feedbackGain;
+        return this;
     };
 
     synthEngine.play = function () {
         var currentTime = audioContext.currentTime;
-        this.nodes.output.gain.setTargetAtTime(0.9, currentTime, 0.01);
+        this.nodes.output.gain.setTargetAtTime(0.9, currentTime, 0.025);
         return this;
     };
 
     synthEngine.stop = function () {
         var currentTime = audioContext.currentTime;
-        this.nodes.output.gain.setTargetAtTime(0, currentTime, 0.01);
+        this.nodes.output.gain.setTargetAtTime(0, currentTime, 0.1);
         return this;
     };
 

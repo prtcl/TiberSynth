@@ -7,7 +7,6 @@ define(function (require) {
     }
 
     return Backbone.Model.extend({
-        idAttribute: 'label',
         defaults: { label: '', x: 0, y: 0, weight: 0, value: 0, distance: 0 },
         randomize: function () {
             this.set({

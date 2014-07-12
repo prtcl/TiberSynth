@@ -44,8 +44,11 @@ define(function (require) {
             return this;
         },
         play: function () {
-            synthEngine.connectNodes()
-                .bindPatchRouting(this.model.patch);
+            synthEngine.connectNodes();
+            this.model.on('change', function (model) {
+                var data = model.patch.toJSON();
+                synthEngine.update(data);
+            });
             var playingSurface = new PlayingSurface({
                 model: this.model,
                 el: this.ui.playingSurface
