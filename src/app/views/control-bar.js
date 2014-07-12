@@ -8,7 +8,14 @@ define(function (require) {
         template: Handlebars.compile(template),
         events: {
             'mouseenter .toggle-slide': 'toggleSlide',
-            'click .toggle-slide': 'toggleSlide'
+            'click .toggle-slide': 'toggleSlide',
+            'change .range-slider': 'saveSliderValues'
+        },
+        ui: {
+            toggleButton: '.toggle-slide',
+            filterRange: '.filter-range',
+            noiseBalance: '.noise-balance',
+            feedbackEmphasis: '.feedback-emphasis'
         },
         initialize: function () {
             _.bindAll(this, 'toggleSlide');
@@ -18,9 +25,9 @@ define(function (require) {
             var html = this.template(this.model.toJSON());
             this.$el.empty()
                 .append(html);
-            this.ui = {
-                toggleButton: $('.toggle-slide', this.el)
-            };
+            _.each(this.ui, function (selector, name) {
+                this.ui[name] = $(selector, this.el);
+            }, this);
             return this;
         },
         toggleSlide: function () {
@@ -31,6 +38,19 @@ define(function (require) {
                 this.$el.addClass('slide-out');
                 this.ui.toggleButton.html('&laquo;');
             }
+            return this;
+        },
+        serializeSliderData: function () {
+            var data = {
+                filterRange: Math.round(this.ui.filterRange.val()),
+                noiseBalance: Math.round(this.ui.noiseBalance.val()),
+                feedbackEmphasis: Math.round(this.ui.feedbackEmphasis.val())
+            };
+            return data;
+        },
+        saveSliderValues: function () {
+            var data = this.serializeSliderData();
+            this.model.set(data);
             return this;
         }
     });

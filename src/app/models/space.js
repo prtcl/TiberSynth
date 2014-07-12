@@ -2,13 +2,15 @@
 define(function (require) {
 
     var GravityPoints = require('collections/gravity-points'),
-        Patch = require('models/patch');
+        Patch = require('models/patch'),
+        Controls = require('models/controls');
 
     return Backbone.Model.extend({
         defaults: { created: 0, x: 0, y: 0, playing: false },
         constructor: function () {
             this.points = new GravityPoints();
             this.patch = new Patch();
+            this.controls = new Controls();
             this.history = new Backbone.Collection();
             return Backbone.Model.apply(this, arguments);
         },
@@ -16,6 +18,10 @@ define(function (require) {
             this._historyIndex = 0;
             this.set('created', Date.now());
             this.mapPointsToPatch();
+
+            this.controls.on('change', function () {
+                console.log(this.controls.toJSON());
+            }, this);
         },
         mapPointsToPatch: function () {
             this.points.add([

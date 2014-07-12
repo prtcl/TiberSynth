@@ -57,7 +57,7 @@ define(function (require) {
                 .on('play', synthEngine.play, synthEngine)
                 .on('stop', synthEngine.stop, synthEngine);
             var controlBar = new ControlBar({
-                model: this.model,
+                model: this.model.controls,
                 el: this.ui.controls
             });
             keyboard
