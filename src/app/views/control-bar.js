@@ -7,8 +7,8 @@ define(function (require) {
         className: 'control-bar',
         template: Handlebars.compile(template),
         events: {
+            'mouseleave': 'toggleSlide',
             'mouseenter .toggle-slide': 'toggleSlide',
-            'click .toggle-slide': 'toggleSlide',
             'change .range-slider': 'saveSliderValues'
         },
         ui: {
@@ -30,7 +30,7 @@ define(function (require) {
             }, this);
             return this;
         },
-        toggleSlide: function () {
+        toggleSlide: _.debounce(function () {
             if (this.$el.hasClass('slide-out')) {
                 this.$el.removeClass('slide-out');
                 this.ui.toggleButton.html('&raquo;');
@@ -39,7 +39,7 @@ define(function (require) {
                 this.ui.toggleButton.html('&laquo;');
             }
             return this;
-        },
+        }, 100),
         serializeSliderData: function () {
             var data = {
                 filterRange: Math.round(this.ui.filterRange.val()),
