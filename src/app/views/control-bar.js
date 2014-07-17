@@ -8,7 +8,7 @@ define(function (require) {
         template: Handlebars.compile(template),
         events: {
             'mouseleave': 'toggleSlide',
-            'mouseenter .toggle-slide': 'toggleSlide',
+            'click .toggle-slide': 'toggleSlide',
             'change .range-slider': 'saveSliderValues'
         },
         ui: {
