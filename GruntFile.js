@@ -47,6 +47,10 @@ module.exports = function(grunt) {
                     { src: 'src/components/requirejs-text/text.js', dest: 'build/static/lib/text.js' },
                     { cwd: 'src', src: 'app/**', dest: 'build/static/', expand: true }
                 ]
+            },
+            img: {
+                mode: 644,
+                files: [{ src: 'src/img/*', dest: 'build/static/img/', flatten: true, expand: true }]
             }
         },
         concat: {
@@ -149,8 +153,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-requirejs');
 
     grunt.registerTask('default', []);
-    grunt.registerTask('build:dev', ['clean:build', 'copy:dev', 'compile-handlebars:dev', 'htmlmin:dev']);
-    grunt.registerTask('build:prod', ['clean:build', 'concat:libs', 'uglify:libs', 'compile-handlebars:prod', 'htmlmin:prod', 'requirejs']);
+    grunt.registerTask('build:dev', ['clean:build', 'copy:dev', 'copy:img', 'compile-handlebars:dev', 'htmlmin:dev']);
+    grunt.registerTask('build:prod', ['clean:build', 'concat:libs', 'uglify:libs', 'copy:img', 'compile-handlebars:prod', 'htmlmin:prod', 'requirejs']);
     grunt.registerTask('develop', ['browserSync', 'watch:dev']);
     grunt.registerTask('test-prod', ['build:prod', 'connect']);
 
