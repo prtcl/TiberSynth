@@ -7,7 +7,7 @@ define(function (require) {
         className: 'control-bar',
         template: Handlebars.compile(template),
         events: {
-            'mouseleave': 'toggleSlide',
+            // 'mouseleave': 'toggleSlide',
             'click .toggle-slide': 'toggleSlide',
             'change .range-slider': 'saveSliderValues'
         },
