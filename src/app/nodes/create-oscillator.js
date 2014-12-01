@@ -8,7 +8,7 @@ define(function (require) {
             osc = audioContext.createOscillator();
         osc.type = options.type;
         osc.frequency.value = options.frequency;
-        osc.start(1);
+        osc.start(0);
         return osc;
     };
 

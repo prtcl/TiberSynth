@@ -41,6 +41,7 @@ define(function (require) {
             var infoModal = new InfoModal()
                 .on('play', this.play, this);
             this.ui.modal.append(infoModal.el);
+            $('body').on('touchmove', function (e) { e.preventDefault(); });
             return this;
         },
         play: function () {

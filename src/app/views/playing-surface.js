@@ -6,21 +6,40 @@ define(function (require) {
     return Backbone.View.extend({
         className: 'playing-surface',
         events: {
+            'scroll': 'preventScroll',
             'mousedown': 'mouseDown',
             'mouseup': 'mouseUp',
             'mousemove': 'trackMousePosition',
-            'keydown': 'keyDown'
+            'touchstart': 'touchStart',
+            'touchend': 'touchEnd',
+            'touchmove': 'touchMove'
         },
         initialize: function () {
             this.listenTo(this.model, 'change', this.update, this);
             this.listenTo(viewport, 'resize', this.resize, this);
             this.draw();
         },
-        mouseDown: function () {
+        touchStart: function (e) {
+            e.preventDefault();
+            this.mouseDown(e);
+            return false;
+        },
+        touchEnd: function (e) {
+            e.preventDefault();
+            this.mouseUp(e);
+            return false;
+        },
+        touchMove: function (e) {
+            e.preventDefault();
+            var touch = e.originalEvent.touches[0];
+            this.trackMousePosition(touch);
+            return false;
+        },
+        mouseDown: function (e) {
             this.model.set('playing', true);
             this.trigger('play');
         },
-        mouseUp: function () {
+        mouseUp: function (e) {
             this.model.set('playing', false);
             this.trigger('stop');
         },
