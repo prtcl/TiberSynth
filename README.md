@@ -14,4 +14,4 @@ To run the synth locally for development, just clone this repo, run `npm install
 
 ## Play
 
-The synth is currently running at [tibersynth.prtcl.cc](http://tibersynth.prtcl.cc/). You will need a modern web browser and a relatively fast computer to play the instrument. Decent speakers/headphones and a high volume level are recommended. 
+The synth is currently running at [tibersynth.cc](http://tibersynth.cc/). You will need a modern web browser and a relatively fast computer to play the instrument. Decent speakers/headphones and a high volume level are recommended. 
