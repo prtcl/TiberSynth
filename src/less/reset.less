@@ -1,0 +1,95 @@
+@import "./variables.less";
+
+* {
+  margin: 0;
+  padding: 0;
+
+  &,
+  &::after,
+  &::before {
+    box-sizing: border-box;
+  }
+}
+
+html,
+body {
+  background-color: white;
+  color: @colorBlack;
+  font-family: @fontFamily;
+  font-size: @fontSize;
+  font-weight: 400;
+  height: 100%;
+  line-height: @lineHeight;
+  position: relative;
+  text-rendering: optimizeLegibility;
+  width: 100%;
+  z-index: 0;
+}
+
+::selection {
+  background-color: rgba(84, 171, 255, 0.95);
+  color: #fff;
+}
+
+p {
+  margin: 0 0 0.3em;
+}
+
+a,
+a:active,
+a:visited {
+  color: @colorGray;
+  text-decoration: underline;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+ul,
+ol {
+  margin: 0;
+}
+
+li {
+  line-height: @lineHeight;
+  list-style: none;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  li {
+    display: inline-block;
+    line-height: 1em;
+    margin: 0 0.5em 0 0;
+  }
+}
+
+ol > li {
+  list-style: upper-roman inside;
+}
+
+article,
+section {
+  z-index: 0;
+}
+
+img {
+  display: inline-block;
+  vertical-align: middle;
+  width: auto;
+}
+
+canvas {
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+article {
+  left: 0;
+  max-width: 20em;
+  padding: 1em;
+  position: absolute;
+  top: 0;
+}

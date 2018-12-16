@@ -1,5 +1,4 @@
 
 .DS_Store
-node_modules/
-src/components/
-build/
+node_modules
+www/dist

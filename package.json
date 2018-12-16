@@ -1,7 +1,8 @@
 {
+  "private": true,
   "name": "tibersynth",
-  "version": "1.0.0",
-  "description": "",
+  "version": "2.0.0",
+  "description": "TiberSynth is an experimental audio synthesizer that runs in your web browser",
   "repository": {
     "type": "git",
     "url": "https://github.com/prtcl/tibersynth.git"
@@ -12,17 +13,37 @@
     "url": "https://github.com/prtcl/tibersynth/issues"
   },
   "homepage": "https://github.com/prtcl/tibersynth",
+  "scripts": {
+    "build": "npm run clean ; npm install ; npm run webpack",
+    "clean": "rm -r ./node_modules | true ; rm -r ./www/dist | true",
+    "dev": "$(npm bin)/parallelshell 'npm run webpack:watch' 'npm run start'",
+    "start": "cd www && $(npm bin)/static -a 0.0.0.0",
+    "webpack:watch": "$(npm bin)/webpack --watch",
+    "webpack": "$(npm bin)/webpack"
+  },
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-browser-sync": "^1.2.1",
-    "grunt-compile-handlebars": "^0.7.5",
-    "grunt-contrib-clean": "^0.5.0",
-    "grunt-contrib-concat": "^0.4.0",
-    "grunt-contrib-connect": "^0.8.0",
-    "grunt-contrib-copy": "^0.5.0",
-    "grunt-contrib-htmlmin": "^0.3.0",
-    "grunt-contrib-requirejs": "^0.4.4",
-    "grunt-contrib-uglify": "^0.5.0",
-    "grunt-contrib-watch": "^0.6.1"
+    "@babel/core": "^7.2.2",
+    "@babel/preset-react": "^7.0.0",
+    "babel": "^6.23.0",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^2.0.1",
+    "eslint": "^5.10.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-react": "^7.11.1",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
+    "node-static": "^0.7.11",
+    "nodemon": "^1.18.9",
+    "parallelshell": "^3.0.2",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2"
+  },
+  "dependencies": {
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3"
   }
 }
