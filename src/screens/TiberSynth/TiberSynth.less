@@ -1,0 +1,20 @@
+@import "../../less/variables.less";
+
+:local {
+  .container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .sidebar {
+    height: 100%;
+    width: @sidebarWidth;
+    flex: 0 0 auto;
+  }
+
+  .visualization {
+    flex: 1;
+  }
+}

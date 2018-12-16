@@ -1,10 +1,11 @@
-import React from 'react';
-import stylesheet from './App.less';
+import React, { Fragment } from 'react';
+import TiberSynth from './screens/TiberSynth';
+import './less/reset.less';
 
 const App = () => (
-  <div className={stylesheet.container}>
-    <h1>Herro!</h1>
-  </div>
+  <Fragment>
+    <TiberSynth />
+  </Fragment>
 );
 
 export default App;
