@@ -1,4 +1,8 @@
 import compose from '../../utils/compose';
-import withSynthEngine from '../../hoc/withSynthEngine';
+import withParameterSpace from '../../hoc/withParameterSpace';
+import withSynthesisEngine from '../../hoc/withSynthesisEngine';
 
-export default compose(withSynthEngine());
+export default compose(
+  withSynthesisEngine(),
+  withParameterSpace()
+);

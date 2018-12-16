@@ -35,8 +35,8 @@ const getSynthEngine = () => {
   };
 };
 
-export const withSynthEngineProvider = () => Comp =>
-  class WithSynthEngineProvider extends Component {
+export const withSynthesisEngineProvider = () => Comp =>
+  class SynthesisEngine extends Component {
     state = { ...getSynthEngine() };
 
     render () {
@@ -48,14 +48,14 @@ export const withSynthEngineProvider = () => Comp =>
     }
   };
 
-const withSynthEngine = () => Comp => {
-  const WithSynthEngine = props => (
+const withSynthesisEngine = () => Comp => {
+  const WithSynthesisEngine = props => (
     <Consumer>
       {synthEngineProps => <Comp {...props} {...synthEngineProps} />}
     </Consumer>
   );
 
-  return WithSynthEngine;
+  return WithSynthesisEngine;
 };
 
-export default withSynthEngine;
+export default withSynthesisEngine;

@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react';
 import TiberSynth from './screens/TiberSynth';
 import compose from './utils/compose';
-import { withSynthEngineProvider } from './hoc/withSynthEngine';
+import { withParameterSpaceProvider } from './hoc/withParameterSpace';
+import { withSynthesisEngineProvider } from './hoc/withSynthesisEngine';
 import './less/reset.less';
 
 const App = () => (
@@ -10,6 +11,9 @@ const App = () => (
   </Fragment>
 );
 
-const enhance = compose(withSynthEngineProvider());
+const enhance = compose(
+  withParameterSpaceProvider(),
+  withSynthesisEngineProvider()
+);
 
 export default enhance(App);
