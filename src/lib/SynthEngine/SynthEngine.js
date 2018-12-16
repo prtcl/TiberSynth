@@ -89,22 +89,22 @@ export default class SynthEngine {
 
   initNodes () {
     nodeConfigs.forEach(config => {
-      const { type, name, args = {} } = config;
+      const { type, id, args = {} } = config;
       const factory = HELPERS[type];
 
-      this.nodes[name] = factory(this.context, args);
+      this.nodes[id] = factory(this.context, args);
     });
   }
 
   connectNodes () {
     nodeConfigs.forEach(config => {
-      const { connect, name } = config;
+      const { connect, id } = config;
 
       if (!connect) {
         return;
       }
 
-      const node = this.nodes[name];
+      const node = this.nodes[id];
 
       connect.forEach(connector => {
         node.connect(connector(this.nodes));
@@ -116,7 +116,7 @@ export default class SynthEngine {
     const currentTime = this.context.currentTime;
     const output = this.nodes[NODES.OUTPUT];
 
-    output.gain.setTargetAtTime(0.9, currentTime, 0.025);
+    output.gain.setTargetAtTime(1, currentTime, 0.025);
 
     return currentTime;
   }
@@ -128,5 +128,19 @@ export default class SynthEngine {
     output.gain.setTargetAtTime(0, currentTime, 0.1);
 
     return currentTime;
+  }
+
+  updateValues (data) {
+    nodeConfigs.forEach(config => {
+      const { id, set } = config;
+
+      if (typeof set !== 'function') {
+        return;
+      }
+
+      const node = this.nodes[id];
+
+      set(node, data);
+    });
   }
 }

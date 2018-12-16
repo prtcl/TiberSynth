@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { calculateDistance, flip, rand } from '../lib/math';
 import {
+  VALUE_MAPPERS,
+  getInitialOscillators,
   getInitialPoints,
   getInitialSynthesisValues,
-  VALUE_MAPPERS,
 } from '../lib/parameterSpace';
 
 const { Consumer, Provider } = React.createContext();
@@ -13,7 +14,8 @@ const INITIAL_STATE = () => ({
   isPlaying: false,
   points: getInitialPoints(),
   position: { x: 0, y: 0 },
-  synthsisValues: getInitialSynthesisValues(),
+  oscillators: getInitialOscillators(),
+  synthesisValues: getInitialSynthesisValues(),
 });
 
 export const withParameterSpaceProvider = () => Comp =>
@@ -22,28 +24,44 @@ export const withParameterSpaceProvider = () => Comp =>
 
     componentDidMount () {
       this.randomize();
+
+      window.addEventListener('keydown', e => {
+        if (e.which === 82) {
+          this.randomize();
+        }
+      });
     }
 
     randomize () {
-      const { points } = this.state;
+      const { oscillators, points } = this.state;
 
       const updatedPoints = points.map(point => {
         return {
           ...point,
-          x: rand(),
-          y: rand(),
-          weight: rand(),
+          x: rand(-1, 1),
+          y: rand(-1, 1),
+          weight: rand(0, 1),
         };
       });
 
-      this.setState({ points: updatedPoints }, () => {
-        this.move(this.state.position);
+      const updatedOscillators = oscillators.map(oscillator => {
+        return {
+          ...oscillator,
+          value: rand(0, 1),
+        };
       });
+
+      this.setState(
+        { oscillators: updatedOscillators, points: updatedPoints },
+        () => {
+          this.move(this.state.position);
+        }
+      );
     }
 
     move = ({ x, y }) => {
-      const { points } = this.state;
-      const position = { x, y };
+      const { oscillators, points, synthesisValues } = this.state;
+      const position = { x: x * 2 - 1, y: y * 2 - 1 };
 
       const updatedPoints = points.map(point => {
         const distance = calculateDistance(point, position);
@@ -56,20 +74,23 @@ export const withParameterSpaceProvider = () => Comp =>
         };
       });
 
-      const updatedSynthesisValues = updatedPoints.reduce((res, point) => {
-        const mapper = VALUE_MAPPERS[point.id];
-        const value = mapper(point.value);
+      const updatedSynthesisValues = [...oscillators, ...updatedPoints].reduce(
+        (res, parameter) => {
+          const mapper = VALUE_MAPPERS[parameter.id];
+          const value = mapper(parameter.value);
 
-        return {
-          ...res,
-          [point.id]: value,
-        };
-      }, {});
+          return {
+            ...res,
+            [parameter.id]: value,
+          };
+        },
+        synthesisValues
+      );
 
       this.setState({
         points: updatedPoints,
         position,
-        synthsisValues: updatedSynthesisValues,
+        synthesisValues: updatedSynthesisValues,
       });
     };
 

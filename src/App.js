@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import TiberSynth from './screens/TiberSynth';
-import compose from './utils/compose';
+import compose from './lib/compose';
 import { withParameterSpaceProvider } from './hoc/withParameterSpace';
 import { withSynthesisEngineProvider } from './hoc/withSynthesisEngine';
 import './less/reset.less';

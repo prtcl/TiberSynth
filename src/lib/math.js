@@ -16,3 +16,5 @@ export const calculateDistance = ({ x: x1, y: y1 }, { x: x2, y: y2 }) => {
 
   return clamp(d, 0, 1);
 };
+
+export const expo = n => Math.pow(n, Math.E);

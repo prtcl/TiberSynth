@@ -1,3 +1,5 @@
+import { OSCILLATORS, POINTS } from '../parameterSpace';
+
 export const NODE_TYPES = {
   COMPRESSOR: 'COMPRESSOR',
   DELAY: 'DELAY',
@@ -15,6 +17,7 @@ const EQ_LOW = 'EQ_LOW';
 const EQ_LOW_MID = 'EQ_LOW_MID';
 const FEEDBACK = 'FEEDBACK';
 const FEEDBACK_COMPRESSOR = 'FEEDBACK_COMPRESSOR';
+const FEEDBACK_COMPRESSOR_TWO = 'FEEDBACK_COMPRESSOR_TWO';
 const FEEDBACK_GAIN = 'FEEDBACK_GAIN';
 const HIPASS = 'HIPASS';
 const LOWPASS = 'LOWPASS';
@@ -35,6 +38,7 @@ const OSC_PAN_E = 'OSC_PAN_E';
 const OSC_PAN_F = 'OSC_PAN_F';
 const OUTPUT = 'OUTPUT';
 const OUTPUT_COMPRESSOR = 'OUTPUT_COMPRESSOR';
+const OUTPUT_LIMITER = 'OUTPUT_LIMITER';
 const PRE_FILTER_COMPRESSOR = 'PRE_FILTER_COMPRESSOR';
 const XMOD_GAIN_A = 'XMOD_GAIN_A';
 const XMOD_GAIN_B = 'XMOD_GAIN_B';
@@ -51,6 +55,7 @@ export const NODES = {
   EQ_LOW_MID,
   FEEDBACK,
   FEEDBACK_COMPRESSOR,
+  FEEDBACK_COMPRESSOR_TWO,
   FEEDBACK_GAIN,
   HIPASS,
   LOWPASS,
@@ -71,6 +76,7 @@ export const NODES = {
   OSC_PAN_F,
   OUTPUT,
   OUTPUT_COMPRESSOR,
+  OUTPUT_LIMITER,
   PRE_FILTER_COMPRESSOR,
   XMOD_GAIN_A,
   XMOD_GAIN_B,
@@ -80,186 +86,245 @@ export const NODES = {
   XMOD_GAIN_F,
 };
 
+const getCurrentTime = node => node.context.currentTime;
+
 export default [
   {
-    name: OSC_A,
+    id: OSC_A,
     type: NODE_TYPES.OSC,
     args: { type: 'square', frequency: 0 },
     connect: [nodes => nodes[XMOD_GAIN_B], nodes => nodes[OSC_PAN_A]],
     set: (node, data) => {
-      node.detune.value = data[OSC_A].detune;
-      node.frequency.value = data[OSC_A].frequency;
+      const currentTime = getCurrentTime(node);
+
+      node.detune.setValueAtTime(data[POINTS.OSC_A_DETUNE], currentTime);
+      node.frequency.setValueAtTime(
+        data[OSCILLATORS.OSC_A_FREQUENCY],
+        currentTime
+      );
     },
   },
   {
-    name: OSC_B,
+    id: OSC_B,
     type: NODE_TYPES.OSC,
     args: { type: 'sine', frequency: 0 },
     connect: [nodes => nodes[XMOD_GAIN_A], nodes => nodes[OSC_PAN_B]],
     set: (node, data) => {
-      node.detune.value = data[OSC_B].detune;
-      node.frequency.value = data[OSC_B].frequency;
+      const currentTime = getCurrentTime(node);
+
+      node.detune.setValueAtTime(data[POINTS.OSC_B_DETUNE], currentTime);
+      node.frequency.setValueAtTime(
+        data[OSCILLATORS.OSC_B_FREQUENCY],
+        currentTime
+      );
     },
   },
   {
-    name: OSC_C,
+    id: OSC_C,
     type: NODE_TYPES.OSC,
     args: { type: 'sawtooth', frequency: 0 },
     connect: [nodes => nodes[XMOD_GAIN_D], nodes => nodes[OSC_PAN_C]],
     set: (node, data) => {
-      node.detune.value = data[OSC_C].detune;
-      node.frequency.value = data[OSC_C].frequency;
+      const currentTime = getCurrentTime(node);
+
+      node.detune.setValueAtTime(data[POINTS.OSC_C_DETUNE], currentTime);
+      node.frequency.setValueAtTime(
+        data[OSCILLATORS.OSC_C_FREQUENCY],
+        currentTime
+      );
     },
   },
   {
-    name: OSC_D,
+    id: OSC_D,
     type: NODE_TYPES.OSC,
     args: { type: 'sawtooth', frequency: 0 },
     connect: [nodes => nodes[XMOD_GAIN_C], nodes => nodes[OSC_PAN_D]],
     set: (node, data) => {
-      node.detune.value = data[OSC_D].detune;
-      node.frequency.value = data[OSC_D].frequency;
+      const currentTime = getCurrentTime(node);
+
+      node.detune.setValueAtTime(data[POINTS.OSC_D_DETUNE], currentTime);
+      node.frequency.setValueAtTime(
+        data[OSCILLATORS.OSC_D_FREQUENCY],
+        currentTime
+      );
     },
   },
   {
-    name: OSC_E,
+    id: OSC_E,
     type: NODE_TYPES.OSC,
     args: { type: 'sine', frequency: 0 },
     connect: [nodes => nodes[XMOD_GAIN_F], nodes => nodes[OSC_PAN_E]],
     set: (node, data) => {
-      node.detune.value = data[OSC_E].detune;
-      node.frequency.value = data[OSC_E].frequency;
+      const currentTime = getCurrentTime(node);
+
+      node.detune.setValueAtTime(data[POINTS.OSC_E_DETUNE], currentTime);
+      node.frequency.setValueAtTime(
+        data[OSCILLATORS.OSC_E_FREQUENCY],
+        currentTime
+      );
     },
   },
   {
-    name: OSC_F,
+    id: OSC_F,
     type: NODE_TYPES.OSC,
     args: { type: 'square', frequency: 0 },
     connect: [nodes => nodes[XMOD_GAIN_E], nodes => nodes[OSC_PAN_F]],
     set: (node, data) => {
-      node.detune.value = data[OSC_F].detune;
-      node.frequency.value = data[OSC_F].frequency;
+      const currentTime = getCurrentTime(node);
+
+      node.detune.setValueAtTime(data[POINTS.OSC_F_DETUNE], currentTime);
+      node.frequency.setValueAtTime(
+        data[OSCILLATORS.OSC_F_FREQUENCY],
+        currentTime
+      );
     },
   },
   {
-    name: XMOD_GAIN_A,
+    id: XMOD_GAIN_A,
     type: NODE_TYPES.GAIN,
     args: { gain: 0 },
     connect: [nodes => nodes[OSC_A].frequency],
     set: (node, data) => {
-      node.gain.value = data[XMOD_GAIN_A].gain;
+      const currentTime = getCurrentTime(node);
+      const value = data[POINTS.XMOD_GAIN_A_GAIN];
+
+      node.gain.setTargetAtTime(value, currentTime, 0.01);
     },
   },
   {
-    name: XMOD_GAIN_B,
+    id: XMOD_GAIN_B,
     type: NODE_TYPES.GAIN,
     args: { gain: 0 },
     connect: [nodes => nodes[OSC_B].frequency],
     set: (node, data) => {
-      node.gain.value = data[XMOD_GAIN_B].gain;
+      const currentTime = getCurrentTime(node);
+      const value = data[POINTS.XMOD_GAIN_B_GAIN];
+
+      node.gain.setTargetAtTime(value, currentTime, 0.01);
     },
   },
   {
-    name: XMOD_GAIN_C,
+    id: XMOD_GAIN_C,
     type: NODE_TYPES.GAIN,
     args: { gain: 0 },
     connect: [nodes => nodes[OSC_C].frequency],
     set: (node, data) => {
-      node.gain.value = data[XMOD_GAIN_C].gain;
+      const currentTime = getCurrentTime(node);
+      const value = data[POINTS.XMOD_GAIN_C_GAIN];
+
+      node.gain.setTargetAtTime(value, currentTime, 0.01);
     },
   },
   {
-    name: XMOD_GAIN_D,
+    id: XMOD_GAIN_D,
     type: NODE_TYPES.GAIN,
     args: { gain: 0 },
     connect: [nodes => nodes[OSC_D].frequency],
     set: (node, data) => {
-      node.gain.value = data[XMOD_GAIN_D].gain;
+      const currentTime = getCurrentTime(node);
+      const value = data[POINTS.XMOD_GAIN_D_GAIN];
+
+      node.gain.setTargetAtTime(value, currentTime, 0.01);
     },
   },
   {
-    name: XMOD_GAIN_E,
+    id: XMOD_GAIN_E,
     type: NODE_TYPES.GAIN,
     args: { gain: 0 },
     connect: [nodes => nodes[OSC_E].frequency],
     set: (node, data) => {
-      node.gain.value = data[XMOD_GAIN_E].gain;
+      const currentTime = getCurrentTime(node);
+      const value = data[POINTS.XMOD_GAIN_E_GAIN];
+
+      node.gain.setTargetAtTime(value, currentTime, 0.01);
     },
   },
   {
-    name: XMOD_GAIN_F,
+    id: XMOD_GAIN_F,
     type: NODE_TYPES.GAIN,
     args: { gain: 0 },
     connect: [nodes => nodes[OSC_F].frequency],
     set: (node, data) => {
-      node.gain.value = data[XMOD_GAIN_F].gain;
+      const currentTime = getCurrentTime(node);
+      const value = data[POINTS.XMOD_GAIN_F_GAIN];
+
+      node.gain.setTargetAtTime(value, currentTime, 0.01);
     },
   },
   {
-    name: OSC_GAIN_A,
+    id: OSC_GAIN_A,
     type: NODE_TYPES.GAIN,
     args: { gain: 0 },
     connect: [nodes => nodes[PRE_FILTER_COMPRESSOR]],
     set: (node, data) => {
-      node.gain.value = data[OSC_GAIN_A].gain;
+      const currentTime = getCurrentTime(node);
+      const value = data[POINTS.OSC_GAIN_A_GAIN];
+
+      node.gain.setTargetAtTime(value, currentTime, 0.01);
     },
   },
   {
-    name: OSC_GAIN_B,
+    id: OSC_GAIN_B,
     type: NODE_TYPES.GAIN,
     args: { gain: 0 },
     connect: [nodes => nodes[PRE_FILTER_COMPRESSOR]],
     set: (node, data) => {
-      node.gain.value = data[OSC_GAIN_B].gain;
+      const currentTime = getCurrentTime(node);
+      const value = data[POINTS.OSC_GAIN_B_GAIN];
+
+      node.gain.setTargetAtTime(value, currentTime, 0.01);
     },
   },
   {
-    name: OSC_GAIN_C,
+    id: OSC_GAIN_C,
     type: NODE_TYPES.GAIN,
     args: { gain: 0 },
     connect: [nodes => nodes[PRE_FILTER_COMPRESSOR]],
     set: (node, data) => {
-      node.gain.value = data[OSC_GAIN_C].gain;
+      const currentTime = getCurrentTime(node);
+      const value = data[POINTS.OSC_GAIN_C_GAIN];
+
+      node.gain.setTargetAtTime(value, currentTime, 0.01);
     },
   },
   {
-    name: OSC_PAN_A,
+    id: OSC_PAN_A,
     type: NODE_TYPES.PAN,
     args: { x: -0.5, y: 0.1, z: 0 },
     connect: [nodes => nodes[OSC_GAIN_A]],
   },
   {
-    name: OSC_PAN_B,
+    id: OSC_PAN_B,
     type: NODE_TYPES.PAN,
-    args: { x: -0.5, y: 0.1, z: 0 },
+    args: { x: 0.5, y: 0.1, z: 0 },
     connect: [nodes => nodes[OSC_GAIN_A]],
   },
   {
-    name: OSC_PAN_C,
+    id: OSC_PAN_C,
     type: NODE_TYPES.PAN,
     args: { x: -0.005, y: -0.1, z: 0 },
     connect: [nodes => nodes[OSC_GAIN_B]],
   },
   {
-    name: OSC_PAN_D,
+    id: OSC_PAN_D,
     type: NODE_TYPES.PAN,
     args: { x: 0.005, y: -0.1, z: 0 },
     connect: [nodes => nodes[OSC_GAIN_B]],
   },
   {
-    name: OSC_PAN_E,
+    id: OSC_PAN_E,
     type: NODE_TYPES.PAN,
     args: { x: -0.05, y: -0.5, z: 0 },
     connect: [nodes => nodes[OSC_GAIN_C]],
   },
   {
-    name: OSC_PAN_F,
+    id: OSC_PAN_F,
     type: NODE_TYPES.PAN,
     args: { x: 0.05, y: -0.5, z: 0 },
     connect: [nodes => nodes[OSC_GAIN_C]],
   },
   {
-    name: PRE_FILTER_COMPRESSOR,
+    id: PRE_FILTER_COMPRESSOR,
     type: NODE_TYPES.COMPRESSOR,
     args: {
       ratio: 1.5,
@@ -270,7 +335,7 @@ export default [
     connect: [nodes => nodes[HIPASS]],
   },
   {
-    name: HIPASS,
+    id: HIPASS,
     type: NODE_TYPES.FILTER,
     args: {
       type: 'highpass',
@@ -279,116 +344,151 @@ export default [
     },
     connect: [nodes => nodes[LOWPASS]],
     set: (node, data) => {
-      node.frequency.value = data[HIPASS].frequency;
-      node.Q.value = data[HIPASS].q;
+      const currentTime = getCurrentTime(node);
+
+      node.frequency.setValueAtTime(data[POINTS.HIPASS_FREQUENCY], currentTime);
+      node.Q.setValueAtTime(data[POINTS.HIPASS_Q], currentTime);
     },
   },
   {
-    name: LOWPASS,
+    id: LOWPASS,
     type: NODE_TYPES.FILTER,
     args: {
       type: 'lowpass',
       frequency: 10000,
       q: 0.05,
     },
-    connect: [nodes => nodes[OUTPUT], nodes => nodes[FEEDBACK]],
+    connect: [nodes => nodes[EQ_LOW]],
     set: (node, data) => {
-      node.frequency.value = data[LOWPASS].frequency;
-      node.Q.value = data[LOWPASS].q;
+      const currentTime = getCurrentTime(node);
+
+      node.frequency.setValueAtTime(
+        data[POINTS.LOWPASS_FREQUENCY],
+        currentTime
+      );
+      node.Q.setValueAtTime(data[POINTS.LOWPASS_Q], currentTime);
     },
   },
   {
-    name: FEEDBACK,
+    id: FEEDBACK,
     type: NODE_TYPES.DELAY,
     args: { time: 0 },
     connect: [nodes => nodes[FEEDBACK_GAIN]],
     set: (node, data) => {
-      node.delayTime.value = data[FEEDBACK].delay;
+      const currentTime = getCurrentTime(node);
+      const value = data[POINTS.FEEDBACK_DELAY];
+
+      node.delayTime.setTargetAtTime(value, currentTime, 0.01);
     },
   },
   {
-    name: FEEDBACK_GAIN,
+    id: FEEDBACK_GAIN,
     type: NODE_TYPES.GAIN,
     args: { gain: 0 },
     connect: [nodes => nodes[FEEDBACK_COMPRESSOR]],
     set: (node, data) => {
-      node.gain.value = data[FEEDBACK_GAIN].gain;
+      const currentTime = getCurrentTime(node);
+      const value = data[POINTS.FEEDBACK_GAIN];
+
+      node.gain.setTargetAtTime(value, currentTime, 0.01);
     },
   },
   {
-    name: FEEDBACK_COMPRESSOR,
+    id: FEEDBACK_COMPRESSOR,
     type: NODE_TYPES.COMPRESSOR,
     args: {
+      attack: 0.2,
+      ratio: 5,
+      release: 0.2,
+      threshold: -5,
+    },
+    connect: [nodes => nodes[FEEDBACK_COMPRESSOR_TWO]],
+  },
+  {
+    id: FEEDBACK_COMPRESSOR_TWO,
+    type: NODE_TYPES.COMPRESSOR,
+    args: {
+      attack: 0.05,
       ratio: 20,
-      threshold: -2,
-      attack: 0.001,
-      release: 0.001,
+      release: 0.1,
+      threshold: -18,
     },
     connect: [nodes => nodes[HIPASS]],
   },
   {
-    name: EQ_LOW,
+    id: EQ_LOW,
     type: NODE_TYPES.FILTER,
     args: {
       type: 'lowshelf',
-      frequency: 80,
+      frequency: 100,
       q: 1,
-      gain: -2,
+      gain: 8,
     },
     connect: [nodes => nodes[EQ_LOW_MID]],
   },
   {
-    name: EQ_LOW_MID,
+    id: EQ_LOW_MID,
     type: NODE_TYPES.FILTER,
     args: {
       type: 'peaking',
       frequency: 350,
-      q: 2.5,
-      gain: -5,
+      q: 0.5,
+      gain: 12,
     },
     connect: [nodes => nodes[EQ_HIGH_MID]],
   },
   {
-    name: EQ_HIGH_MID,
+    id: EQ_HIGH_MID,
     type: NODE_TYPES.FILTER,
     args: {
       type: 'peaking',
-      frequency: 4500,
-      q: 0.5,
-      gain: 1,
+      frequency: 2400,
+      q: 1.5,
+      gain: 6,
     },
     connect: [nodes => nodes[EQ_HIGH]],
   },
   {
-    name: EQ_HIGH,
+    id: EQ_HIGH,
     type: NODE_TYPES.FILTER,
     args: {
       type: 'highshelf',
-      frequency: 8000,
-      q: 1,
-      gain: 15,
+      frequency: 6000,
+      q: 0.75,
+      gain: 16,
     },
+    connect: [nodes => nodes[OUTPUT], nodes => nodes[FEEDBACK]],
+  },
+  {
+    id: OUTPUT,
+    type: NODE_TYPES.GAIN,
+    args: { gain: 0 },
     connect: [nodes => nodes[OUTPUT_COMPRESSOR]],
   },
   {
-    name: OUTPUT_COMPRESSOR,
+    id: OUTPUT_COMPRESSOR,
     type: NODE_TYPES.COMPRESSOR,
     args: {
-      ratio: 20,
-      threshold: -10,
+      ratio: 5,
+      threshold: -11,
       attack: 0.1,
-      release: 0.25,
+      release: 0.1,
+    },
+    connect: [nodes => nodes[OUTPUT_LIMITER]],
+  },
+  {
+    id: OUTPUT_LIMITER,
+    type: NODE_TYPES.COMPRESSOR,
+    args: {
+      ratio: 11,
+      threshold: -6,
+      attack: 0.1,
+      release: 0.1,
     },
     connect: [nodes => nodes[DESTINATION]],
   },
   {
-    name: OUTPUT,
-    type: NODE_TYPES.GAIN,
-    args: { gain: 0 },
-    connect: [nodes => nodes[EQ_LOW], nodes => nodes[DESTINATION]],
-  },
-  {
-    name: DESTINATION,
+    id: DESTINATION,
     type: NODE_TYPES.DESTINATION,
   },
 ];

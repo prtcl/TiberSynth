@@ -1,4 +1,4 @@
-import { scale } from './math';
+import { expo, scale } from './math';
 
 const FEEDBACK_DELAY = 'FEEDBACK_DELAY';
 const FEEDBACK_GAIN = 'FEEDBACK_GAIN';
@@ -7,11 +7,17 @@ const HIPASS_Q = 'HIPASS_Q';
 const LOWPASS_FREQUENCY = 'LOWPASS_FREQUENCY';
 const LOWPASS_Q = 'LOWPASS_Q';
 const OSC_A_DETUNE = 'OSC_A_DETUNE';
+const OSC_A_FREQUENCY = 'OSC_A_FREQUENCY';
 const OSC_B_DETUNE = 'OSC_B_DETUNE';
+const OSC_B_FREQUENCY = 'OSC_B_FREQUENCY';
 const OSC_C_DETUNE = 'OSC_C_DETUNE';
+const OSC_C_FREQUENCY = 'OSC_C_FREQUENCY';
 const OSC_D_DETUNE = 'OSC_D_DETUNE';
+const OSC_D_FREQUENCY = 'OSC_D_FREQUENCY';
 const OSC_E_DETUNE = 'OSC_E_DETUNE';
+const OSC_E_FREQUENCY = 'OSC_E_FREQUENCY';
 const OSC_F_DETUNE = 'OSC_F_DETUNE';
+const OSC_F_FREQUENCY = 'OSC_F_FREQUENCY';
 const OSC_GAIN_A_GAIN = 'OSC_GAIN_A_GAIN';
 const OSC_GAIN_B_GAIN = 'OSC_GAIN_B_GAIN';
 const OSC_GAIN_C_GAIN = 'OSC_GAIN_C_GAIN';
@@ -46,34 +52,51 @@ export const POINTS = {
   XMOD_GAIN_F_GAIN,
 };
 
+export const OSCILLATORS = {
+  OSC_A_FREQUENCY,
+  OSC_B_FREQUENCY,
+  OSC_C_FREQUENCY,
+  OSC_D_FREQUENCY,
+  OSC_E_FREQUENCY,
+  OSC_F_FREQUENCY,
+};
+
+const createOscillatorFrequency = range => value => value * range;
+
 const createOscDetune = (min, max) => value => scale(value, 0, 1, min, max);
 
-const createOscGain = (min, max) => value => scale(value, 0, 1, min, max);
+const createOscGain = (min, max) => value => scale(expo(value), 0, 1, min, max);
 
-const createXmodGain = (range = 60000) => value => value * range;
+const createXmodGain = range => value => expo(value) * range;
 
 export const VALUE_MAPPERS = {
-  [FEEDBACK_DELAY]: value => scale(value, 0, 1, 0.001, 0.25),
-  [FEEDBACK_GAIN]: value => scale(value, 0, 1, 0.5, 1),
-  [HIPASS_FREQUENCY]: value => scale(value, 0, 1, 0, 8000),
-  [HIPASS_Q]: value => scale(value, 0, 1, 0.7, 1.2),
-  [LOWPASS_FREQUENCY]: value => scale(value, 0, 1, 30, 18000),
-  [LOWPASS_Q]: value => scale(value, 0, 1, 0.7, 1.2),
+  [FEEDBACK_DELAY]: value => scale(value, 0, 1, 0.001, 0.8),
+  [FEEDBACK_GAIN]: value => scale(expo(value), 0, 1, 0.15, 1),
+  [HIPASS_FREQUENCY]: value => scale(value, 0, 1, 5, 5000),
+  [HIPASS_Q]: value => scale(value, 0, 1, 0.2, 0.9),
+  [LOWPASS_FREQUENCY]: value => scale(value, 0, 1, 30, 12000),
+  [LOWPASS_Q]: value => scale(value, 0, 1, 0.2, 0.5),
   [OSC_A_DETUNE]: createOscDetune(-500, 500),
+  [OSC_A_FREQUENCY]: createOscillatorFrequency(150),
   [OSC_B_DETUNE]: createOscDetune(-125, 125),
+  [OSC_B_FREQUENCY]: createOscillatorFrequency(1500),
   [OSC_C_DETUNE]: createOscDetune(-250, 250),
+  [OSC_C_FREQUENCY]: createOscillatorFrequency(150),
   [OSC_D_DETUNE]: createOscDetune(-250, 250),
+  [OSC_D_FREQUENCY]: createOscillatorFrequency(1500),
   [OSC_E_DETUNE]: createOscDetune(-250, 250),
+  [OSC_E_FREQUENCY]: createOscillatorFrequency(150),
   [OSC_F_DETUNE]: createOscDetune(-500, 500),
-  [OSC_GAIN_A_GAIN]: createOscGain(0.5, 0.9),
-  [OSC_GAIN_B_GAIN]: createOscGain(0.4, 0.7),
-  [OSC_GAIN_C_GAIN]: createOscGain(0.2, 0.9),
-  [XMOD_GAIN_A_GAIN]: createXmodGain(60000),
-  [XMOD_GAIN_B_GAIN]: createXmodGain(60000),
-  [XMOD_GAIN_C_GAIN]: createXmodGain(60000),
-  [XMOD_GAIN_D_GAIN]: createXmodGain(60000),
-  [XMOD_GAIN_E_GAIN]: createXmodGain(60000),
-  [XMOD_GAIN_F_GAIN]: createXmodGain(60000),
+  [OSC_F_FREQUENCY]: createOscillatorFrequency(1500),
+  [OSC_GAIN_A_GAIN]: createOscGain(0.5, 1),
+  [OSC_GAIN_B_GAIN]: createOscGain(0.5, 1),
+  [OSC_GAIN_C_GAIN]: createOscGain(0.2, 0.8),
+  [XMOD_GAIN_A_GAIN]: createXmodGain(100000),
+  [XMOD_GAIN_B_GAIN]: createXmodGain(100000),
+  [XMOD_GAIN_C_GAIN]: createXmodGain(100000),
+  [XMOD_GAIN_D_GAIN]: createXmodGain(100000),
+  [XMOD_GAIN_E_GAIN]: createXmodGain(100000),
+  [XMOD_GAIN_F_GAIN]: createXmodGain(100000),
 };
 
 export const POINT_CONFIGS = [
@@ -163,6 +186,33 @@ export const POINT_CONFIGS = [
   },
 ];
 
+export const OSCILLATOR_CONFIGS = [
+  {
+    id: OSC_A_FREQUENCY,
+    label: 'Osc A Freq',
+  },
+  {
+    id: OSC_B_FREQUENCY,
+    label: 'Osc B Freq',
+  },
+  {
+    id: OSC_C_FREQUENCY,
+    label: 'Osc C Freq',
+  },
+  {
+    id: OSC_D_FREQUENCY,
+    label: 'Osc D Freq',
+  },
+  {
+    id: OSC_E_FREQUENCY,
+    label: 'Osc E Freq',
+  },
+  {
+    id: OSC_F_FREQUENCY,
+    label: 'Osc F Freq',
+  },
+];
+
 export const getInitialPoints = () =>
   POINT_CONFIGS.map(config => ({
     ...config,
@@ -173,7 +223,13 @@ export const getInitialPoints = () =>
     y: 0,
   }));
 
-export const getInitialSynthesisValues = () =>
+export const getInitialOscillators = () =>
+  OSCILLATOR_CONFIGS.map(config => ({
+    ...config,
+    value: 0,
+  }));
+
+export const getInitialPointValues = () =>
   Object.values(POINTS).reduce(
     (res, id) => ({
       ...res,
@@ -181,3 +237,17 @@ export const getInitialSynthesisValues = () =>
     }),
     {}
   );
+
+export const getInitialOscillatorValues = () =>
+  Object.values(OSCILLATORS).reduce(
+    (res, id) => ({
+      ...res,
+      [id]: 0,
+    }),
+    {}
+  );
+
+export const getInitialSynthesisValues = () => ({
+  ...getInitialPointValues(),
+  ...getInitialOscillatorValues(),
+});
