@@ -1,1 +1,4 @@
-export { default } from './TiberSynth';
+import TiberSynth from './TiberSynth';
+import enhance from './TiberSynth.hoc';
+
+export default enhance(TiberSynth);
