@@ -2,6 +2,7 @@ const path = require('path');
 
 module.exports = {
   entry: './src/index.js',
+  devtool: 'source-map',
   output: {
     path: path.resolve('www', 'dist'),
     publicPath: '/dist/',
@@ -13,6 +14,14 @@ module.exports = {
         test: /.js$/,
         loaders: 'babel-loader',
         include: path.resolve('src'),
+        query: {
+          env: {
+            development: {
+              plugins: [['transform-react-display-name']],
+            },
+          },
+        },
+        exclude: /node_modules/,
       },
       {
         test: /\.less$/,
