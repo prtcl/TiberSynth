@@ -10,11 +10,14 @@ import {
 const { Consumer, Provider } = React.createContext();
 
 const INITIAL_STATE = () => ({
+  feedbackRange: 0.8,
+  filterRange: 0.8,
   history: [],
   isPlaying: false,
+  noiseRange: 0.8,
+  oscillators: getInitialOscillators(),
   points: getInitialPoints(),
   position: { x: 0, y: 0 },
-  oscillators: getInitialOscillators(),
   synthesisValues: getInitialSynthesisValues(),
 });
 
@@ -32,7 +35,7 @@ export const withParameterSpaceProvider = () => Comp =>
       });
     }
 
-    randomize () {
+    randomize = () => {
       const { oscillators, points } = this.state;
 
       const updatedPoints = points.map(point => {
@@ -57,7 +60,15 @@ export const withParameterSpaceProvider = () => Comp =>
           this.move(this.state.position);
         }
       );
-    }
+    };
+
+    undo = () => {
+      console.log('undo');
+    };
+
+    redo = () => {
+      console.log('redo');
+    };
 
     move = ({ x, y }) => {
       const { oscillators, points, synthesisValues } = this.state;
@@ -102,13 +113,30 @@ export const withParameterSpaceProvider = () => Comp =>
       this.setState({ isPlaying: false });
     };
 
+    updateFeedback = value => {
+      this.setState({ feedbackRange: value });
+    };
+
+    updateNoise = value => {
+      this.setState({ noiseRange: value });
+    };
+
+    updateFilter = value => {
+      this.setState({ filterRange: value });
+    };
+
     getParameterSpaceProps () {
       return {
         ...this.state,
+        onChangeFeedback: this.updateFeedback,
+        onChangeFilter: this.updateFilter,
+        onChangeNoise: this.updateNoise,
         onMove: this.move,
         onPlay: this.play,
         onRandomize: this.randomize,
+        onRedo: this.redo,
         onStop: this.stop,
+        onUndo: this.undo,
       };
     }
 

@@ -3,7 +3,43 @@
 :local {
   .container {
     background-color: @colorBlack;
+    display: flex;
+    flex-direction: column;
     height: 100%;
+    overflow: auto;
+    padding: @spacing;
     width: @sidebarWidth;
+  }
+
+  .block {
+    flex: 0 0 auto;
+  }
+
+  .blockFlex {
+    flex: 1 0 auto;
+  }
+
+  .spaceControls {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: @spacing / 2 0;
+
+    .button {
+      flex: 0 0 auto;
+    }
+
+    .button:not(:last-child) {
+      margin-right: @fontSize / 2;
+    }
+
+    .buttonFlex {
+      flex: 1;
+    }
+  }
+
+  .parameterSliders {
+    margin: @spacing / 2 0;
   }
 }
