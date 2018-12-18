@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { calculateDistance, flip, rand } from '../lib/math';
+import { calculateDistance, clamp, flip, rand } from '../lib/math';
 import {
   VALUE_MAPPERS,
   getInitialOscillators,
@@ -13,6 +13,7 @@ const INITIAL_STATE = () => ({
   feedbackRange: 0.8,
   filterRange: 0.8,
   history: [],
+  historyIndex: 0,
   isPlaying: false,
   noiseRange: 0.8,
   oscillators: getInitialOscillators(),
@@ -21,22 +22,81 @@ const INITIAL_STATE = () => ({
   synthesisValues: getInitialSynthesisValues(),
 });
 
+const MAX_HISTORY = 100;
+
+const getHistoryIndex = (offset = 0, { history, historyIndex }) => {
+  return clamp(historyIndex + offset, 0, history.length - 1);
+};
+
+const getUpdatedSpace = ({
+  oscillators,
+  points,
+  position,
+  synthesisValues,
+}) => {
+  const updatedPoints = points.map(point => {
+    const distance = calculateDistance(point, position);
+    const value = point.weight * flip(distance);
+
+    return {
+      ...point,
+      distance,
+      value,
+    };
+  });
+
+  const updatedSynthesisValues = [...oscillators, ...updatedPoints].reduce(
+    (res, parameter) => {
+      const mapper = VALUE_MAPPERS[parameter.id];
+      const value = mapper(parameter.value);
+
+      return {
+        ...res,
+        [parameter.id]: value,
+      };
+    },
+    synthesisValues
+  );
+
+  return {
+    oscillators,
+    points: updatedPoints,
+    position,
+    synthesisValues: updatedSynthesisValues,
+  };
+};
+
+const getMergedHistory = ({ history, oscillators, points, historyIndex }) => {
+  const mergedHistory = [
+    ...history,
+    {
+      oscillators,
+      points,
+    },
+  ];
+  const len = mergedHistory.length;
+  const slicedHistory = mergedHistory.slice(
+    Math.max(0, len - MAX_HISTORY),
+    len
+  );
+
+  return {
+    history: slicedHistory,
+    historyIndex,
+  };
+};
+
 export const withParameterSpaceProvider = () => Comp =>
   class ParameterSpace extends Component {
     state = { ...INITIAL_STATE() };
 
     componentDidMount () {
       this.randomize();
-
-      window.addEventListener('keydown', e => {
-        if (e.which === 82) {
-          this.randomize();
-        }
-      });
     }
 
     randomize = () => {
-      const { oscillators, points } = this.state;
+      const { oscillators, points, history } = this.state;
+      const historyIndex = Math.min(history.length, MAX_HISTORY - 1);
 
       const updatedPoints = points.map(point => {
         return {
@@ -54,55 +114,54 @@ export const withParameterSpaceProvider = () => Comp =>
         };
       });
 
-      this.setState(
-        { oscillators: updatedOscillators, points: updatedPoints },
-        () => {
-          this.move(this.state.position);
-        }
-      );
-    };
-
-    undo = () => {
-      console.log('undo');
-    };
-
-    redo = () => {
-      console.log('redo');
+      this.setState({
+        ...getUpdatedSpace({
+          ...this.state,
+          points: updatedPoints,
+          oscillators: updatedOscillators,
+        }),
+        ...getMergedHistory({
+          history,
+          oscillators: updatedOscillators,
+          points: updatedPoints,
+          historyIndex,
+        }),
+      });
     };
 
     move = ({ x, y }) => {
-      const { oscillators, points, synthesisValues } = this.state;
-      const position = { x: x * 2 - 1, y: y * 2 - 1 };
-
-      const updatedPoints = points.map(point => {
-        const distance = calculateDistance(point, position);
-        const value = point.weight * flip(distance);
-
-        return {
-          ...point,
-          distance,
-          value,
-        };
-      });
-
-      const updatedSynthesisValues = [...oscillators, ...updatedPoints].reduce(
-        (res, parameter) => {
-          const mapper = VALUE_MAPPERS[parameter.id];
-          const value = mapper(parameter.value);
-
-          return {
-            ...res,
-            [parameter.id]: value,
-          };
-        },
-        synthesisValues
-      );
+      const updatedPosition = { x: x * 2 - 1, y: y * 2 - 1 };
 
       this.setState({
-        points: updatedPoints,
-        position,
-        synthesisValues: updatedSynthesisValues,
+        ...getUpdatedSpace({
+          ...this.state,
+          position: updatedPosition,
+        }),
       });
+    };
+
+    history = offset => {
+      const { history } = this.state;
+      const historyIndex = getHistoryIndex(offset, this.state);
+
+      if (historyIndex === this.state.historyIndex) {
+        return;
+      }
+
+      const { oscillators, points } = history[historyIndex];
+
+      this.setState({
+        ...getUpdatedSpace({ ...this.state, oscillators, points }),
+        historyIndex,
+      });
+    };
+
+    undo = () => {
+      this.history(-1);
+    };
+
+    redo = () => {
+      this.history(1);
     };
 
     play = () => {

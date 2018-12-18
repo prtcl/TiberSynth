@@ -7,7 +7,13 @@
     cursor: pointer;
     font: @fontSize / 1em normal @fontFamily;
     margin: 0;
+    outline: none;
     padding: 0.5em 1em;
+    transition: 150ms opacity linear;
+
+    &:active {
+      opacity: 0.95;
+    }
   }
 
   .colorWhite {
