@@ -1,72 +1,14 @@
 import AudioContext from './utils/AudioContext';
 import nodeConfigs, { NODES, NODE_TYPES } from './nodeConfigs';
-
-export const createGain = (context, { gain }) => {
-  const node = context.createGain();
-
-  node.gain.value = gain;
-
-  return node;
-};
-
-export const createOscillator = (
-  context,
-  { type = 'sine', frequency = 440 }
-) => {
-  const node = context.createOscillator();
-
-  node.type = type;
-  node.frequency.value = frequency;
-  node.start(0);
-
-  return node;
-};
-
-export const createPanner = (context, { x = 0, y = 0, z = 0 }) => {
-  const node = context.createPanner();
-
-  node.panningModel = 'equalpower';
-  node.distanceModel = 'exponential';
-  node.setPosition(x, y, z);
-
-  return node;
-};
-
-export const createCompressor = (
-  context,
-  { threshold = -1, ratio = 1.5, attack = 0.1, release = 0.25 }
-) => {
-  const node = context.createDynamicsCompressor();
-
-  node.threshold.value = threshold;
-  node.ratio.value = ratio;
-  node.attack.value = attack;
-  node.release.value = release;
-
-  return node;
-};
-
-export const createFilter = (
-  context,
-  { type = 'lowpass', frequency = 1000, q = 0.0001, gain = 0 }
-) => {
-  const node = context.createBiquadFilter();
-
-  node.type = type;
-  node.frequency.value = frequency;
-  node.Q.value = q;
-  node.gain.value = gain;
-
-  return node;
-};
-
-export const createDelay = (context, { time = 0 }) => {
-  const node = context.createDelay();
-
-  node.delayTime.value = time;
-
-  return node;
-};
+import {
+  createCompressor,
+  createDelay,
+  createFilter,
+  createGain,
+  createNoise,
+  createOscillator,
+  createPanner,
+} from './helpers';
 
 export const HELPERS = {
   [NODE_TYPES.COMPRESSOR]: createCompressor,
@@ -74,6 +16,7 @@ export const HELPERS = {
   [NODE_TYPES.DESTINATION]: context => context.destination,
   [NODE_TYPES.FILTER]: createFilter,
   [NODE_TYPES.GAIN]: createGain,
+  [NODE_TYPES.NOISE]: createNoise,
   [NODE_TYPES.OSC]: createOscillator,
   [NODE_TYPES.PAN]: createPanner,
 };

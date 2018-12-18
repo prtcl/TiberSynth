@@ -6,6 +6,7 @@ const HIPASS_FREQUENCY = 'HIPASS_FREQUENCY';
 const HIPASS_Q = 'HIPASS_Q';
 const LOWPASS_FREQUENCY = 'LOWPASS_FREQUENCY';
 const LOWPASS_Q = 'LOWPASS_Q';
+const NOISE_GAIN = 'NOISE_GAIN';
 const OSC_A_DETUNE = 'OSC_A_DETUNE';
 const OSC_A_FREQUENCY = 'OSC_A_FREQUENCY';
 const OSC_B_DETUNE = 'OSC_B_DETUNE';
@@ -35,6 +36,7 @@ export const POINTS = {
   HIPASS_Q,
   LOWPASS_FREQUENCY,
   LOWPASS_Q,
+  NOISE_GAIN,
   OSC_A_DETUNE,
   OSC_B_DETUNE,
   OSC_C_DETUNE,
@@ -76,6 +78,7 @@ export const VALUE_MAPPERS = {
   [HIPASS_Q]: value => scale(value, 0, 1, 0.2, 0.9),
   [LOWPASS_FREQUENCY]: value => scale(value, 0, 1, 30, 12000),
   [LOWPASS_Q]: value => scale(value, 0, 1, 0.2, 0.5),
+  [NOISE_GAIN]: value => expo(value),
   [OSC_A_DETUNE]: createOscDetune(-500, 500),
   [OSC_A_FREQUENCY]: createOscillatorFrequency(150),
   [OSC_B_DETUNE]: createOscDetune(-125, 125),
@@ -159,6 +162,10 @@ export const POINT_CONFIGS = [
   {
     id: OSC_GAIN_C_GAIN,
     label: 'Osc C Gain',
+  },
+  {
+    id: NOISE_GAIN,
+    label: 'Noise Gain',
   },
   {
     id: HIPASS_FREQUENCY,

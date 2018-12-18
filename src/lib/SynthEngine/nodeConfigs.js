@@ -6,6 +6,7 @@ export const NODE_TYPES = {
   DESTINATION: 'DESTINATION',
   FILTER: 'FILTER',
   GAIN: 'GAIN',
+  NOISE: 'NOISE',
   OSC: 'OSC',
   PAN: 'PAN',
 };
@@ -21,6 +22,9 @@ const FEEDBACK_COMPRESSOR_TWO = 'FEEDBACK_COMPRESSOR_TWO';
 const FEEDBACK_GAIN = 'FEEDBACK_GAIN';
 const HIPASS = 'HIPASS';
 const LOWPASS = 'LOWPASS';
+const NOISE = 'NOISE';
+const NOISE_AM = 'NOISE_AM';
+const NOISE_GAIN = 'NOISE_GAIN';
 const OSC_A = 'OSC_A';
 const OSC_B = 'OSC_B';
 const OSC_C = 'OSC_C';
@@ -40,6 +44,7 @@ const OUTPUT = 'OUTPUT';
 const OUTPUT_COMPRESSOR = 'OUTPUT_COMPRESSOR';
 const OUTPUT_LIMITER = 'OUTPUT_LIMITER';
 const PRE_FILTER_COMPRESSOR = 'PRE_FILTER_COMPRESSOR';
+const PRE_NOISE_SUM = 'PRE_NOISE_SUM';
 const XMOD_GAIN_A = 'XMOD_GAIN_A';
 const XMOD_GAIN_B = 'XMOD_GAIN_B';
 const XMOD_GAIN_C = 'XMOD_GAIN_C';
@@ -59,6 +64,9 @@ export const NODES = {
   FEEDBACK_GAIN,
   HIPASS,
   LOWPASS,
+  NOISE,
+  NOISE_AM,
+  NOISE_GAIN,
   OSC_A,
   OSC_B,
   OSC_C,
@@ -78,6 +86,7 @@ export const NODES = {
   OUTPUT_COMPRESSOR,
   OUTPUT_LIMITER,
   PRE_FILTER_COMPRESSOR,
+  PRE_NOISE_SUM,
   XMOD_GAIN_A,
   XMOD_GAIN_B,
   XMOD_GAIN_C,
@@ -252,42 +261,6 @@ export default [
     },
   },
   {
-    id: OSC_GAIN_A,
-    type: NODE_TYPES.GAIN,
-    args: { gain: 0 },
-    connect: [nodes => nodes[PRE_FILTER_COMPRESSOR]],
-    set: (node, data) => {
-      const currentTime = getCurrentTime(node);
-      const value = data[POINTS.OSC_GAIN_A_GAIN];
-
-      node.gain.setTargetAtTime(value, currentTime, 0.01);
-    },
-  },
-  {
-    id: OSC_GAIN_B,
-    type: NODE_TYPES.GAIN,
-    args: { gain: 0 },
-    connect: [nodes => nodes[PRE_FILTER_COMPRESSOR]],
-    set: (node, data) => {
-      const currentTime = getCurrentTime(node);
-      const value = data[POINTS.OSC_GAIN_B_GAIN];
-
-      node.gain.setTargetAtTime(value, currentTime, 0.01);
-    },
-  },
-  {
-    id: OSC_GAIN_C,
-    type: NODE_TYPES.GAIN,
-    args: { gain: 0 },
-    connect: [nodes => nodes[PRE_FILTER_COMPRESSOR]],
-    set: (node, data) => {
-      const currentTime = getCurrentTime(node);
-      const value = data[POINTS.OSC_GAIN_C_GAIN];
-
-      node.gain.setTargetAtTime(value, currentTime, 0.01);
-    },
-  },
-  {
     id: OSC_PAN_A,
     type: NODE_TYPES.PAN,
     args: { x: -0.5, y: 0.1, z: 0 },
@@ -322,6 +295,80 @@ export default [
     type: NODE_TYPES.PAN,
     args: { x: 0.05, y: -0.5, z: 0 },
     connect: [nodes => nodes[OSC_GAIN_C]],
+  },
+  {
+    id: OSC_GAIN_A,
+    type: NODE_TYPES.GAIN,
+    args: { gain: 0 },
+    connect: [
+      nodes => nodes[PRE_FILTER_COMPRESSOR],
+      nodes => nodes[PRE_NOISE_SUM],
+    ],
+    set: (node, data) => {
+      const currentTime = getCurrentTime(node);
+      const value = data[POINTS.OSC_GAIN_A_GAIN];
+
+      node.gain.setTargetAtTime(value, currentTime, 0.01);
+    },
+  },
+  {
+    id: OSC_GAIN_B,
+    type: NODE_TYPES.GAIN,
+    args: { gain: 0 },
+    connect: [
+      nodes => nodes[PRE_FILTER_COMPRESSOR],
+      nodes => nodes[PRE_NOISE_SUM],
+    ],
+    set: (node, data) => {
+      const currentTime = getCurrentTime(node);
+      const value = data[POINTS.OSC_GAIN_B_GAIN];
+
+      node.gain.setTargetAtTime(value, currentTime, 0.01);
+    },
+  },
+  {
+    id: OSC_GAIN_C,
+    type: NODE_TYPES.GAIN,
+    args: { gain: 0 },
+    connect: [
+      nodes => nodes[PRE_FILTER_COMPRESSOR],
+      nodes => nodes[PRE_NOISE_SUM],
+    ],
+    set: (node, data) => {
+      const currentTime = getCurrentTime(node);
+      const value = data[POINTS.OSC_GAIN_C_GAIN];
+
+      node.gain.setTargetAtTime(value, currentTime, 0.01);
+    },
+  },
+  {
+    id: PRE_NOISE_SUM,
+    type: NODE_TYPES.GAIN,
+    args: { gain: 1 },
+    connect: [nodes => nodes[NOISE_AM].gain],
+  },
+  {
+    id: NOISE,
+    type: NODE_TYPES.NOISE,
+    connect: [nodes => nodes[NOISE_AM]],
+  },
+  {
+    id: NOISE_AM,
+    type: NODE_TYPES.GAIN,
+    args: { gain: 0 },
+    connect: [nodes => nodes[NOISE_GAIN]],
+  },
+  {
+    id: NOISE_GAIN,
+    type: NODE_TYPES.GAIN,
+    args: { gain: 0 },
+    connect: [nodes => nodes[PRE_FILTER_COMPRESSOR]],
+    set: (node, data) => {
+      const currentTime = getCurrentTime(node);
+      const value = data[POINTS.NOISE_GAIN];
+
+      node.gain.setTargetAtTime(value, currentTime, 0.01);
+    },
   },
   {
     id: PRE_FILTER_COMPRESSOR,

@@ -17,6 +17,8 @@ const getSynthEngine = () => {
   try {
     synthEngine = new SynthEngine();
   } catch (err) {
+    console.error(err);
+
     return {
       isCompatibleBrowser: false,
       synthEngine: null,
