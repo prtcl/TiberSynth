@@ -1,7 +1,7 @@
 @import "../../less/variables.less";
 
 :local {
-  @handleWidth: 15px;
+  @handleWidth: 14px;
   @handleCenter: @handleWidth / 2;
   @sliderHeight: 24px;
   @trackColor: #fbfbfd;
@@ -14,7 +14,6 @@
   .labelContainer {
     display: flex;
     flex-direction: row;
-    margin-bottom: @spacing / 2;
   }
 
   .label,
@@ -54,14 +53,16 @@
 
   .handle {
     background-color: @colorWhite;
+    border-radius: @handleWidth;
     border: 0;
-    border-radius: @borderRadius;
+    border: 1px solid #d2d5de;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     cursor: pointer;
-    height: @sliderHeight;
+    height: @handleWidth;
     margin-left: -(@handleCenter);
     position: absolute;
-    width: @handleWidth;
+    top: @sliderHeight / 2 - @handleWidth / 2;
+    width: @handleWidth - 1;
     z-index: 2;
   }
 }

@@ -6,7 +6,7 @@ import Slider from '../../../../components/Slider';
 import stylesheet from './Sidebar.less';
 
 const ExplainationCopy = () => (
-  <div className={classNames([stylesheet.block, stylesheet.blockFlex])}>
+  <div className={classNames([stylesheet.block, stylesheet.block__expand])}>
     <Text color="white">
       TiberSynth is an experimental audio synthesizer that runs in your web
       browser. You play the synthesizer by moving your mouse around a randomized
@@ -28,25 +28,27 @@ const ExplainationCopy = () => (
 );
 
 const SpaceControls = ({ onRandomize, onUndo, onRedo }) => (
-  <div className={classNames([stylesheet.block, stylesheet.spaceControls])}>
-    <Button
-      className={classNames([stylesheet.button, stylesheet.buttonFlex])}
-      color="white"
-      label="Randomize"
-      onClick={onRandomize}
-    />
-    <Button
-      className={stylesheet.button}
-      color="white"
-      label="Undo"
-      onClick={onUndo}
-    />
-    <Button
-      className={stylesheet.button}
-      color="white"
-      label="Redo"
-      onClick={onRedo}
-    />
+  <div className={classNames([stylesheet.block, stylesheet.block__margin])}>
+    <div className={stylesheet.spaceControls}>
+      <Button
+        className={classNames([stylesheet.button, stylesheet.buttonFlex])}
+        color="white"
+        label="Randomize"
+        onClick={onRandomize}
+      />
+      <Button
+        className={stylesheet.button}
+        color="white"
+        label="Undo"
+        onClick={onUndo}
+      />
+      <Button
+        className={stylesheet.button}
+        color="white"
+        label="Redo"
+        onClick={onRedo}
+      />
+    </div>
   </div>
 );
 
@@ -58,7 +60,7 @@ const ParameterSliders = ({
   onChangeFilter,
   onChangeNoise,
 }) => (
-  <div className={classNames([stylesheet.block, stylesheet.parameterSliders])}>
+  <div className={classNames([stylesheet.block, stylesheet.block__padding])}>
     <Slider
       label="Feedback"
       onChange={onChangeFeedback}
@@ -83,14 +85,18 @@ const Title = () => (
 
 const Visualizer = () => (
   <div className={stylesheet.block}>
-    <div style={{ backgroundColor: 'white', height: '144px' }} />
+    <div style={{ backgroundColor: '#4c4c4c', height: '144px' }} />
   </div>
+);
+
+const Empty = () => (
+  <div className={classNames([stylesheet.block, stylesheet.block__expand])} />
 );
 
 const Sidebar = props => (
   <div className={stylesheet.container}>
-    <ExplainationCopy />
     <SpaceControls {...props} />
+    <Empty />
     <ParameterSliders {...props} />
     <Title />
     <Visualizer />
