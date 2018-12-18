@@ -64,8 +64,12 @@ const ParameterSliders = ({
       onChange={onChangeFeedback}
       value={feedbackRange}
     />
-    <Slider label="Noise" onChange={onChangeNoise} value={noiseRange} />
-    <Slider label="Filter" onChange={onChangeFilter} value={filterRange} />
+    <Slider label="Noise Balance" onChange={onChangeNoise} value={noiseRange} />
+    <Slider
+      label="Filter Range"
+      onChange={onChangeFilter}
+      value={filterRange}
+    />
   </div>
 );
 

@@ -1,6 +1,8 @@
 @import "../../less/variables.less";
 
 :local {
+  @transitionDuration: 250ms;
+
   .container {
     border-radius: @borderRadius;
     border: none;
@@ -9,7 +11,7 @@
     margin: 0;
     outline: none;
     padding: 0.5em 1em;
-    transition: 150ms opacity linear;
+    transition: @transitionDuration opacity linear;
 
     &:active {
       opacity: 0.95;

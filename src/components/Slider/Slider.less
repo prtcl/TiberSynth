@@ -1,19 +1,67 @@
 @import "../../less/variables.less";
 
 :local {
+  @handleWidth: 15px;
+  @handleCenter: @handleWidth / 2;
+  @sliderHeight: 24px;
+  @trackColor: #fbfbfd;
+  @trackHeight: 4px;
+
   .container {
     margin: @spacing / 2 0;
   }
 
-  .label {
+  .labelContainer {
+    display: flex;
+    flex-direction: row;
     margin-bottom: @spacing / 2;
   }
 
-  .slider {
-    padding: 0 1px;
+  .label,
+  .value {
+    flex: 1;
   }
 
-  .input {
+  .value {
+    text-align: right;
+  }
+
+  .sliderContainer {
+    padding: 0 @handleCenter;
+  }
+
+  .slider {
+    cursor: move;
+    height: @sliderHeight;
+    position: relative;
     width: 100%;
+  }
+
+  .rail,
+  .track {
+    background-color: @trackColor;
+    height: @trackHeight;
+    left: 0;
+    opacity: 0.2;
+    position: absolute;
+    top: @sliderHeight / 2 - @trackHeight / 2;
+    width: 100%;
+  }
+
+  .track {
+    z-index: 1;
+  }
+
+  .handle {
+    background-color: @colorWhite;
+    border: 0;
+    border-radius: @borderRadius;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    height: @sliderHeight;
+    margin-left: -(@handleCenter);
+    position: absolute;
+    width: @handleWidth;
+    z-index: 2;
   }
 }

@@ -1,46 +1,145 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import {
+  Handles as RCHandles,
+  Rail as RCRail,
+  Slider as RCSlider,
+  Tracks as RCTracks,
+} from 'react-compound-slider';
 import Text from '../Text';
 import stylesheet from './Slider.less';
 
+const Handle = ({ percent, ...props }) => (
+  <div
+    {...props}
+    className={stylesheet.handle}
+    style={{ left: `${percent}%` }}
+  />
+);
+
+const Handles = props => (
+  <RCHandles {...props}>
+    {({ handles, getHandleProps }) => (
+      <Fragment>
+        {handles.map(handle => (
+          <Handle key={handle.id} {...handle} {...getHandleProps(handle.id)} />
+        ))}
+      </Fragment>
+    )}
+  </RCHandles>
+);
+
+const Track = ({ source, target, ...props }) => (
+  <div
+    {...props}
+    className={stylesheet.track}
+    style={{
+      left: `${source.percent}%`,
+      width: `${target.percent - source.percent}%`,
+    }}
+  />
+);
+
+const Tracks = props => (
+  <RCTracks {...props} right={false}>
+    {({ tracks, getTrackProps }) => (
+      <Fragment>
+        {tracks.map(({ id, source, target }) => (
+          <Track
+            {...getTrackProps()}
+            key={id}
+            source={source}
+            target={target}
+          />
+        ))}
+      </Fragment>
+    )}
+  </RCTracks>
+);
+
+const Rail = props => (
+  <RCRail {...props}>
+    {({ getRailProps }) => (
+      <div {...getRailProps()} className={stylesheet.rail} />
+    )}
+  </RCRail>
+);
+
+const defaultValueFormatter = value => `${Math.round(value * 100)}%`;
+
 export default class Slider extends Component {
+  state = {
+    value: this.props.value,
+  };
+
   static defaultProps = {
-    color: 'white',
     max: 1,
     min: 0,
     onChange: () => null,
-    step: 0.1,
+    step: 0.01,
     value: 0,
+    valueFormatter: defaultValueFormatter,
   };
 
-  handleChange = e => {
-    this.props.onChange(e.target.value);
+  getValue () {
+    return [this.props.value];
+  }
+
+  getFormattedValue () {
+    const { valueFormatter } = this.props;
+    const { value } = this.state;
+
+    return valueFormatter(value);
+  }
+
+  getDomain () {
+    const { min, max } = this.props;
+
+    return [min, max];
+  }
+
+  handleChange = ([value]) => {
+    this.props.onChange(value);
+  };
+
+  handleUpdate = ([value]) => {
+    this.setState({ value });
   };
 
   renderLabel () {
-    const { color, label } = this.props;
+    const { label } = this.props;
+    const value = this.getFormattedValue();
 
     return (
-      <Text className={stylesheet.label} color={color}>
-        {label}
-      </Text>
+      <div className={stylesheet.labelContainer}>
+        <Text className={stylesheet.label} color="white">
+          {label}
+        </Text>
+        <Text className={stylesheet.value} color="gray">
+          {value}
+        </Text>
+      </div>
     );
   }
 
   renderSlider () {
-    const { label, min, max, step, value } = this.props;
+    const { step } = this.props;
+    const value = this.getValue();
+    const domain = this.getDomain();
 
     return (
-      <div className={stylesheet.slider}>
-        <input
-          className={stylesheet.input}
-          max={max}
-          min={min}
-          name={label}
+      <div className={stylesheet.sliderContainer}>
+        <RCSlider
+          className={stylesheet.slider}
+          domain={domain}
           onChange={this.handleChange}
+          onUpdate={this.handleUpdate}
           step={step}
-          type="range"
-          value={value}
-        />
+          values={value}
+        >
+          <Rail />
+          <Tracks />
+          <Handles />
+        </RCSlider>
       </div>
     );
   }
