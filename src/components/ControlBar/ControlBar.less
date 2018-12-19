@@ -1,0 +1,25 @@
+@import "../../less/variables.less";
+
+:local {
+  .container {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    opacity: 0.9;
+
+    .action {
+      flex: 0 0 auto;
+    }
+
+    .action:not(:last-child) {
+      margin-right: @spacing;
+    }
+
+    .spacer {
+      flex: 1;
+      height: 100%;
+      width: 100%;
+    }
+  }
+}

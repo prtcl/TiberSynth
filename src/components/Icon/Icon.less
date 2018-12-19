@@ -1,0 +1,29 @@
+@import "../../less/variables.less";
+
+:local {
+  .container {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    padding: 3px;
+
+    &:active {
+      .icon {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .icon {
+    transition: 250ms opacity linear;
+  }
+
+  .colorWhite {
+    fill: @colorWhite;
+  }
+
+  .colorBlack {
+    fill: @colorBlack;
+  }
+}
