@@ -15,10 +15,26 @@ const getMouseCoordinates = ({ pageX, pageY }, ref) => {
 };
 
 export default class Mouse extends Component {
+  static defaultProps = {
+    onDown: () => null,
+    onEnter: () => null,
+    onLeave: () => null,
+    onMove: () => null,
+    onUp: () => null,
+  };
+
   containerRef = React.createRef();
 
   handleMouseDown = () => {
     this.props.onDown();
+  };
+
+  handleMouseEnter = () => {
+    this.props.onEnter();
+  };
+
+  handleMouseLeave = () => {
+    this.props.onLeave();
   };
 
   handleMouseUp = () => {
@@ -38,6 +54,8 @@ export default class Mouse extends Component {
     return (
       <div
         onMouseDown={this.handleMouseDown}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
         onMouseMove={this.handleMouseMove}
         onMouseUp={this.handleMouseUp}
         ref={this.containerRef}

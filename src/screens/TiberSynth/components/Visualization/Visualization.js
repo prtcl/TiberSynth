@@ -2,9 +2,9 @@ import React from 'react';
 import Mouse from '../../../../components/Mouse';
 import stylesheet from './Visualization.less';
 
-const Visualization = ({ onMouseMove, onMouseDown, onMouseUp }) => (
+const Visualization = ({ onMove, onPlay, onStop }) => (
   <div className={stylesheet.container}>
-    <Mouse onMove={onMouseMove} onUp={onMouseUp} onDown={onMouseDown} />
+    <Mouse onMove={onMove} onUp={onStop} onDown={onPlay} onLeave={onStop} />
   </div>
 );
 
