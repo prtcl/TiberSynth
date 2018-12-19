@@ -1,4 +1,4 @@
-import AudioContext from './utils/AudioContext';
+import AudioContext from './lib/AudioContext';
 import nodeConfigs, { NODES, NODE_TYPES } from './nodeConfigs';
 import {
   createCompressor,
@@ -8,7 +8,7 @@ import {
   createNoise,
   createOscillator,
   createPanner,
-} from './helpers';
+} from './lib/helpers';
 
 export const HELPERS = {
   [NODE_TYPES.COMPRESSOR]: createCompressor,

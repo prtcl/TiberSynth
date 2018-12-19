@@ -65,6 +65,7 @@ export const createDelay = (context, { time = 0 }) => {
   return node;
 };
 
+// stolen from http://www.musicdsp.org/files/pink.txt
 export const createNoise = context => {
   const bufferSize = 4096;
   const node = context.createScriptProcessor(bufferSize, 1, 1);

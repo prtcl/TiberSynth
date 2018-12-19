@@ -11,10 +11,10 @@ const isCompatibleBrowser = () => {
   if (typeof context === 'undefined') {
     return false;
   }
-  if (canPlay.ogg === false && canPlay.mp3 === false) {
+  if (!('createGain' in context)) {
     return false;
   }
-  if (!('createGain' in context)) {
+  if (canPlay.ogg === false && canPlay.mp3 === false) {
     return false;
   }
 
