@@ -1,6 +1,7 @@
 import AudioContext from './lib/AudioContext';
 import nodeConfigs, { NODES, NODE_TYPES } from './nodeConfigs';
 import {
+  createAnalyzer,
   createCompressor,
   createDelay,
   createFilter,
@@ -11,6 +12,7 @@ import {
 } from './lib/helpers';
 
 export const HELPERS = {
+  [NODE_TYPES.ANALYZER]: createAnalyzer,
   [NODE_TYPES.COMPRESSOR]: createCompressor,
   [NODE_TYPES.DELAY]: createDelay,
   [NODE_TYPES.DESTINATION]: context => context.destination,
@@ -85,5 +87,9 @@ export default class SynthEngine {
 
       set(node, data);
     });
+  }
+
+  getAnalyzer () {
+    return this.nodes[NODES.ANALYZER];
   }
 }

@@ -3,11 +3,17 @@ import SynthEngine, { isCompatibleBrowser } from '../lib/SynthEngine';
 
 const { Consumer, Provider } = React.createContext();
 
+const DEFAULT_STATE = {
+  analyser: null,
+  isCompatibleBrowser: false,
+  synthEngine: null,
+  synthEngineError: null,
+};
+
 const getSynthEngine = () => {
   if (!isCompatibleBrowser()) {
     return {
-      isCompatibleBrowser: false,
-      synthEngine: null,
+      ...DEFAULT_STATE,
       synthEngineError: new Error('Browser does not support the Web Audio API'),
     };
   }
@@ -20,8 +26,7 @@ const getSynthEngine = () => {
     console.error(err);
 
     return {
-      isCompatibleBrowser: false,
-      synthEngine: null,
+      ...DEFAULT_STATE,
       synthEngineError: err,
     };
   }
@@ -31,9 +36,10 @@ const getSynthEngine = () => {
   }
 
   return {
+    ...DEFAULT_STATE,
+    analyser: synthEngine.getAnalyzer(),
     isCompatibleBrowser: true,
     synthEngine,
-    synthEngineError: null,
   };
 };
 

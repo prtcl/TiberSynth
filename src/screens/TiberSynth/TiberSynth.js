@@ -6,7 +6,7 @@ import stylesheet from './TiberSynth.less';
 const TiberSynth = props => (
   <div className={stylesheet.container}>
     <div className={stylesheet.sidebar}>
-      <Sidebar />
+      <Sidebar {...props} />
     </div>
     <div className={stylesheet.visualization}>
       <Visualization {...props} />

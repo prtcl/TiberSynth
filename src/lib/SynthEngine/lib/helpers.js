@@ -1,3 +1,5 @@
+import AudioAnalyser from './AudioAnalyser';
+
 export const createGain = (context, { gain }) => {
   const node = context.createGain();
 
@@ -98,3 +100,6 @@ export const createNoise = context => {
 
   return node;
 };
+
+export const createAnalyzer = (context, args) =>
+  new AudioAnalyser(context, args);

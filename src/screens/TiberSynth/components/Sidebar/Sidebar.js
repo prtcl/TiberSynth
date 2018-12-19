@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import Analyzer from '../../../../components/Analyser';
 import ControlBar from '../../../../components/ControlBar';
 import Text from '../../../../components/Text';
 import Slider from '../../../../components/Slider';
@@ -46,15 +47,17 @@ const ParameterSliders = ({
 
 const Title = () => (
   <div className={stylesheet.block}>
-    <Text color="white" type="title">
-      TiberSynth
-    </Text>
+    <div style={{ opacity: 0.95 }}>
+      <Text color="white" type="title">
+        TiberSynth
+      </Text>
+    </div>
   </div>
 );
 
 const Visualizer = () => (
   <div className={stylesheet.block}>
-    <div style={{ backgroundColor: '#4c4c4c', height: '144px' }} />
+    <Analyzer height={144} />
   </div>
 );
 

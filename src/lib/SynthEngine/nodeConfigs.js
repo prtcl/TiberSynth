@@ -1,6 +1,7 @@
 import { OSCILLATORS, POINTS } from '../parameterSpace';
 
 export const NODE_TYPES = {
+  ANALYZER: 'ANALYZER',
   COMPRESSOR: 'COMPRESSOR',
   DELAY: 'DELAY',
   DESTINATION: 'DESTINATION',
@@ -11,6 +12,7 @@ export const NODE_TYPES = {
   PAN: 'PAN',
 };
 
+const ANALYZER = 'ANALYZER';
 const DESTINATION = 'DESTINATION';
 const EQ_HIGH = 'EQ_HIGH';
 const EQ_HIGH_MID = 'EQ_HIGH_MID';
@@ -53,6 +55,7 @@ const XMOD_GAIN_E = 'XMOD_GAIN_E';
 const XMOD_GAIN_F = 'XMOD_GAIN_F';
 
 export const NODES = {
+  ANALYZER,
   DESTINATION,
   EQ_HIGH,
   EQ_HIGH_MID,
@@ -532,7 +535,16 @@ export default [
       attack: 0.1,
       release: 0.1,
     },
-    connect: [nodes => nodes[DESTINATION]],
+    connect: [nodes => nodes[DESTINATION], nodes => nodes[ANALYZER].node],
+  },
+  {
+    id: ANALYZER,
+    type: NODE_TYPES.ANALYZER,
+    args: {
+      size: 1024,
+      min: -100,
+      max: 0,
+    },
   },
   {
     id: DESTINATION,
