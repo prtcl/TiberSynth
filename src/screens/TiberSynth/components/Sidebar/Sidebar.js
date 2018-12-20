@@ -22,26 +22,15 @@ const SpaceControls = ({ onRandomize, onUndo, onRedo }) => (
   </div>
 );
 
-const ParameterSliders = ({
-  feedbackRange,
-  filterRange,
-  noiseRange,
-  onChangeFeedback,
-  onChangeFilter,
-  onChangeNoise,
-}) => (
+const ParameterSliders = ({ onUpdateRangeValue, ranges }) => (
   <div className={classNames([stylesheet.block, stylesheet.block__padding])}>
-    <Slider
-      label="Feedback"
-      onChange={onChangeFeedback}
-      value={feedbackRange}
-    />
-    <Slider label="Noise Balance" onChange={onChangeNoise} value={noiseRange} />
-    <Slider
-      label="Filter Range"
-      onChange={onChangeFilter}
-      value={filterRange}
-    />
+    {ranges.map(({ id, ...rangeProps }) => (
+      <Slider
+        key={id}
+        {...rangeProps}
+        onChange={value => onUpdateRangeValue(value, id)}
+      />
+    ))}
   </div>
 );
 

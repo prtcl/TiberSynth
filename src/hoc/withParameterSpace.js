@@ -4,21 +4,20 @@ import {
   VALUE_MAPPERS,
   getInitialOscillators,
   getInitialPoints,
+  getInitialRanges,
   getInitialSynthesisValues,
 } from '../lib/parameterSpace';
 
 const { Consumer, Provider } = React.createContext();
 
 const INITIAL_STATE = () => ({
-  feedbackRange: 0.8,
-  filterRange: 0.8,
   history: [],
   historyIndex: 0,
   isPlaying: false,
-  noiseRange: 0.8,
   oscillators: getInitialOscillators(),
   points: getInitialPoints(),
   position: { x: 0, y: 0 },
+  ranges: getInitialRanges(),
   synthesisValues: getInitialSynthesisValues(),
 });
 
@@ -32,6 +31,7 @@ const getUpdatedSpace = ({
   oscillators,
   points,
   position,
+  ranges,
   synthesisValues,
 }) => {
   const updatedPoints = points.map(point => {
@@ -45,10 +45,18 @@ const getUpdatedSpace = ({
     };
   });
 
+  const rangeValues = ranges.reduce(
+    (res, range) => ({
+      ...res,
+      [range.id]: range.value,
+    }),
+    {}
+  );
+
   const updatedSynthesisValues = [...oscillators, ...updatedPoints].reduce(
     (res, parameter) => {
       const mapper = VALUE_MAPPERS[parameter.id];
-      const value = mapper(parameter.value);
+      const value = mapper(parameter.value, rangeValues);
 
       return {
         ...res,
@@ -62,6 +70,8 @@ const getUpdatedSpace = ({
     oscillators,
     points: updatedPoints,
     position,
+    rangeValues,
+    ranges,
     synthesisValues: updatedSynthesisValues,
   };
 };
@@ -172,30 +182,35 @@ export const withParameterSpaceProvider = () => Comp =>
       this.setState({ isPlaying: false });
     };
 
-    updateFeedback = value => {
-      this.setState({ feedbackRange: value });
-    };
+    updateRangeValue = (value, id) => {
+      const { ranges } = this.state;
 
-    updateNoise = value => {
-      this.setState({ noiseRange: value });
-    };
+      const updatedRanges = ranges.map(range => {
+        if (range.id !== id) {
+          return range;
+        }
 
-    updateFilter = value => {
-      this.setState({ filterRange: value });
+        return {
+          ...range,
+          value,
+        };
+      });
+
+      this.setState({
+        ...getUpdatedSpace({ ...this.state, ranges: updatedRanges }),
+      });
     };
 
     getParameterSpaceProps () {
       return {
         ...this.state,
-        onChangeFeedback: this.updateFeedback,
-        onChangeFilter: this.updateFilter,
-        onChangeNoise: this.updateNoise,
         onMove: this.move,
         onPlay: this.play,
         onRandomize: this.randomize,
         onRedo: this.redo,
         onStop: this.stop,
         onUndo: this.undo,
+        onUpdateRangeValue: this.updateRangeValue,
       };
     }
 
