@@ -26,9 +26,11 @@ const withGestureWiring = () => Comp =>
     }
 
     componentDidUpdate (prevProps) {
-      const { isPlaying, synthEngine, synthesisValues } = this.props;
+      const { isPlaying, synthEngine, synthesisValues, volume } = this.props;
 
-      synthEngine.updateValues(synthesisValues);
+      if (synthesisValues !== prevProps.synthesisValues) {
+        synthEngine.updateValues(synthesisValues);
+      }
 
       if (isPlaying !== prevProps.isPlaying) {
         if (isPlaying) {
@@ -36,6 +38,10 @@ const withGestureWiring = () => Comp =>
         } else {
           synthEngine.stop();
         }
+      }
+
+      if (volume !== prevProps.volume) {
+        synthEngine.setVolume(volume);
       }
     }
 

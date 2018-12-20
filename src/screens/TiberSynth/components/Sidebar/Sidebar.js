@@ -8,6 +8,10 @@ import stylesheet from './Sidebar.less';
 
 const Spacer = () => <div className={stylesheet.spacer} />;
 
+const Seperator = ({ children }) => (
+  <div className={stylesheet.seperator}>{children}</div>
+);
+
 const SpaceControls = ({ onRandomize, onUndo, onRedo }) => (
   <div className={classNames([stylesheet.block, stylesheet.block__margin])}>
     <ControlBar
@@ -22,7 +26,12 @@ const SpaceControls = ({ onRandomize, onUndo, onRedo }) => (
   </div>
 );
 
-const ParameterSliders = ({ onUpdateRangeValue, ranges }) => (
+const ParameterSliders = ({
+  onChangeVolume,
+  onUpdateRangeValue,
+  ranges,
+  volume,
+}) => (
   <div className={classNames([stylesheet.block, stylesheet.block__padding])}>
     {ranges.map(({ id, ...rangeProps }) => (
       <Slider
@@ -31,6 +40,9 @@ const ParameterSliders = ({ onUpdateRangeValue, ranges }) => (
         onChange={value => onUpdateRangeValue(value, id)}
       />
     ))}
+    <Seperator>
+      <Slider label="Volume" onChange={onChangeVolume} value={volume} />
+    </Seperator>
   </div>
 );
 

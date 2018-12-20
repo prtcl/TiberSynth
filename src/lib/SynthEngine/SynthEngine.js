@@ -10,6 +10,7 @@ import {
   createOscillator,
   createPanner,
 } from './lib/helpers';
+import { expo } from '../math';
 
 export const HELPERS = {
   [NODE_TYPES.ANALYZER]: createAnalyzer,
@@ -99,5 +100,14 @@ export default class SynthEngine {
 
   resume () {
     this.context.resume();
+  }
+
+  setVolume (value) {
+    const currentTime = this.context.currentTime;
+    const node = this.nodes[NODES.MAIN];
+
+    node.gain.setTargetAtTime(expo(value), currentTime, 0.1);
+
+    return currentTime;
   }
 }

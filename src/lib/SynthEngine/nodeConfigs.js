@@ -24,6 +24,7 @@ const FEEDBACK_COMPRESSOR_TWO = 'FEEDBACK_COMPRESSOR_TWO';
 const FEEDBACK_GAIN = 'FEEDBACK_GAIN';
 const HIPASS = 'HIPASS';
 const LOWPASS = 'LOWPASS';
+const MAIN = 'MAIN';
 const NOISE = 'NOISE';
 const NOISE_AM = 'NOISE_AM';
 const NOISE_GAIN = 'NOISE_GAIN';
@@ -67,6 +68,7 @@ export const NODES = {
   FEEDBACK_GAIN,
   HIPASS,
   LOWPASS,
+  MAIN,
   NOISE,
   NOISE_AM,
   NOISE_GAIN,
@@ -472,7 +474,7 @@ export default [
       type: 'lowshelf',
       frequency: 100,
       q: 1,
-      gain: 8,
+      gain: 6,
     },
     connect: [nodes => nodes[EQ_LOW_MID]],
   },
@@ -535,7 +537,7 @@ export default [
       attack: 0.1,
       release: 0.1,
     },
-    connect: [nodes => nodes[DESTINATION], nodes => nodes[ANALYZER].node],
+    connect: [nodes => nodes[MAIN], nodes => nodes[ANALYZER].node],
   },
   {
     id: ANALYZER,
@@ -545,6 +547,12 @@ export default [
       min: -100,
       max: 0,
     },
+  },
+  {
+    id: MAIN,
+    type: NODE_TYPES.GAIN,
+    args: { gain: 0.8 },
+    connect: [nodes => nodes[DESTINATION]],
   },
   {
     id: DESTINATION,

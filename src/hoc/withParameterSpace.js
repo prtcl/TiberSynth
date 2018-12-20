@@ -19,6 +19,7 @@ const INITIAL_STATE = () => ({
   position: { x: 0, y: 0 },
   ranges: getInitialRanges(),
   synthesisValues: getInitialSynthesisValues(),
+  volume: 0.65,
 });
 
 const MAX_HISTORY = 100;
@@ -201,9 +202,14 @@ export const withParameterSpaceProvider = () => Comp =>
       });
     };
 
+    updateVolume = value => {
+      this.setState({ volume: value });
+    };
+
     getParameterSpaceProps () {
       return {
         ...this.state,
+        onChangeVolume: this.updateVolume,
         onMove: this.move,
         onPlay: this.play,
         onRandomize: this.randomize,
