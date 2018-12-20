@@ -92,4 +92,12 @@ export default class SynthEngine {
   getAnalyzer () {
     return this.nodes[NODES.ANALYZER];
   }
+
+  isSuspended () {
+    return this.context.state === 'suspended';
+  }
+
+  resume () {
+    this.context.resume();
+  }
 }

@@ -47,6 +47,32 @@ export const withSynthesisEngineProvider = () => Comp =>
   class SynthesisEngine extends Component {
     state = { ...getSynthEngine() };
 
+    constructor (props) {
+      super(props);
+
+      this.checkSuspendedState();
+    }
+
+    checkSuspendedState () {
+      const { synthEngine, isCompatibleBrowser } = this.state;
+
+      if (!isCompatibleBrowser) {
+        return;
+      }
+
+      if (synthEngine.isSuspended()) {
+        const resume = () => {
+          synthEngine.resume();
+
+          window.removeEventListener('mousedown', resume);
+          window.removeEventListener('touchstart', resume);
+        };
+
+        window.addEventListener('mousedown', resume);
+        window.addEventListener('touchstart', resume);
+      }
+    }
+
     render () {
       return (
         <Provider value={this.state}>
