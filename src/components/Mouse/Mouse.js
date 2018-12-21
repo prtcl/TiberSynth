@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const STYLE = { width: '100%', height: '100%' };
+const STYLE = { width: '100%', height: '100%', overflow: 'hidden' };
 
 const getMouseCoordinates = ({ pageX, pageY }, ref) => {
   if (!ref || !ref.current) {
@@ -25,8 +25,12 @@ export default class Mouse extends Component {
 
   containerRef = React.createRef();
 
-  handleMouseDown = () => {
+  handleDown = () => {
     this.props.onDown();
+  };
+
+  handleUp = () => {
+    this.props.onUp();
   };
 
   handleMouseEnter = () => {
@@ -37,10 +41,6 @@ export default class Mouse extends Component {
     this.props.onLeave();
   };
 
-  handleMouseUp = () => {
-    this.props.onUp();
-  };
-
   handleMouseMove = e => {
     const { onMove } = this.props;
     const coords = getMouseCoordinates(e, this.containerRef);
@@ -48,16 +48,34 @@ export default class Mouse extends Component {
     onMove(coords);
   };
 
+  handleTouchStart = e => {
+    this.handleTouchMove(e);
+    this.handleDown();
+  };
+
+  handleTouchMove = e => {
+    if (!e.touches) {
+      return;
+    }
+
+    this.handleMouseMove(e.touches[0]);
+    e.preventDefault();
+  };
+
   render () {
     const { children } = this.props;
 
     return (
       <div
-        onMouseDown={this.handleMouseDown}
+        onMouseDown={this.handleDown}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
         onMouseMove={this.handleMouseMove}
-        onMouseUp={this.handleMouseUp}
+        onMouseUp={this.handleUp}
+        onTouchCancel={this.handleMouseLeave}
+        onTouchEnd={this.handleUp}
+        onTouchMove={this.handleTouchMove}
+        onTouchStart={this.handleTouchStart}
         ref={this.containerRef}
         style={STYLE}
       >

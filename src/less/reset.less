@@ -3,6 +3,7 @@
 * {
   margin: 0;
   padding: 0;
+  touch-action: none;
 
   &,
   &::after,
@@ -20,7 +21,8 @@ body {
   font-weight: 400;
   height: 100%;
   line-height: @lineHeight;
-  position: relative;
+  overflow: hidden;
+  position: fixed;
   text-rendering: optimizeLegibility;
   width: 100%;
   z-index: 0;

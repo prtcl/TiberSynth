@@ -11,9 +11,11 @@ import stylesheet from './Slider.less';
 const Handle = ({ percent, ...props }) => (
   <div
     {...props}
-    className={stylesheet.handle}
+    className={stylesheet.handleContainer}
     style={{ left: `${percent}%` }}
-  />
+  >
+    <div className={stylesheet.handle} />
+  </div>
 );
 
 const Handles = props => (
@@ -31,12 +33,14 @@ const Handles = props => (
 const Track = ({ source, target, ...props }) => (
   <div
     {...props}
-    className={stylesheet.track}
+    className={stylesheet.trackContainer}
     style={{
       left: `${source.percent}%`,
       width: `${target.percent - source.percent}%`,
     }}
-  />
+  >
+    <div className={stylesheet.track} />
+  </div>
 );
 
 const Tracks = props => (
@@ -59,7 +63,9 @@ const Tracks = props => (
 const Rail = props => (
   <RCRail {...props}>
     {({ getRailProps }) => (
-      <div {...getRailProps()} className={stylesheet.rail} />
+      <div {...getRailProps()} className={stylesheet.railContainer}>
+        <div className={stylesheet.rail} />
+      </div>
     )}
   </RCRail>
 );
