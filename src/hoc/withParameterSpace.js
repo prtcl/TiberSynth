@@ -156,6 +156,10 @@ export const withParameterSpaceProvider = () => Comp =>
       const historyIndex = getHistoryIndex(offset, this.state);
 
       if (historyIndex === this.state.historyIndex) {
+        if (offset > 0) {
+          return this.randomize();
+        }
+
         return;
       }
 
