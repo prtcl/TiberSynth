@@ -1,29 +1,53 @@
 @import "../../less/variables.less";
 
+@keyframes fade-button-highlight {
+  0% {
+    background-color: rgba(255, 255, 255, 1);
+  }
+  100% {
+    background-color: rgba(255, 255, 255, 0);
+  }
+}
+
 :local {
+  @enterDuration: 50ms;
+  @exitDuration: 250ms;
+
   .container {
     align-items: center;
+    border-radius: 50px;
     cursor: pointer;
     display: flex;
     justify-content: center;
     padding: 3px;
-
-    &:active {
-      .icon {
-        opacity: 0.8;
-      }
-    }
+    transition: @exitDuration background-color ease-in-out;
   }
 
-  .icon {
-    transition: 250ms opacity linear;
+  .isActive {
+    transition-duration: @enterDuration;
   }
 
   .colorWhite {
-    fill: @colorWhite;
+    background: rgba(255, 255, 255, 0);
+
+    .icon {
+      fill: @colorWhite;
+    }
+
+    &.isActive {
+      background: rgba(255, 255, 255, 0.1);
+    }
   }
 
   .colorBlack {
-    fill: @colorBlack;
+    background: rgba(0, 0, 0, 0);
+
+    .icon {
+      fill: @colorBlack;
+    }
+
+    &.isActive {
+      background: rgba(0, 0, 0, 0.1);
+    }
   }
 }
