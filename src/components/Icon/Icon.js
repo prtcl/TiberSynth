@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import IosArrowBack from 'react-ionicons/lib/IosArrowBack';
+import IosArrowDown from 'react-ionicons/lib/IosArrowDown';
 import IosArrowForward from 'react-ionicons/lib/IosArrowForward';
 import IosBook from 'react-ionicons/lib/IosBook';
 import IosInformationCircleOutline from 'react-ionicons/lib/IosInformationCircleOutline';
@@ -20,6 +21,7 @@ const COLORS = {
 const TYPES = {
   back: IosArrowBack,
   book: IosBook,
+  down: IosArrowDown,
   forward: IosArrowForward,
   github: LogoGithub,
   info: IosInformationCircleOutline,

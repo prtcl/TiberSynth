@@ -1,5 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
+import { NAME as ABOUT } from '../About';
+import { NAME as MANUAL } from '../Manual';
 import Analyzer from '../../../../components/Analyser';
 import ControlBar from '../../../../components/ControlBar';
 import Menu from '../../../../components/Menu';
@@ -19,8 +21,8 @@ const NavMenu = ({ shouldShowMenu, onCloseNavMenu, onShowModal }) => (
     isOpen={shouldShowMenu}
     onClose={onCloseNavMenu}
     items={[
-      { label: 'About', icon: 'info', onClick: () => onShowModal('INFO') },
-      { label: 'Manual', icon: 'book', onClick: () => onShowModal('MANUAL') },
+      { label: 'About', icon: 'info', onClick: () => onShowModal(ABOUT) },
+      { label: 'Manual', icon: 'book', onClick: () => onShowModal(MANUAL) },
       {
         label: 'GitHub',
         icon: 'github',

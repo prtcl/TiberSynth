@@ -1,0 +1,70 @@
+@import "../../less/variables.less";
+
+:local {
+  @zindex: 100;
+
+  .overlay {
+    background-color: rgba(255, 255, 255, 0.06);
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: @zindex;
+  }
+
+  .wrapper {
+    align-items: center;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: @zindex * 2;
+  }
+
+  .container {
+    background-color: rgba(0, 0, 0, 0.72);
+    border-radius: @spacing;
+    padding: @spacing;
+    z-index: @zindex * 3;
+  }
+
+  .header {
+    display: flex;
+
+    .icon {
+      margin-left: -2px;
+      opacity: 0.2;
+    }
+  }
+
+  .content {
+    opacity: 0.95;
+    padding: @spacing / 2;
+  }
+
+  .fadeEnter {
+    opacity: 0;
+    transform: translateY(@spacing / 2);
+  }
+
+  .fadeEnterActive {
+    opacity: 1;
+    transition: all 55ms ease-in-out;
+    transform: translateY(0);
+  }
+
+  .fadeExit {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .fadeExitActive {
+    opacity: 0;
+    transition: all 75ms ease-in-out;
+    transform: translateY(@spacing);
+  }
+}
