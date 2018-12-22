@@ -51,6 +51,7 @@
     "react": "^16.6.3",
     "react-compound-slider": "^0.16.3",
     "react-dom": "^16.6.3",
-    "react-ionicons": "^3.0.1"
+    "react-ionicons": "^3.0.1",
+    "react-transition-group": "^2.5.2"
   }
 }

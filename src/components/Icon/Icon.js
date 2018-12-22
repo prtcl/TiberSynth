@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import IosArrowBack from 'react-ionicons/lib/IosArrowBack';
 import IosArrowForward from 'react-ionicons/lib/IosArrowForward';
+import IosBook from 'react-ionicons/lib/IosBook';
+import IosInformationCircleOutline from 'react-ionicons/lib/IosInformationCircleOutline';
 import IosMenu from 'react-ionicons/lib/IosMenu';
 import IosMore from 'react-ionicons/lib/IosMore';
 import IosRefresh from 'react-ionicons/lib/IosRefresh';
+import LogoGithub from 'react-ionicons/lib/LogoGithub';
 import stylesheet from './Icon.less';
 
 const SIZE = 24;
@@ -16,7 +19,10 @@ const COLORS = {
 
 const TYPES = {
   back: IosArrowBack,
+  book: IosBook,
   forward: IosArrowForward,
+  github: LogoGithub,
+  info: IosInformationCircleOutline,
   menu: IosMenu,
   more: IosMore,
   refresh: IosRefresh,
@@ -29,6 +35,7 @@ export default class Icon extends Component {
 
   static defaultProps = {
     color: 'white',
+    isClickable: true,
     size: SIZE,
   };
 
@@ -44,26 +51,36 @@ export default class Icon extends Component {
   };
 
   render () {
-    const { color, size, type, ...props } = this.props;
+    const { className, color, size, type, isClickable, ...props } = this.props;
     const { isActive } = this.state;
 
     const Type = TYPES[type];
-    const fontSize = `${size}px`;
+
     const classes = classNames([
       stylesheet.container,
+      className,
       COLORS[color],
       isActive && stylesheet.isActive,
     ]);
 
+    const icon = (
+      <Type {...props} className={stylesheet.icon} fontSize={`${size}px`} />
+    );
+
+    if (!isClickable) {
+      return <div className={classes}>{icon}</div>;
+    }
+
     return (
       <a
-        className={classes}
         onMouseDown={this.handleMouseDown}
+        onMouseLeave={this.handleMouseUp}
         onMouseUp={this.handleMouseUp}
         onTouchEnd={this.handleMouseUp}
         onTouchStart={this.handleMouseDown}
+        className={classes}
       >
-        <Type {...props} className={stylesheet.icon} fontSize={fontSize} />
+        {icon}
       </a>
     );
   }

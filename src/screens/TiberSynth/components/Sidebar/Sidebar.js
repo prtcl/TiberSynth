@@ -2,8 +2,9 @@ import React from 'react';
 import classNames from 'classnames';
 import Analyzer from '../../../../components/Analyser';
 import ControlBar from '../../../../components/ControlBar';
-import Text from '../../../../components/Text';
+import Menu from '../../../../components/Menu';
 import Slider from '../../../../components/Slider';
+import Text from '../../../../components/Text';
 import stylesheet from './Sidebar.less';
 
 const Spacer = () => <div className={stylesheet.spacer} />;
@@ -12,11 +13,28 @@ const Seperator = ({ children }) => (
   <div className={stylesheet.seperator}>{children}</div>
 );
 
-const SpaceControls = ({ onRandomize, onUndo, onRedo }) => (
+const NavMenu = ({ shouldShowMenu, onCloseNavMenu, onShowModal }) => (
+  <Menu
+    className={stylesheet.navMenu}
+    isOpen={shouldShowMenu}
+    onClose={onCloseNavMenu}
+    items={[
+      { label: 'About', icon: 'info', onClick: () => onShowModal('INFO') },
+      { label: 'Manual', icon: 'book', onClick: () => onShowModal('MANUAL') },
+      {
+        label: 'GitHub',
+        icon: 'github',
+        to: 'https://github.com/prtcl/tibersynth',
+      },
+    ]}
+  />
+);
+
+const SpaceControls = ({ onRandomize, onUndo, onRedo, onOpenNavMenu }) => (
   <div className={classNames([stylesheet.block, stylesheet.block__margin])}>
     <ControlBar
       actions={[
-        { type: 'menu', color: 'white', onClick: () => console.log('menu') },
+        { type: 'menu', color: 'white', onClick: onOpenNavMenu },
         { type: 'spacer' },
         { type: 'refresh', color: 'white', onClick: onRandomize },
         { type: 'back', color: 'white', onClick: onUndo },
@@ -48,7 +66,7 @@ const ParameterSliders = ({
 
 const Title = () => (
   <div className={stylesheet.block}>
-    <div style={{ opacity: 0.95 }}>
+    <div className={stylesheet.title}>
       <Text color="white" type="title">
         TiberSynth
       </Text>
@@ -64,6 +82,7 @@ const Visualizer = () => (
 
 const Sidebar = props => (
   <div className={stylesheet.container}>
+    <NavMenu {...props} />
     <SpaceControls {...props} />
     <Spacer />
     <ParameterSliders {...props} />
