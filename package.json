@@ -48,6 +48,7 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "hashids": "^1.2.2",
+    "memoize-one": "^5.0.0",
     "mousetrap": "^1.6.2",
     "react": "^16.6.3",
     "react-compound-slider": "^0.16.3",

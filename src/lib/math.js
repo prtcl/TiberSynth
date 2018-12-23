@@ -7,7 +7,7 @@ export const flip = n => n * -1 + 1;
 export const rand = (min = 0, max = 1) => Math.random() * (max - min) + min;
 
 export const scale = (n, a1, a2, b1, b2) =>
-  b1 + ((clamp(n, a1, a2) - a1) * (b2 - b1)) / (a2 - a1);
+  b1 + ((n - a1) * (b2 - b1)) / (a2 - a1);
 
 export const calculateDistance = ({ x: x1, y: y1 }, { x: x2, y: y2 }) => {
   const x = x1 - x2;
