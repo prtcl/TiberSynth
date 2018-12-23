@@ -1,16 +1,16 @@
 @import "../../../../less/variables.less";
 
 :local {
-  .container {
+  .container,
+  .pointVisualization,
+  .svg,
+  .transitionGroup {
     height: 100%;
     overflow: hidden;
     width: 100%;
   }
 
-  .pointVisualization,
   .svg {
-    width: 100%;
-    height: 100%;
     cursor: crosshair;
   }
 
@@ -44,5 +44,16 @@
       font-weight: 400;
       color: rgba(0, 0, 0, 0.05);
     }
+  }
+
+  .fadeEnter {
+    opacity: 0;
+    transform: translateY(@spacing);
+  }
+
+  .fadeEnterActive {
+    opacity: 1;
+    transition: all 300ms ease-in-out, transform 75ms ease-in;
+    transform: translateY(0px);
   }
 }

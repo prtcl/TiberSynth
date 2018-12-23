@@ -1,9 +1,19 @@
 import React from 'react';
 import Measure from 'react-measure';
 import memoize from 'memoize-one';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Mouse from '../../../../components/Mouse';
 import { expo, flip, scale } from '../../../../lib/math';
 import stylesheet from './PlayingSurface.less';
+
+const TRANSITION_CLASSES = {
+  enter: stylesheet.fadeEnter,
+  enterActive: stylesheet.fadeEnterActive,
+  exit: stylesheet.fadeExitDone,
+  exitActive: stylesheet.fadeExitActive,
+};
+
+const TIMEOUT = { enter: 300, exit: 0 };
 
 const FORMATTERS = {
   hz: n => `${Math.round(n)}hz`,
@@ -122,16 +132,25 @@ const PlayingSurface = ({
     {({ measureRef, contentRect: { bounds: dimensions } }) => (
       <div ref={measureRef} className={stylesheet.container}>
         <Mouse onMove={onMove} onUp={onStop} onDown={onPlay} onLeave={onStop}>
-          {spaceId && dimensions.width && (
-            <PointVisualization
-              dimensions={dimensions}
-              key={spaceId}
-              points={points}
-              position={position}
-              spaceId={spaceId}
-              synthesisValues={synthesisValues}
-            />
-          )}
+          <TransitionGroup className={stylesheet.transitionGroup}>
+            {spaceId && dimensions.width && (
+              <CSSTransition
+                key={spaceId}
+                appear={true}
+                classNames={TRANSITION_CLASSES}
+                timeout={TIMEOUT}
+              >
+                <PointVisualization
+                  dimensions={dimensions}
+                  key={spaceId}
+                  points={points}
+                  position={position}
+                  spaceId={spaceId}
+                  synthesisValues={synthesisValues}
+                />
+              </CSSTransition>
+            )}
+          </TransitionGroup>
         </Mouse>
       </div>
     )}
