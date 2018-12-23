@@ -5,16 +5,25 @@ import Mouse from '../../../../components/Mouse';
 import { expo, flip, scale } from '../../../../lib/math';
 import stylesheet from './PlayingSurface.less';
 
+const FORMATTERS = {
+  hz: n => `${Math.round(n)}hz`,
+  ms: n => `${Math.round(n * 1000)}ms`,
+  percent: n => `${Math.round(n * 100)}%`,
+};
+
 const getPointCx = memoize((x = 0, width = 0) => scale(x, -1, 1, 0, width));
 const getPointCy = memoize((y = 0, height = 0) => scale(y, -1, 1, height, 0));
 
 const Point = ({
   dimensions,
+  distance = 0,
+  label,
+  synthesisValue,
+  value = 0,
+  weight = 0,
   x = 0,
   y = 0,
-  value = 0,
-  distance = 0,
-  weight = 0,
+  valueFormatter,
 }) => {
   const { width, height } = dimensions;
   const cx = getPointCx(x, width);
@@ -34,6 +43,13 @@ const Point = ({
 
   return (
     <g className={stylesheet.point}>
+      <circle
+        className={stylesheet.weightHalo}
+        cx={cx}
+        cy={cy}
+        r={weightRadius * 3}
+        style={{ opacity: weightOpacity }}
+      />
       <circle
         className={stylesheet.weight}
         cx={cx}
@@ -55,11 +71,26 @@ const Point = ({
         r={1}
         style={{ opacity: markerOpacity }}
       />
+      <text className={stylesheet.label} x={cx + 13 + valueRadius} y={cy}>
+        {label}
+      </text>
+      <text
+        className={stylesheet.synthesisValue}
+        x={cx + 13 + valueRadius}
+        y={cy + 13}
+      >
+        {valueFormatter(synthesisValue)}
+      </text>
     </g>
   );
 };
 
-const PointVisualization = ({ dimensions, points, position }) => (
+const PointVisualization = ({
+  dimensions,
+  points,
+  position,
+  synthesisValues,
+}) => (
   <div className={stylesheet.pointVisualization}>
     <svg className={stylesheet.svg}>
       <g>
@@ -69,6 +100,8 @@ const PointVisualization = ({ dimensions, points, position }) => (
             dimensions={dimensions}
             key={point.id}
             position={position}
+            synthesisValue={synthesisValues[point.id]}
+            valueFormatter={FORMATTERS[point.format]}
           />
         ))}
       </g>
@@ -83,6 +116,7 @@ const PlayingSurface = ({
   points,
   position,
   spaceId,
+  synthesisValues,
 }) => (
   <Measure bounds={true}>
     {({ measureRef, contentRect: { bounds: dimensions } }) => (
@@ -95,6 +129,7 @@ const PlayingSurface = ({
               points={points}
               position={position}
               spaceId={spaceId}
+              synthesisValues={synthesisValues}
             />
           )}
         </Mouse>

@@ -181,90 +181,112 @@ export const POINT_CONFIGS = [
   {
     id: POINTS.OSC_A_DETUNE,
     label: 'Osc A Detune',
+    format: 'hz',
   },
   {
     id: POINTS.OSC_B_DETUNE,
     label: 'Osc B Detune',
+    format: 'hz',
   },
   {
     id: POINTS.OSC_C_DETUNE,
     label: 'Osc C Detune',
+    format: 'hz',
   },
   {
     id: POINTS.OSC_D_DETUNE,
     label: 'Osc D Detune',
+    format: 'hz',
   },
   {
     id: POINTS.OSC_E_DETUNE,
     label: 'Osc E Detune',
+    format: 'hz',
   },
   {
     id: POINTS.OSC_F_DETUNE,
     label: 'Osc F Detune',
+    format: 'hz',
   },
   {
     id: XMOD_GAIN_A_GAIN,
-    label: 'Xmod A Gain',
+    label: 'Osc A X-mod',
+    format: 'percent',
   },
   {
     id: XMOD_GAIN_B_GAIN,
-    label: 'Xmod B Gain',
+    label: 'Osc B X-mod',
+    format: 'percent',
   },
   {
     id: XMOD_GAIN_C_GAIN,
-    label: 'Xmod C Gain',
+    label: 'Osc C X-mod',
+    format: 'percent',
   },
   {
     id: XMOD_GAIN_D_GAIN,
-    label: 'Xmod D Gain',
+    label: 'Osc D X-mod',
+    format: 'percent',
   },
   {
     id: XMOD_GAIN_E_GAIN,
-    label: 'Xmod E Gain',
+    label: 'Osc E X-mod',
+    format: 'percent',
   },
   {
     id: XMOD_GAIN_F_GAIN,
-    label: 'Xmod F Gain',
+    label: 'Osc F X-mod',
+    format: 'percent',
   },
   {
     id: OSC_GAIN_A_GAIN,
-    label: 'Osc A Gain',
+    label: 'Osc A|B Gain',
+    format: 'percent',
   },
   {
     id: OSC_GAIN_B_GAIN,
-    label: 'Osc B Gain',
+    label: 'Osc C|D Gain',
+    format: 'percent',
   },
   {
     id: OSC_GAIN_C_GAIN,
-    label: 'Osc C Gain',
+    label: 'Osc E|F Gain',
+    format: 'percent',
   },
   {
     id: NOISE_GAIN,
-    label: 'Noise Gain',
+    label: 'Noise Amount',
+    format: 'percent',
   },
   {
     id: HIPASS_FREQUENCY,
-    label: 'Hipass Freq',
+    label: 'Hipass Frequency',
+    format: 'hz',
   },
   {
     id: HIPASS_Q,
     label: 'Hipass Q',
+    format: 'percent',
   },
   {
     id: LOWPASS_FREQUENCY,
-    label: 'Lowpas Freq',
+    label: 'Lowpas Frequency',
+    format: 'hz',
   },
   {
     id: LOWPASS_Q,
     label: 'Lowpass Q',
+    format: 'percent',
   },
   {
     id: FEEDBACK_DELAY,
     label: 'Feedback Delay',
+    format: 'ms',
   },
   {
     id: FEEDBACK_GAIN,
-    label: 'Feedback Gain',
+    label: 'Feedback Amount',
+    format: 'percent',
   },
 ];
 
