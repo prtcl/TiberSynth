@@ -7,6 +7,7 @@ import {
   getInitialRanges,
   getInitialSynthesisValues,
 } from '../lib/parameterSpace';
+import generateId from '../lib/generateId';
 
 const { Consumer, Provider } = React.createContext();
 
@@ -33,6 +34,7 @@ const getUpdatedSpace = ({
   points,
   position,
   ranges,
+  spaceId,
   synthesisValues,
 }) => {
   const updatedPoints = points.map(point => {
@@ -73,16 +75,24 @@ const getUpdatedSpace = ({
     position,
     rangeValues,
     ranges,
+    spaceId,
     synthesisValues: updatedSynthesisValues,
   };
 };
 
-const getMergedHistory = ({ history, oscillators, points, historyIndex }) => {
+const getMergedHistory = ({
+  history,
+  historyIndex,
+  oscillators,
+  points,
+  spaceId,
+}) => {
   const mergedHistory = [
     ...history,
     {
       oscillators,
       points,
+      spaceId,
     },
   ];
   const len = mergedHistory.length;
@@ -108,6 +118,7 @@ export const withParameterSpaceProvider = () => Comp =>
     randomize = () => {
       const { oscillators, points, history } = this.state;
       const historyIndex = Math.min(history.length, MAX_HISTORY - 1);
+      const spaceId = generateId();
 
       const updatedPoints = points.map(point => {
         return {
@@ -128,14 +139,16 @@ export const withParameterSpaceProvider = () => Comp =>
       this.setState({
         ...getUpdatedSpace({
           ...this.state,
-          points: updatedPoints,
           oscillators: updatedOscillators,
+          points: updatedPoints,
+          spaceId,
         }),
         ...getMergedHistory({
           history,
+          historyIndex,
           oscillators: updatedOscillators,
           points: updatedPoints,
-          historyIndex,
+          spaceId,
         }),
       });
     };
@@ -163,10 +176,10 @@ export const withParameterSpaceProvider = () => Comp =>
         return;
       }
 
-      const { oscillators, points } = history[historyIndex];
+      const { oscillators, points, spaceId } = history[historyIndex];
 
       this.setState({
-        ...getUpdatedSpace({ ...this.state, oscillators, points }),
+        ...getUpdatedSpace({ ...this.state, oscillators, points, spaceId }),
         historyIndex,
       });
     };
