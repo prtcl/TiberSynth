@@ -53,7 +53,7 @@ export default class Icon extends Component {
   };
 
   render () {
-    const { className, color, size, type, isClickable, ...props } = this.props;
+    const { className, color, size, type, isClickable } = this.props;
     const { isActive } = this.state;
 
     const Type = TYPES[type];
@@ -65,9 +65,7 @@ export default class Icon extends Component {
       isActive && stylesheet.isActive,
     ]);
 
-    const icon = (
-      <Type {...props} className={stylesheet.icon} fontSize={`${size}px`} />
-    );
+    const icon = <Type className={stylesheet.icon} fontSize={`${size}px`} />;
 
     if (!isClickable) {
       return <div className={classes}>{icon}</div>;
