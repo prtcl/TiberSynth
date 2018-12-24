@@ -16,10 +16,12 @@
   "scripts": {
     "build": "npm run clean ; npm install ; npm run webpack",
     "clean": "rm -r ./node_modules | true ; rm -r ./www/dist | true",
-    "dev": "$(npm bin)/parallelshell 'npm run webpack:watch' 'npm run start'",
-    "start": "cd www && $(npm bin)/static -a 0.0.0.0",
-    "webpack:watch": "NODE_ENV=development $(npm bin)/webpack --watch --mode=development",
-    "webpack": "$(npm bin)/webpack"
+    "dev": "$(npm bin)/parallelshell 'npm run webpack:watch' 'npm run server:dev'",
+    "server": "NODE_ENV=production PORT=8989 node ./app.js",
+    "server:dev": "NODE_ENV=development PORT=3000 nodemon ./app.js",
+    "start": "npm run dev",
+    "webpack": "$(npm bin)/webpack",
+    "webpack:watch": "NODE_ENV=development $(npm bin)/webpack --watch --mode=development"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -38,7 +40,6 @@
     "eslint-plugin-react": "^7.11.1",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
-    "node-static": "^0.7.11",
     "nodemon": "^1.18.9",
     "parallelshell": "^3.0.2",
     "style-loader": "^0.23.1",
@@ -47,7 +48,11 @@
   },
   "dependencies": {
     "classnames": "^2.2.6",
+    "handlebars": "^4.0.12",
     "hashids": "^1.2.2",
+    "koa": "^2.6.2",
+    "koa-static": "^5.0.0",
+    "koa-views": "^6.1.5",
     "memoize-one": "^5.0.0",
     "mousetrap": "^1.6.2",
     "react": "^16.6.3",
@@ -55,6 +60,7 @@
     "react-dom": "^16.6.3",
     "react-ionicons": "^3.0.1",
     "react-measure": "^2.2.2",
+    "react-router-dom": "^4.3.1",
     "react-transition-group": "^2.5.2"
   }
 }

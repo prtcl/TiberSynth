@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import About, { NAME as ABOUT } from './components/About';
 import Manual, { NAME as MANUAL } from './components/Manual';
 import Sidebar from './components/Sidebar';
-import PlayingSurface from './components/PlayingSurface';
+import PlayingSurface from '../../components/PlayingSurface';
 import stylesheet from './TiberSynth.less';
 
 const Modals = ({ currentModal, onCloseModal }) => (

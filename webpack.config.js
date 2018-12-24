@@ -4,7 +4,7 @@ module.exports = {
   entry: './src/index.js',
   devtool: 'source-map',
   output: {
-    path: path.resolve('www', 'dist'),
+    path: path.resolve('static', 'dist'),
     publicPath: '/dist/',
     filename: 'app.js',
   },

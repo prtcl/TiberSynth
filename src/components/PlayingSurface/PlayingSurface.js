@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Measure from 'react-measure';
 import memoize from 'memoize-one';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import Mouse from '../../../../components/Mouse';
-import { expo, flip, scale } from '../../../../lib/math';
+import Mouse from '../Mouse';
+import { expo, flip, scale } from '../../lib/math';
 import stylesheet from './PlayingSurface.less';
 
 const TRANSITION_CLASSES = {
@@ -28,12 +28,13 @@ const Point = ({
   dimensions,
   distance = 0,
   label,
+  shouldDisplayLabels,
   synthesisValue,
   value = 0,
+  valueFormatter,
   weight = 0,
   x = 0,
   y = 0,
-  valueFormatter,
 }) => {
   const { width, height } = dimensions;
   const cx = getPointCx(x, width);
@@ -81,24 +82,29 @@ const Point = ({
         r={1}
         style={{ opacity: markerOpacity }}
       />
-      <text className={stylesheet.label} x={cx + 13 + valueRadius} y={cy}>
-        {label}
-      </text>
-      <text
-        className={stylesheet.synthesisValue}
-        x={cx + 13 + valueRadius}
-        y={cy + 13}
-      >
-        {valueFormatter(synthesisValue)}
-      </text>
+      {shouldDisplayLabels && (
+        <Fragment>
+          <text className={stylesheet.label} x={cx + 13 + valueRadius} y={cy}>
+            {label}
+          </text>
+          <text
+            className={stylesheet.synthesisValue}
+            x={cx + 13 + valueRadius}
+            y={cy + 13}
+          >
+            {valueFormatter(synthesisValue)}
+          </text>
+        </Fragment>
+      )}
     </g>
   );
 };
 
-const PointVisualization = ({
+export const PointVisualization = ({
   dimensions,
   points,
   position,
+  shouldDisplayLabels,
   synthesisValues,
 }) => (
   <div className={stylesheet.pointVisualization}>
@@ -110,6 +116,7 @@ const PointVisualization = ({
             dimensions={dimensions}
             key={point.id}
             position={position}
+            shouldDisplayLabels={shouldDisplayLabels}
             synthesisValue={synthesisValues[point.id]}
             valueFormatter={FORMATTERS[point.format]}
           />
@@ -125,6 +132,7 @@ const PlayingSurface = ({
   onStop,
   points,
   position,
+  shouldDisplayLabels = true,
   spaceId,
   synthesisValues,
 }) => (
@@ -145,6 +153,7 @@ const PlayingSurface = ({
                   key={spaceId}
                   points={points}
                   position={position}
+                  shouldDisplayLabels={shouldDisplayLabels}
                   spaceId={spaceId}
                   synthesisValues={synthesisValues}
                 />

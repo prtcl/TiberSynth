@@ -39,7 +39,11 @@ export default class Modal extends Component {
   };
 
   handleOutsideClick = () => {
-    this.props.onClose();
+    const { onClose } = this.props;
+
+    if (onClose) {
+      onClose();
+    }
   };
 
   render () {
