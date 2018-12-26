@@ -77,7 +77,7 @@ const Title = () => (
 );
 
 const Visualizer = () => (
-  <div className={stylesheet.block}>
+  <div className={stylesheet.block} style={{ height: 144 }}>
     <Analyzer height={144} />
   </div>
 );

@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import './less/reset.less';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import TiberSynth from './screens/TiberSynth';
 import Welcome from './screens/Welcome';
 import compose from './lib/compose';
 import { withParameterSpaceProvider } from './hoc/withParameterSpace';
 import { withSynthesisEngineProvider } from './hoc/withSynthesisEngine';
-import './less/reset.less';
 
 export const ROUTES = [
   {
@@ -19,13 +19,13 @@ export const ROUTES = [
   },
 ];
 
-const App = () => (
-  <Router>
-    <Fragment>
+const App = ({ context, routerComponent: Router, location }) => (
+  <Router {...(location ? { context, location } : {})}>
+    <Switch>
       {ROUTES.map(route => (
         <Route key={route.path} {...route} />
       ))}
-    </Fragment>
+    </Switch>
   </Router>
 );
 

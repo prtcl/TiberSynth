@@ -1,17 +1,5 @@
 {
-  "presets": ["@babel/preset-react"],
-  "env": {
-    "development": {
-      "presets": [
-        [
-          "@babel/preset-react",
-          {
-            "development": true
-          }
-        ]
-      ]
-    }
-  },
+  "presets": ["@babel/preset-env", "@babel/preset-react"],
   "plugins": [
     "@babel/plugin-transform-react-display-name",
     "@babel/plugin-proposal-class-properties"

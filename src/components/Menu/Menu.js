@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import Mousetrap from 'mousetrap';
 import { CSSTransition } from 'react-transition-group';
 import classNames from 'classnames';
+import Mousetrap from '../../lib/mousetrap';
 import Icon from '../Icon';
 import Text from '../Text';
 import stylesheet from './Menu.less';

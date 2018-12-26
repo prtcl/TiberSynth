@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Mousetrap from 'mousetrap';
+import Mousetrap from '../../../lib/mousetrap';
 
 const SHORTCUTS = {
   RANDOMIZE: 'r',

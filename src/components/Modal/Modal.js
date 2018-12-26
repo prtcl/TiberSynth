@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Mousetrap from 'mousetrap';
+import Mousetrap from '../../lib/mousetrap';
 import { CSSTransition } from 'react-transition-group';
 import Icon from '../Icon';
 import stylesheet from './Modal.less';

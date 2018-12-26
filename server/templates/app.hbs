@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{{meta.title}}</title>
+  <meta charset="utf-8" />
+  <meta name="description" content="{{meta.description}}" />
+  <meta name="author" content="{{{meta.author}}}" />
+  <link rel="canonical" href="{{meta.url}}" />
+  <meta property="og:title" content="{{meta.title}}" />
+  <meta property="og:description" content="{{meta.description}}" />
+  <meta property="og:url" content="{{meta.url}}" />
+  <meta property="og:image" content="{{meta.image}}" />
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  {{#each styles}}
+  <link href="{{{.}}}" rel="stylesheet" />
+  {{/each}}
+  {{#each scripts}}
+  <script src="{{{.}}}"></script>
+  {{/each}}
+</head>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id={{meta.analyticsId}}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', '{{meta.analyticsId}}');
+</script>
+
+<body>
+  <div id="app" style="width: 100%; height: 100%;">{{{content}}}</div>
+</body>
+
+</html>
