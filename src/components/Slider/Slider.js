@@ -18,18 +18,6 @@ const Handle = ({ percent, ...props }) => (
   </div>
 );
 
-const Handles = props => (
-  <RCHandles {...props}>
-    {({ handles, getHandleProps }) => (
-      <Fragment>
-        {handles.map(handle => (
-          <Handle key={handle.id} {...handle} {...getHandleProps(handle.id)} />
-        ))}
-      </Fragment>
-    )}
-  </RCHandles>
-);
-
 const Track = ({ source, target, ...props }) => (
   <div
     {...props}
@@ -41,33 +29,6 @@ const Track = ({ source, target, ...props }) => (
   >
     <div className={stylesheet.track} />
   </div>
-);
-
-const Tracks = props => (
-  <RCTracks {...props} right={false}>
-    {({ tracks, getTrackProps }) => (
-      <Fragment>
-        {tracks.map(({ id, source, target }) => (
-          <Track
-            {...getTrackProps()}
-            key={id}
-            source={source}
-            target={target}
-          />
-        ))}
-      </Fragment>
-    )}
-  </RCTracks>
-);
-
-const Rail = props => (
-  <RCRail {...props}>
-    {({ getRailProps }) => (
-      <div {...getRailProps()} className={stylesheet.railContainer}>
-        <div className={stylesheet.rail} />
-      </div>
-    )}
-  </RCRail>
 );
 
 const defaultValueFormatter = value => `${Math.round(value * 100)}%`;
@@ -142,9 +103,40 @@ export default class Slider extends Component {
           step={step}
           values={value}
         >
-          <Rail />
-          <Tracks />
-          <Handles />
+          <RCRail>
+            {({ getRailProps }) => (
+              <div {...getRailProps()} className={stylesheet.railContainer}>
+                <div className={stylesheet.rail} />
+              </div>
+            )}
+          </RCRail>
+          <RCTracks right={false}>
+            {({ tracks, getTrackProps }) => (
+              <Fragment>
+                {tracks.map(({ id, source, target }) => (
+                  <Track
+                    {...getTrackProps()}
+                    key={id}
+                    source={source}
+                    target={target}
+                  />
+                ))}
+              </Fragment>
+            )}
+          </RCTracks>
+          <RCHandles>
+            {({ handles, getHandleProps }) => (
+              <Fragment>
+                {handles.map(handle => (
+                  <Handle
+                    key={handle.id}
+                    {...handle}
+                    {...getHandleProps(handle.id)}
+                  />
+                ))}
+              </Fragment>
+            )}
+          </RCHandles>
         </RCSlider>
       </div>
     );
