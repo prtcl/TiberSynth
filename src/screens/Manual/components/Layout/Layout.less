@@ -10,7 +10,48 @@
     width: 100vw;
   }
 
+  .page {
+    margin: 0 @spacing;
+    max-height: 100%;
+    max-width: @staticPageWidth;
+    padding: @spacing * 1.5 0;
+    width: 100%;
+
+    .title {
+      font-size: @fontSizeLarge;
+    }
+  }
+
+  .header {
+    padding: 0 @spacing;
+
+    &,
+    .actions {
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .actions {
+      margin-left: -(@spacing - (@spacing / 4) + 1);
+      margin-bottom: @spacing * 1.5;
+      padding-left: 2px;
+    }
+
+    .left {
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      padding-right: @spacing;
+
+      .text {
+        margin: 0;
+        font-weight: 600;
+      }
+    }
+  }
+
   .content {
-    width: @staticPageWidth;
+    padding: @spacing;
   }
 }

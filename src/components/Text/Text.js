@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import stylesheet from './Text.less';
 
 const TYPES = {
+  header: stylesheet.typeHeader,
   small: stylesheet.typeSmall,
   text: stylesheet.typeText,
   title: stylesheet.typeTitle,
@@ -14,11 +15,11 @@ const COLORS = {
   white: stylesheet.colorWhite,
 };
 
-const Title = ({ children, ...props }) => <h1 {...props}>{children}</h1>;
+const Title = ({ children, ...props }) => <h2 {...props}>{children}</h2>;
 const Span = ({ children, ...props }) => <span {...props}>{children}</span>;
 
 const getComponentForType = type => {
-  if (type === 'title') {
+  if (type === 'header' || type === 'title') {
     return Title;
   }
 
