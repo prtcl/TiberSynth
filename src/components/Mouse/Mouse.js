@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import throttle from 'lodash/throttle';
 
 const STYLE = { width: '100%', height: '100%', overflow: 'hidden' };
 
@@ -42,10 +43,9 @@ export default class Mouse extends Component {
   };
 
   handleMouseMove = e => {
-    const { onMove } = this.props;
     const coords = getMouseCoordinates(e, this.containerRef);
 
-    onMove(coords);
+    this.emitMove(coords);
   };
 
   handleTouchStart = e => {
@@ -61,6 +61,10 @@ export default class Mouse extends Component {
     this.handleMouseMove(e.touches[0]);
     e.preventDefault();
   };
+
+  emitMove = throttle(coords => {
+    this.props.onMove(coords);
+  }, 30);
 
   render () {
     const { children } = this.props;

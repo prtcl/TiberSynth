@@ -143,14 +143,14 @@ const PlayingSurface = ({
           <TransitionGroup className={stylesheet.transitionGroup}>
             {spaceId && dimensions.width && (
               <CSSTransition
-                key={spaceId}
+                key={`${spaceId}-transition`}
                 appear={true}
                 classNames={TRANSITION_CLASSES}
                 timeout={TIMEOUT}
               >
                 <PointVisualization
                   dimensions={dimensions}
-                  key={spaceId}
+                  key={`${spaceId}-visualization`}
                   points={points}
                   position={position}
                   shouldDisplayLabels={shouldDisplayLabels}

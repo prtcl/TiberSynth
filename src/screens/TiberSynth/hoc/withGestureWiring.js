@@ -18,6 +18,12 @@ const withGestureWiring = () => Comp =>
       this.mousetrap.bind(SHORTCUTS.REDO, this.redo);
     }
 
+    componentDidMount () {
+      const { synthEngine, volume } = this.props;
+
+      synthEngine.setVolume(volume);
+    }
+
     componentWillUnmount () {
       this.mousetrap.reset();
     }

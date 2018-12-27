@@ -1,5 +1,6 @@
 const path = require('path');
 const merge = require('webpack-merge');
+const autoprefixer = require('autoprefixer');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -19,7 +20,7 @@ const BABEL_LOADER = {
   exclude: /node_modules/,
 };
 
-const STYLE_LOADER = {
+const LESS_LOADER = {
   test: /\.less$/,
   use: [
     MiniCssExtractPlugin.loader,
@@ -29,6 +30,13 @@ const STYLE_LOADER = {
         sourceMap: true,
         modules: true,
         localIdentName: '[name]-[local]-[hash:base64:5]',
+      },
+    },
+    {
+      loader: 'postcss-loader',
+      options: {
+        sourceMap: 'inline',
+        plugins: [autoprefixer()],
       },
     },
     {
@@ -47,7 +55,7 @@ const DEFAULT_CONFIG = {
     publicPath: '/assets/',
   },
   module: {
-    rules: [BABEL_LOADER, STYLE_LOADER],
+    rules: [BABEL_LOADER, LESS_LOADER],
   },
   plugins: [
     new MiniCssExtractPlugin({
