@@ -1,0 +1,29 @@
+@import "../../../less/variables.less";
+
+:local {
+  @symbolHeight: @fontSize * 2;
+
+  .iconSymbol,
+  .letterSymbol {
+    margin: 0 @fontSize * 0.25;
+  }
+
+  .iconSymbol {
+    background-color: @colorLightGray;
+    border-radius: @borderRadius;
+    display: inline-block;
+    height: @symbolHeight;
+    position: relative;
+    top: @spacing / 2;
+  }
+
+  .letterSymbol {
+    display: inline-block;
+    background-color: @colorLightGray;
+    border-radius: @borderRadius;
+    width: @symbolHeight;
+    height: @symbolHeight;
+    text-align: center;
+    padding-top: @spacing / 4;
+  }
+}

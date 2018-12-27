@@ -1,4 +1,4 @@
-import Manual from '../screens/Manual/Manual';
+import Manual from '../screens/Manual';
 import TiberSynth from '../screens/TiberSynth';
 import Welcome from '../screens/Welcome';
 

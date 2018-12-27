@@ -32,7 +32,15 @@ const getLinkComponent = ({ onClick, to }) => {
   return RouterLink;
 };
 
-const Link = ({ bold, children, color, className, onClick, to, ...props }) => {
+const Link = ({
+  bold,
+  children,
+  color,
+  className,
+  onClick,
+  to = '',
+  ...props
+}) => {
   const Comp = getLinkComponent({ onClick, to });
   const linkProps = getLinkProps({ onClick, to });
 

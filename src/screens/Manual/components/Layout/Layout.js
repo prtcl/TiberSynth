@@ -1,22 +1,12 @@
 import React from 'react';
-import Icon from '../../../../components/Icon';
-import Link from '../../../../components/Link';
+import IconButton from '../IconButton';
 import Text from '../../../../components/Text';
 import stylesheet from './Layout.less';
-
-const Left = ({ label, icon, to }) => (
-  <Link className={stylesheet.left} to={to}>
-    <Icon type={icon} color="black" isClickable={false} />
-    <Text color="black" className={stylesheet.text}>
-      {label}
-    </Text>
-  </Link>
-);
 
 export const Header = ({ title, left }) => (
   <div className={stylesheet.header}>
     <div className={stylesheet.actions}>
-      <Left {...left} />
+      <IconButton {...left} />
     </div>
     <div className={stylesheet.title}>
       <Text type="header" color="black">
@@ -28,6 +18,27 @@ export const Header = ({ title, left }) => (
 
 export const Content = ({ children }) => (
   <div className={stylesheet.content}>{children}</div>
+);
+
+export const PageControls = ({ right, left }) => (
+  <div className={stylesheet.pageControls}>
+    {left && (
+      <IconButton
+        {...left}
+        className={stylesheet.left}
+        icon="back"
+        position="left"
+      />
+    )}
+    {right && (
+      <IconButton
+        {...right}
+        className={stylesheet.right}
+        icon="forward"
+        position="right"
+      />
+    )}
+  </div>
 );
 
 const Layout = ({ children }) => (

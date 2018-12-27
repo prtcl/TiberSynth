@@ -1,1 +1,4 @@
-export { default } from './Manual';
+import Manual from './Manual';
+import enhance from './Manual.hoc';
+
+export default enhance(Manual);

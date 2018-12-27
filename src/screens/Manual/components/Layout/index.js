@@ -1,1 +1,1 @@
-export { default, Header, Content } from './Layout';
+export { default, Header, Content, PageControls } from './Layout';

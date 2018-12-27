@@ -11,7 +11,7 @@
   }
 
   .page {
-    margin: 0 @spacing;
+    margin: 0 @spacing * 1.5;
     max-height: 100%;
     max-width: @staticPageWidth;
     padding: @spacing * 1.5 0;
@@ -37,21 +37,25 @@
       margin-bottom: @spacing * 1.5;
       padding-left: 2px;
     }
-
-    .left {
-      align-items: center;
-      display: flex;
-      flex-direction: row;
-      padding-right: @spacing;
-
-      .text {
-        margin: 0;
-        font-weight: 600;
-      }
-    }
   }
 
   .content {
     padding: @spacing;
+  }
+
+  .pageControls {
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: @spacing * 1.5;
+    padding: 0 3px 0 2px;
+
+    .left {
+      flex: 1;
+    }
+
+    .right {
+      padding-right: 0;
+    }
   }
 }
