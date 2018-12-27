@@ -1,7 +1,8 @@
 import React from 'react';
+import Link from '../../../../components/Link';
 import Modal from '../../../../components/Modal';
 import Text from '../../../../components/Text';
-import Link from '../../../../components/Link';
+import { ROUTES } from '../../../../config/routes';
 
 export const NAME = 'ABOUT';
 
@@ -23,7 +24,7 @@ const About = props => (
   <Modal
     {...props}
     actions={[
-      { label: 'Manual', to: '/manual' },
+      { label: 'Manual', to: ROUTES.MANUAL },
       { label: 'Donate', onClick: () => console.log('donate') },
     ]}
     width={WIDTH}

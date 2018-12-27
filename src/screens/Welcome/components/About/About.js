@@ -1,14 +1,15 @@
 import React from 'react';
 import Modal from '../../../../components/Modal';
 import Text from '../../../../components/Text';
+import { ROUTES } from '../../../../config/routes';
 
 const About = () => (
   <Modal
     isOpen={true}
     title="TiberSynth"
     actions={[
-      { label: 'Manual', to: '/manual' },
-      { label: 'Play', to: '/play' },
+      { label: 'Manual', to: ROUTES.MANUAL },
+      { label: 'Play', to: ROUTES.PLAY },
     ]}
   >
     <Text color="white">
