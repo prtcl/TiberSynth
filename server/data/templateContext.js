@@ -8,9 +8,5 @@ module.exports = {
     author: 'Cory O\'Brien',
     analyticsId: 'UA-47948701-3',
   },
-  scripts: ['/assets/vendor.js', '/assets/client.js'],
-  styles: [
-    'https://fonts.googleapis.com/css?family=Lato',
-    '/assets/client.css',
-  ],
+  styles: ['https://fonts.googleapis.com/css?family=Lato'],
 };

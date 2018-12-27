@@ -1,4 +1,6 @@
 const path = require('path');
+const merge = require('webpack-merge');
+const ManifestPlugin = require('webpack-manifest-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const DEV = process.env.NODE_ENV !== 'production';
@@ -40,23 +42,22 @@ const DEFAULT_CONFIG = {
     ? { devtool: 'source-map', mode: 'development' }
     : { mode: 'production' }),
   output: {
-    filename: '[name].js',
+    filename: '[name].[contentHash].js',
     path: path.resolve('dist'),
-    publicPath: '/assets',
+    publicPath: '/assets/',
   },
   module: {
     rules: [BABEL_LOADER, STYLE_LOADER],
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
+      filename: '[name].[contentHash].css',
+      chunkFilename: '[id].[contentHash].css',
     }),
   ],
 };
 
-const CLIENT_CONFIG = {
-  ...DEFAULT_CONFIG,
+const CLIENT_CONFIG = merge(DEFAULT_CONFIG, {
   entry: { client: path.resolve('src', 'index.js') },
   devtool: 'source-map',
   optimization: {
@@ -71,16 +72,16 @@ const CLIENT_CONFIG = {
       },
     },
   },
-};
+  plugins: [new ManifestPlugin({ fileName: 'manifest.client.json' })],
+});
 
-const SERVER_CONFIG = {
-  ...DEFAULT_CONFIG,
+const SERVER_CONFIG = merge(DEFAULT_CONFIG, {
   target: 'node',
   entry: { server: path.resolve('src', 'server.js') },
   output: {
-    ...DEFAULT_CONFIG.output,
     libraryTarget: 'commonjs',
   },
-};
+  plugins: [new ManifestPlugin({ fileName: 'manifest.server.json' })],
+});
 
 module.exports = [CLIENT_CONFIG, SERVER_CONFIG];
