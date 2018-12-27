@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Mousetrap from '../../lib/mousetrap';
 import { CSSTransition } from 'react-transition-group';
+import Button from '../Button';
 import Icon from '../Icon';
+import Text from '../Text';
 import stylesheet from './Modal.less';
 
 const ESCAPE = 'esc';
@@ -10,6 +12,8 @@ const TIMEOUT = {
   enter: 55,
   exit: 75,
 };
+
+const DEFAULT_WIDTH = 13 * 32;
 
 const TRANSITION_CLASSES = {
   enter: stylesheet.fadeEnter,
@@ -20,7 +24,7 @@ const TRANSITION_CLASSES = {
 
 export default class Modal extends Component {
   static defaultProps = {
-    width: 500,
+    width: DEFAULT_WIDTH,
   };
 
   constructor (props) {
@@ -46,8 +50,59 @@ export default class Modal extends Component {
     }
   };
 
+  renderHeader () {
+    const { onClose } = this.props;
+
+    if (!onClose) {
+      return null;
+    }
+
+    return (
+      <div className={stylesheet.header}>
+        <Icon
+          className={stylesheet.icon}
+          type="down"
+          onClick={onClose}
+          color="white"
+        />
+      </div>
+    );
+  }
+
+  renderTitle () {
+    const { title } = this.props;
+
+    if (!title) {
+      return null;
+    }
+
+    return (
+      <div className={stylesheet.title}>
+        <Text className={stylesheet.text} color="white" type="title">
+          {title}
+        </Text>
+      </div>
+    );
+  }
+
+  renderActions () {
+    const { actions } = this.props;
+
+    if (!actions) {
+      return null;
+    }
+
+    return (
+      <div className={stylesheet.actions}>
+        {actions.map((action, index) => (
+          <Button key={index} {...action} className={stylesheet.button} />
+        ))}
+      </div>
+    );
+  }
+
   render () {
-    const { children, isOpen, onClose, width } = this.props;
+    const { children, isOpen, width } = this.props;
 
     return (
       <CSSTransition
@@ -63,17 +118,10 @@ export default class Modal extends Component {
             onClick={this.handleOutsideClick}
           />
           <div className={stylesheet.container} style={{ maxWidth: width }}>
-            {onClose && (
-              <div className={stylesheet.header}>
-                <Icon
-                  className={stylesheet.icon}
-                  type="down"
-                  onClick={onClose}
-                  color="white"
-                />
-              </div>
-            )}
+            {this.renderHeader()}
+            {this.renderTitle()}
             <div className={stylesheet.content}>{children}</div>
+            {this.renderActions()}
           </div>
         </div>
       </CSSTransition>

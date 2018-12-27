@@ -7,7 +7,11 @@
     border-radius: @borderRadius;
     border: none;
     cursor: pointer;
-    font: @fontSize / 1em normal @fontFamily;
+    display: inline-block;
+    font-family: @fontFamily;
+    font-size: @fontSize;
+    font-weight: 600;
+    line-height: @lineHeight;
     margin: 0;
     outline: none;
     padding: 0.5em 1em;
@@ -21,12 +25,22 @@
   }
 
   .colorWhite {
-    background-color: @colorWhite;
-    color: @colorBlack;
+    &,
+    &:active,
+    &:hover,
+    &:visited {
+      background-color: @colorWhite;
+      color: @colorBlack;
+    }
   }
 
   .colorBlack {
-    background-color: @colorBlack;
-    color: @colorWhite;
+    &,
+    &:active,
+    &:hover,
+    &:visited {
+      background-color: @colorBlack;
+      color: @colorWhite;
+    }
   }
 }

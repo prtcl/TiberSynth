@@ -1,36 +1,26 @@
 import React from 'react';
-import Button from '../../../../components/Button';
 import Modal from '../../../../components/Modal';
 import Text from '../../../../components/Text';
-import stylesheet from './About.less';
-
-const WIDTH = 440;
 
 const About = () => (
-  <Modal isOpen={true} width={WIDTH}>
-    <div className={stylesheet.title}>
-      <Text color="white" type="title">
-        TiberSynth
-      </Text>
-    </div>
+  <Modal
+    isOpen={true}
+    title="TiberSynth"
+    actions={[
+      { label: 'Manual', to: '/manual' },
+      { label: 'Play', to: '/play' },
+    ]}
+  >
+    <Text color="white">
+      TiberSynth is an experimental audio synthesizer that runs in your web
+      browser. It is a gesture-based instrument that allows you to navigate a
+      complex multi-dimensional sound-space using simple movements.
+    </Text>
 
-    <div className={stylesheet.content}>
-      <Text color="white">
-        TiberSynth is an experimental audio synthesizer that runs in your web
-        browser. You play the synthesizer by moving your mouse around a
-        randomized 2D parameter space. The closer your mouse is to a given
-        parameter, the more influence it has on that value.
-      </Text>
-
-      <Text color="white">
-        Something something about the manual and about donating money. Have fun
-        playing the synth now.
-      </Text>
-    </div>
-
-    <div className={stylesheet.actions}>
-      <Button className={stylesheet.button} to="/play" label="Play" />
-    </div>
+    <Text color="white">
+      Check out the manual pages if you’d like a better introduction, or just
+      click play to dive in.
+    </Text>
   </Modal>
 );
 

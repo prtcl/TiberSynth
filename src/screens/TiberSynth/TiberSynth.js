@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import About, { NAME as ABOUT } from './components/About';
-import Manual, { NAME as MANUAL } from './components/Manual';
 import Sidebar from './components/Sidebar';
 import PlayingSurface from '../../components/PlayingSurface';
 import stylesheet from './TiberSynth.less';
@@ -8,7 +7,6 @@ import stylesheet from './TiberSynth.less';
 const Modals = ({ currentModal, onCloseModal }) => (
   <Fragment>
     <About isOpen={currentModal === ABOUT} onClose={onCloseModal} />
-    <Manual isOpen={currentModal === MANUAL} onClose={onCloseModal} />
   </Fragment>
 );
 

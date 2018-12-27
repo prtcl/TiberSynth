@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import Mousetrap from '../../lib/mousetrap';
 import Icon from '../Icon';
 import Text from '../Text';
+import Link from '../Link';
 import stylesheet from './Menu.less';
 
 const ESCAPE = 'esc';
@@ -20,24 +21,20 @@ const TRANSITION_CLASSES = {
   exitActive: stylesheet.fadeExitActive,
 };
 
-const MenuItem = ({ label, icon, onClick, to, ...props }) => {
-  const anchorProps = onClick ? { onClick } : { href: to, target: '__blank' };
-
-  return (
-    <a {...props} {...anchorProps} className={stylesheet.menuItem}>
-      <Icon
-        className={stylesheet.icon}
-        color="black"
-        isClickable={false}
-        size={20}
-        type={icon}
-      />
-      <Text className={stylesheet.text} color="black">
-        {label}
-      </Text>
-    </a>
-  );
-};
+const MenuItem = ({ label, icon, ...props }) => (
+  <Link {...props} className={stylesheet.menuItem}>
+    <Icon
+      className={stylesheet.icon}
+      color="black"
+      isClickable={false}
+      size={20}
+      type={icon}
+    />
+    <Text className={stylesheet.text} color="black">
+      {label}
+    </Text>
+  </Link>
+);
 
 export default class Menu extends Component {
   constructor (props) {

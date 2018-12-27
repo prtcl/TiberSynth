@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import Link from '../Link';
 import stylesheet from './Button.less';
 
 const COLORS = {

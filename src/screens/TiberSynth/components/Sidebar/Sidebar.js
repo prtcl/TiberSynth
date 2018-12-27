@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
 import { NAME as ABOUT } from '../About';
-import { NAME as MANUAL } from '../Manual';
 import Analyzer from '../../../../components/Analyser';
 import ControlBar from '../../../../components/ControlBar';
 import Menu from '../../../../components/Menu';
@@ -22,11 +21,11 @@ const NavMenu = ({ shouldShowMenu, onCloseNavMenu, onShowModal }) => (
     onClose={onCloseNavMenu}
     items={[
       { label: 'About', icon: 'info', onClick: () => onShowModal(ABOUT) },
-      { label: 'Manual', icon: 'book', onClick: () => onShowModal(MANUAL) },
+      { label: 'Manual', icon: 'book', to: '/manual' },
       {
-        label: 'GitHub',
+        label: 'Issues',
         icon: 'github',
-        to: 'https://github.com/prtcl/tibersynth',
+        to: 'https://github.com/prtcl/tibersynth/issues',
       },
     ]}
   />

@@ -1,27 +1,46 @@
 import React from 'react';
 import Modal from '../../../../components/Modal';
 import Text from '../../../../components/Text';
+import Link from '../../../../components/Link';
 
 export const NAME = 'ABOUT';
 
+const WIDTH = 13 * 34;
+
+const Author = () => (
+  <Link to="http://prtcl.cc" color="white" bold={true}>
+    Cory O&apos;Brien
+  </Link>
+);
+
+const GitHub = () => (
+  <Link to="https://github.com/prtcl/tibersynth" color="white" bold={true}>
+    GitHub
+  </Link>
+);
+
 const About = props => (
-  <Modal {...props}>
+  <Modal
+    {...props}
+    actions={[
+      { label: 'Manual', to: '/manual' },
+      { label: 'Donate', onClick: () => console.log('donate') },
+    ]}
+    width={WIDTH}
+  >
     <Text color="white">
       TiberSynth is an experimental audio synthesizer that runs in your web
-      browser. You play the synthesizer by moving your mouse around a randomized
-      2D parameter space. The closer your mouse is to a given parameter, the
-      more influence it has on that value.
+      browser. It is a gesture-based instrument that allows you to navigate a
+      complex multi-dimensional sound-space using simple movements.
     </Text>
 
     <Text color="white">
-      The audio engine is a complex FM synthesizer based on cross-modulation and
-      feedback. This creates excellent noise, drone, and percussion sounds.
+      TiberSynth was created by <Author />. The code is available on <GitHub />.
     </Text>
 
     <Text color="white">
-      You can create new parameter spaces, or move forward or backward through
-      your spaces, using the controls below. You can also adjust ranges for
-      feedback, noise, and filter values.
+      If you are enjoying TiberSynth or using it for your music, please consider
+      a donation to help with development and server costs.
     </Text>
   </Modal>
 );

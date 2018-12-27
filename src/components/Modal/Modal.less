@@ -43,9 +43,35 @@
     }
   }
 
+  .title {
+    margin: @spacing / 1.5 @spacing / 2 @spacing / 2 @spacing / 2;
+
+    .text {
+      margin: 0;
+    }
+  }
+
   .content {
     opacity: 0.95;
     padding: @spacing / 2;
+  }
+
+  .actions {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: -(@spacing / 4);
+    padding: 0 @spacing / 2 @spacing / 1.5 @spacing / 2;
+
+    .button {
+      flex: 1;
+      width: 100%;
+    }
+
+    .button:not(:last-child) {
+      margin-bottom: @spacing / 2;
+    }
   }
 
   .fadeEnter {

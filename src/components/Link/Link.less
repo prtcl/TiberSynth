@@ -1,0 +1,36 @@
+@import "../../less//variables.less";
+
+:local {
+  .container {
+    color: inherit;
+    text-decoration: none;
+    transition: 50ms border-color ease-in-out;
+
+    &:hover {
+      color: inherit;
+      border-color: transparent;
+    }
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+
+  .colorWhite {
+    &,
+    &:active,
+    &:visited {
+      border-bottom: 1px solid @colorWhite;
+      color: @colorWhite;
+    }
+  }
+
+  .colorBlack {
+    &,
+    &:active,
+    &:visited {
+      border-bottom: 1px solid @colorBlack;
+      color: @colorBlack;
+    }
+  }
+}
