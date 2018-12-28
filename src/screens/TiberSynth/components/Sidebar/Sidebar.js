@@ -6,6 +6,7 @@ import ControlBar from '../../../../components/ControlBar';
 import Menu from '../../../../components/Menu';
 import Slider from '../../../../components/Slider';
 import Text from '../../../../components/Text';
+import Recorder from '../../../../components/Recorder';
 import stylesheet from './Sidebar.less';
 
 const Spacer = () => <div className={stylesheet.spacer} />;
@@ -42,6 +43,12 @@ const SpaceControls = ({ onRandomize, onUndo, onRedo, onOpenNavMenu }) => (
         { type: 'forward', color: 'white', onClick: onRedo },
       ]}
     />
+  </div>
+);
+
+const OutputRecorder = () => (
+  <div className={stylesheet.block}>
+    <Recorder />
   </div>
 );
 
@@ -86,6 +93,7 @@ const Sidebar = props => (
     <NavMenu {...props} />
     <SpaceControls {...props} />
     <Spacer />
+    <OutputRecorder />
     <ParameterSliders {...props} />
     <Title />
     <Visualizer />
