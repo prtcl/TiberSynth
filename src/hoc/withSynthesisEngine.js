@@ -39,6 +39,7 @@ const getSynthEngine = () => {
     ...DEFAULT_STATE,
     analyser: synthEngine.getAnalyzer(),
     isCompatibleBrowser: true,
+    mediaStream: synthEngine.getMediaStreamDestinationStream(),
     synthEngine,
   };
 };

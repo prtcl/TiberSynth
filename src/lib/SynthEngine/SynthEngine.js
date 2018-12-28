@@ -19,6 +19,8 @@ export const HELPERS = {
   [NODE_TYPES.DESTINATION]: context => context.destination,
   [NODE_TYPES.FILTER]: createFilter,
   [NODE_TYPES.GAIN]: createGain,
+  [NODE_TYPES.MEDIA_STREAM_DESTINATION]: context =>
+    context.createMediaStreamDestination(),
   [NODE_TYPES.NOISE]: createNoise,
   [NODE_TYPES.OSC]: createOscillator,
   [NODE_TYPES.PAN]: createPanner,
@@ -92,6 +94,12 @@ export default class SynthEngine {
 
   getAnalyzer () {
     return this.nodes[NODES.ANALYZER];
+  }
+
+  getMediaStreamDestinationStream () {
+    const { stream } = this.nodes[NODES.MEDIA_STREAM_DESTINATION];
+
+    return stream;
   }
 
   isSuspended () {

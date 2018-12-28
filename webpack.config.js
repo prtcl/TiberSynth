@@ -1,6 +1,7 @@
 const path = require('path');
 const merge = require('webpack-merge');
 const autoprefixer = require('autoprefixer');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -62,6 +63,18 @@ const DEFAULT_CONFIG = {
       filename: '[name].[contentHash].css',
       chunkFilename: '[id].[contentHash].css',
     }),
+    new CopyWebpackPlugin([
+      {
+        from: path.join(
+          __dirname,
+          'node_modules',
+          'opus-media-recorder',
+          'dist'
+        ),
+        to: '[name].[ext]',
+        toType: 'template',
+      },
+    ]),
   ],
 };
 

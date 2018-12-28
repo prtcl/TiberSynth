@@ -7,6 +7,7 @@ export const NODE_TYPES = {
   DESTINATION: 'DESTINATION',
   FILTER: 'FILTER',
   GAIN: 'GAIN',
+  MEDIA_STREAM_DESTINATION: 'MEDIA_STREAM_DESTINATION',
   NOISE: 'NOISE',
   OSC: 'OSC',
   PAN: 'PAN',
@@ -25,6 +26,7 @@ const FEEDBACK_GAIN = 'FEEDBACK_GAIN';
 const HIPASS = 'HIPASS';
 const LOWPASS = 'LOWPASS';
 const MAIN = 'MAIN';
+const MEDIA_STREAM_DESTINATION = 'MEDIA_STREAM_DESTINATION';
 const NOISE = 'NOISE';
 const NOISE_AM = 'NOISE_AM';
 const NOISE_GAIN = 'NOISE_GAIN';
@@ -69,6 +71,7 @@ export const NODES = {
   HIPASS,
   LOWPASS,
   MAIN,
+  MEDIA_STREAM_DESTINATION,
   NOISE,
   NOISE_AM,
   NOISE_GAIN,
@@ -549,10 +552,17 @@ export default [
     },
   },
   {
+    id: MEDIA_STREAM_DESTINATION,
+    type: NODE_TYPES.MEDIA_STREAM_DESTINATION,
+  },
+  {
     id: MAIN,
     type: NODE_TYPES.GAIN,
     args: { gain: 0.8 },
-    connect: [nodes => nodes[DESTINATION]],
+    connect: [
+      nodes => nodes[DESTINATION],
+      nodes => nodes[MEDIA_STREAM_DESTINATION],
+    ],
   },
   {
     id: DESTINATION,

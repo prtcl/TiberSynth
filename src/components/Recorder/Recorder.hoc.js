@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import compose from '../../lib/compose';
 import Mousetrap from '../../lib/mousetrap';
 import withSynthesisEngine from '../../hoc/withSynthesisEngine';
+import MediaRecorder from '../../lib/MediaRecorder';
 import { MODES } from './lib/constants';
 
 const SHORTCUTS = {
@@ -9,7 +10,7 @@ const SHORTCUTS = {
 };
 
 const withMediaRecorder = () => Comp =>
-  class MediaRecorder extends Component {
+  class WithMediaRecorder extends Component {
     state = {
       recordingMode: MODES.EMPTY,
     };
@@ -17,9 +18,65 @@ const withMediaRecorder = () => Comp =>
     constructor (props) {
       super(props);
 
+      this.initMediaRecorder();
+      this.initKeyboardEvents();
+    }
+
+    componentWillUnmount () {
+      this.removeMediaRecorderListeners();
+      this.removeKeyboardListeners();
+    }
+
+    initMediaRecorder () {
+      const { isCompatibleBrowser, mediaStream } = this.props;
+
+      if (!isCompatibleBrowser) {
+        return;
+      }
+
+      const options = { mimeType: 'audio/wav' };
+
+      this.recorder = new MediaRecorder(mediaStream, options);
+
+      this.recorder.addEventListener('dataavailable', this.handleDataAvailable);
+      this.recorder.addEventListener('start', this.handleRecorderStart);
+      this.recorder.addEventListener('stop', this.handleRecorderStop);
+      this.recorder.addEventListener('error', err => console.error(err));
+    }
+
+    initKeyboardEvents () {
       this.mousetrap = new Mousetrap();
       this.mousetrap.bind(SHORTCUTS.TOGGLE_RECORD, this.toggleRecord);
     }
+
+    removeKeyboardListeners () {
+      this.mousetrap.reset();
+    }
+
+    removeMediaRecorderListeners () {
+      if (!this.recorder) {
+        return;
+      }
+
+      this.recorder.removeEventListner(
+        'dataavailable',
+        this.handleDataAvailable
+      );
+      this.recorder.removeEventListner('start', this.handleRecorderStart);
+      this.recorder.removeEventListner('stop', this.handleRecorderStop);
+    }
+
+    handleDataAvailable = e => {
+      console.log('dataavailable', e);
+    };
+
+    handleRecorderStart = e => {
+      console.log('start', e);
+    };
+
+    handleRecorderStop = e => {
+      console.log('stop', e);
+    };
 
     toggleRecord = () => {
       const { recordingMode } = this.state;
@@ -53,10 +110,21 @@ const withMediaRecorder = () => Comp =>
     };
 
     pause = () => {
+      const { recordingMode } = this.state;
+
+      if (recordingMode === MODES.RECORDING) {
+        this.recorder.stop();
+      }
+
+      if (recordingMode === MODES.PLAYING) {
+        console.log('stop playback');
+      }
+
       this.setRecordingMode(MODES.PAUSED);
     };
 
     record = () => {
+      this.recorder.start();
       this.setRecordingMode(MODES.RECORDING);
     };
 
