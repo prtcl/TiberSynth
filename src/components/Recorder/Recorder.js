@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import ControlBar from '../ControlBar';
 import Text from '../Text';
 import { RECORDER_MODES } from './hoc/withMediaRecorder';
+import { formatDuration } from '../../lib/time';
 import stylesheet from './Recorder.less';
 
 const getControlActions = ({
@@ -55,7 +56,7 @@ const getControlActions = ({
 };
 
 const Recorder = props => {
-  const { recordingMode } = props;
+  const { elapsedPlaybackTime, elapsedRecordingTime, recordingMode } = props;
   const actions = getControlActions(props);
   const isRecording = recordingMode === RECORDER_MODES.RECORDING;
 
@@ -70,11 +71,16 @@ const Recorder = props => {
         <Text color="white" className={stylesheet.label}>
           Recorder
         </Text>
+        {recordingMode === RECORDER_MODES.PLAYING && (
+          <Text color="white" className={stylesheet.time}>
+            {formatDuration(elapsedPlaybackTime, 'mm:ss')}
+          </Text>
+        )}
         <Text
           color={isRecording ? 'white' : 'gray'}
           className={stylesheet.time}
         >
-          00:00
+          {formatDuration(elapsedRecordingTime, 'mm:ss')}
         </Text>
       </div>
       <ControlBar actions={actions} />

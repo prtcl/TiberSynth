@@ -6,6 +6,12 @@ export default class AudioWrapper {
     }
   }
 
+  getCurrentTime () {
+    const { currentTime } = this.element;
+
+    return Math.round(currentTime * 1000) || 0;
+  }
+
   setSource (waveData) {
     const objectUrl = URL.createObjectURL(waveData);
 
@@ -30,5 +36,21 @@ export default class AudioWrapper {
     this.element.src = '';
 
     URL.revokeObjectURL(objectUrl);
+  }
+
+  addEventListener (name, handler) {
+    if (!this.element) {
+      return;
+    }
+
+    this.element.addEventListener(name, handler);
+  }
+
+  removeEventListener (name, handler) {
+    if (!this.element) {
+      return;
+    }
+
+    this.element.removeEventListener(name, handler);
   }
 }

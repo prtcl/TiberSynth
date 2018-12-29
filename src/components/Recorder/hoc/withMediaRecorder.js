@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import FileSaver from 'file-saver';
 import AudioWrapper from '../lib/AudioWrapper';
-import Mousetrap from '../../../lib/mousetrap';
 import MediaRecorder from '../../../lib/MediaRecorder';
+import Mousetrap from '../../../lib/mousetrap';
+import { clamp, flip } from '../../../lib/math';
+import { formatDate } from '../../../lib/time';
 
 const EMPTY = 'EMPTY';
 const PAUSED = 'PAUSED';
@@ -18,6 +21,8 @@ export const RECORDER_MODES = {
 const SHORTCUTS = {
   TOGGLE_RECORD: 'space',
 };
+
+const TIMER_INTERVAL = 1000;
 
 const createMediaRecorder = ({ isCompatibleBrowser, mediaStream }, events) => {
   if (!isCompatibleBrowser) {
@@ -44,9 +49,19 @@ const createMousetrap = events => {
   return mousetrap;
 };
 
+const getDownloadFilename = ({ recordingStartTime }) => {
+  const date = formatDate(recordingStartTime, 'YYYY_MM_DD-HH_mm');
+  const filename = `TiberSynth-${date}`;
+
+  return filename;
+};
+
 const INITIAL_STATE = () => ({
+  elapsedPlaybackTime: 0,
+  elapsedRecordingTime: 0,
   recordingError: null,
   recordingMode: EMPTY,
+  recordingStartTime: 0,
   waveData: null,
 });
 
@@ -69,6 +84,7 @@ const withMediaRecorder = () => Comp =>
       };
 
       this.audio = new AudioWrapper();
+      this.audio.addEventListener('timeupdate', this.handleAudioTimeUpdate);
       this.recorder = createMediaRecorder(props, this.recorderEvents);
       this.mousetrap = createMousetrap(this.keyboardEvents);
     }
@@ -83,7 +99,10 @@ const withMediaRecorder = () => Comp =>
       }
 
       this.audio.clear();
+      this.audio.removeEventListener('timeupdate', this.handleAudioTimeUpdate);
       this.mousetrap.reset();
+
+      clearInterval(this.recordingTimerId);
 
       delete this.audio;
       delete this.recorder;
@@ -111,6 +130,24 @@ const withMediaRecorder = () => Comp =>
       this.setState({ recordingError: e });
     };
 
+    handleTimerTick = () => {
+      const { recordingStartTime } = this.state;
+      const elapsedRecordingTime = flip(recordingStartTime - Date.now());
+
+      this.setState({ elapsedRecordingTime });
+    };
+
+    handleAudioTimeUpdate = () => {
+      const { elapsedRecordingTime } = this.state;
+      const elapsedPlaybackTime = clamp(
+        this.audio.getCurrentTime(),
+        0,
+        elapsedRecordingTime
+      );
+
+      this.setState({ elapsedPlaybackTime });
+    };
+
     toggleRecord = () => {
       const { recordingMode } = this.state;
 
@@ -127,21 +164,16 @@ const withMediaRecorder = () => Comp =>
       }
     };
 
-    clear = () => {
-      this.audio.clear();
-      this.recorder = createMediaRecorder(this.props, this.recorderEvents);
-      this.setState({ ...INITIAL_STATE() });
-    };
-
     play = async () => {
       await this.audio.play();
-      this.setState({ recordingMode: PLAYING });
+      this.setState({ elapsedPlaybackTime: 0, recordingMode: PLAYING });
     };
 
     pause = async () => {
       const { recordingMode } = this.state;
 
       if (recordingMode === RECORDING) {
+        clearInterval(this.recordingTimerId);
         this.recorder.stop();
       }
 
@@ -153,10 +185,25 @@ const withMediaRecorder = () => Comp =>
 
     record = () => {
       this.recorder.start();
+      this.recordingTimerId = setInterval(this.handleTimerTick, TIMER_INTERVAL);
+
+      this.setState({
+        elapsedRecordingTime: 0,
+        recordingStartTime: Date.now(),
+      });
+    };
+
+    clear = () => {
+      this.audio.clear();
+      this.recorder = createMediaRecorder(this.props, this.recorderEvents);
+      this.setState({ ...INITIAL_STATE() });
     };
 
     download = () => {
-      console.log('download');
+      const { waveData } = this.state;
+      const filename = getDownloadFilename(this.state);
+
+      FileSaver.saveAs(waveData, filename);
     };
 
     getMediaRecorderProps () {
