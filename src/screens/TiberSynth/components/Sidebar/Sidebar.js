@@ -1,12 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
 import { NAME as ABOUT } from '../About';
-import Analyzer from '../../../../components/Analyser';
+import Analyser from '../../../../components/Analyser';
 import ControlBar from '../../../../components/ControlBar';
 import Menu from '../../../../components/Menu';
 import Slider from '../../../../components/Slider';
 import Text from '../../../../components/Text';
 import Recorder from '../../../../components/Recorder';
+import { ANALYSER_HEIGHT } from '../../../../lib/constants';
 import stylesheet from './Sidebar.less';
 
 const Spacer = () => <div className={stylesheet.spacer} />;
@@ -83,8 +84,8 @@ const Title = () => (
 );
 
 const Visualizer = () => (
-  <div className={stylesheet.block} style={{ height: 144 }}>
-    <Analyzer height={144} />
+  <div className={stylesheet.block} style={{ height: ANALYSER_HEIGHT }}>
+    <Analyser height={ANALYSER_HEIGHT} />
   </div>
 );
 

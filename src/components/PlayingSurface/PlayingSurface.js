@@ -4,6 +4,7 @@ import memoize from 'memoize-one';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Mouse from '../Mouse';
 import { expo, flip, scale } from '../../lib/math';
+import { SPACING } from '../../lib/constants';
 import stylesheet from './PlayingSurface.less';
 
 const TRANSITION_CLASSES = {
@@ -84,13 +85,17 @@ const Point = ({
       />
       {shouldDisplayLabels && (
         <Fragment>
-          <text className={stylesheet.label} x={cx + 13 + valueRadius} y={cy}>
+          <text
+            className={stylesheet.label}
+            x={cx + SPACING + valueRadius}
+            y={cy}
+          >
             {label}
           </text>
           <text
             className={stylesheet.synthesisValue}
-            x={cx + 13 + valueRadius}
-            y={cy + 13}
+            x={cx + SPACING + valueRadius}
+            y={cy + SPACING}
           >
             {valueFormatter(synthesisValue)}
           </text>

@@ -3,10 +3,11 @@ import Link from '../../../../components/Link';
 import Modal from '../../../../components/Modal';
 import Text from '../../../../components/Text';
 import { ROUTES } from '../../../../config/routes';
+import { SPACING } from '../../../../lib/constants';
 
 export const NAME = 'ABOUT';
 
-const WIDTH = 13 * 34;
+const WIDTH = SPACING * 34;
 
 const Author = () => (
   <Link to="http://prtcl.cc" color="white" bold={true}>

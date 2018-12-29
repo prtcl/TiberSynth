@@ -44,6 +44,7 @@
     "koa-logger": "^3.2.0",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
+    "less-vars-loader": "^1.1.0",
     "mini-css-extract-plugin": "^0.5.0",
     "nodemon": "^1.18.9",
     "parallelshell": "^3.0.2",

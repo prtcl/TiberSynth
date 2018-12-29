@@ -5,6 +5,7 @@ import { CSSTransition } from 'react-transition-group';
 import Button from '../Button';
 import Icon from '../Icon';
 import Text from '../Text';
+import { SPACING } from '../../lib/constants';
 import stylesheet from './Modal.less';
 
 const ESCAPE = 'esc';
@@ -14,7 +15,7 @@ const TIMEOUT = {
   exit: 75,
 };
 
-const DEFAULT_WIDTH = 13 * 32;
+const DEFAULT_WIDTH = SPACING * 32;
 
 const TRANSITION_CLASSES = {
   enter: stylesheet.fadeEnter,

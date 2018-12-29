@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import { ICON_SIZE } from '../../lib/constants';
 import stylesheet from './Icon.less';
 
 import IosArrowBack from 'react-ionicons/lib/IosArrowBack';
@@ -18,8 +19,6 @@ import IosRecordingOutline from 'react-ionicons/lib/IosRecordingOutline';
 import IosRefresh from 'react-ionicons/lib/IosRefresh';
 import IosSquare from 'react-ionicons/lib/IosSquare';
 import LogoGithub from 'react-ionicons/lib/LogoGithub';
-
-const SIZE = 24;
 
 const COLORS = {
   white: stylesheet.colorWhite,
@@ -53,7 +52,7 @@ export default class Icon extends Component {
   static defaultProps = {
     color: 'white',
     isClickable: true,
-    size: SIZE,
+    size: ICON_SIZE,
   };
 
   handleMouseDown = () => {

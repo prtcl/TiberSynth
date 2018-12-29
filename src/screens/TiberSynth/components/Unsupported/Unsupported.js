@@ -1,9 +1,10 @@
 import React from 'react';
 import Modal from '../../../../components/Modal';
 import Text from '../../../../components/Text';
+import { SPACING } from '../../../../lib/constants';
 
 export const NAME = 'UNSUPPORTED';
-const WIDTH = 13 * 26;
+const WIDTH = SPACING * 26;
 
 const Unsupported = props => (
   <Modal {...props} type="error" width={WIDTH}>

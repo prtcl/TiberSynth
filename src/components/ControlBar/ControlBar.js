@@ -1,9 +1,9 @@
 import React from 'react';
 import Button from '../Button';
 import Icon from '../Icon';
+import { ICON_SIZE } from '../../lib/constants';
 import stylesheet from './ControlBar.less';
 
-const SIZE = 24;
 const SPACER = 'spacer';
 const Spacer = () => <div className={stylesheet.spacer} />;
 
@@ -27,7 +27,7 @@ const ControlBar = ({ actions }) => {
 
         return (
           <div className={stylesheet.action} key={index}>
-            <Comp {...props} size={SIZE} onClick={onClick} />
+            <Comp {...props} size={ICON_SIZE} onClick={onClick} />
           </div>
         );
       })}
