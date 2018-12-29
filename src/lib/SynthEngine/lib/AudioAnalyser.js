@@ -3,7 +3,7 @@ export default class AudioAnalyser {
     this.node = context.createAnalyser();
     this.node.fftSize = size;
     this.node.maxDecibels = max;
-    this.node.minDecidels = min;
+    this.node.minDecibels = min;
 
     const { frequencyBinCount } = this.node;
 

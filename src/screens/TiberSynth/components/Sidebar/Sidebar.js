@@ -7,13 +7,14 @@ import Menu from '../../../../components/Menu';
 import Slider from '../../../../components/Slider';
 import Text from '../../../../components/Text';
 import Recorder from '../../../../components/Recorder';
-import { ANALYSER_HEIGHT } from '../../../../lib/constants';
+import { ANALYSER_HEIGHT, GITHUB_ISSUES_LINK } from '../../../../lib/constants';
+import { ROUTES } from '../../../../config/routes';
 import stylesheet from './Sidebar.less';
 
 const Spacer = () => <div className={stylesheet.spacer} />;
 
-const Seperator = ({ children }) => (
-  <div className={stylesheet.seperator}>{children}</div>
+const Separator = ({ children }) => (
+  <div className={stylesheet.separator}>{children}</div>
 );
 
 const NavMenu = ({ shouldShowMenu, onCloseNavMenu, onShowModal }) => (
@@ -23,11 +24,11 @@ const NavMenu = ({ shouldShowMenu, onCloseNavMenu, onShowModal }) => (
     onClose={onCloseNavMenu}
     items={[
       { label: 'About', icon: 'info', onClick: () => onShowModal(ABOUT) },
-      { label: 'Manual', icon: 'book', to: '/manual' },
+      { label: 'Manual', icon: 'book', to: ROUTES.MANUAL },
       {
         label: 'Issues',
         icon: 'github',
-        to: 'https://github.com/prtcl/tibersynth/issues',
+        to: GITHUB_ISSUES_LINK,
       },
     ]}
   />
@@ -67,9 +68,9 @@ const ParameterSliders = ({
         onChange={value => onUpdateRangeValue(value, id)}
       />
     ))}
-    <Seperator>
+    <Separator>
       <Slider label="Volume" onChange={onChangeVolume} value={volume} />
-    </Seperator>
+    </Separator>
   </div>
 );
 

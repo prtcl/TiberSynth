@@ -3,27 +3,25 @@
 :local {
   @symbolHeight: @fontSize * 2;
 
-  .iconSymbol,
-  .letterSymbol {
-    margin: 0 @fontSize * 0.25;
-  }
-
   .iconSymbol {
     background-color: @colorLightGray;
     border-radius: @borderRadius;
     display: inline-block;
     height: @symbolHeight;
+    margin: @fontSize * 0.25;
     position: relative;
-    top: @spacing / 2;
+    top: -1px;
+    vertical-align: middle;
   }
 
   .letterSymbol {
-    display: inline-block;
     background-color: @colorLightGray;
     border-radius: @borderRadius;
-    width: @symbolHeight;
+    display: inline-block;
     height: @symbolHeight;
-    text-align: center;
+    margin: 0 @fontSize * 0.25;
     padding-top: @spacing / 4;
+    text-align: center;
+    width: @symbolHeight;
   }
 }

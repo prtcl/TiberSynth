@@ -3,20 +3,26 @@ import Link from '../../../../components/Link';
 import Modal from '../../../../components/Modal';
 import Text from '../../../../components/Text';
 import { ROUTES } from '../../../../config/routes';
-import { SPACING } from '../../../../lib/constants';
+import {
+  AUTHOR,
+  DONATE_LINK,
+  GITHUB_LINK,
+  PRTCL_LINK,
+  SPACING,
+} from '../../../../lib/constants';
 
 export const NAME = 'ABOUT';
 
 const WIDTH = SPACING * 34;
 
 const Author = () => (
-  <Link to="http://prtcl.cc" color="white" bold={true}>
-    Cory O&apos;Brien
+  <Link to={PRTCL_LINK} color="white" bold={true}>
+    {AUTHOR}
   </Link>
 );
 
 const GitHub = () => (
-  <Link to="https://github.com/prtcl/tibersynth" color="white" bold={true}>
+  <Link to={GITHUB_LINK} color="white" bold={true}>
     GitHub
   </Link>
 );
@@ -26,7 +32,7 @@ const About = props => (
     {...props}
     actions={[
       { label: 'Manual', to: ROUTES.MANUAL },
-      { label: 'Donate', onClick: () => console.log('donate') },
+      { label: 'Donate', to: DONATE_LINK },
     ]}
     width={WIDTH}
   >

@@ -240,17 +240,17 @@ export const POINT_CONFIGS = [
   },
   {
     id: OSC_GAIN_A_GAIN,
-    label: 'Osc A|B Gain',
+    label: 'Osc A/B Gain',
     format: 'percent',
   },
   {
     id: OSC_GAIN_B_GAIN,
-    label: 'Osc C|D Gain',
+    label: 'Osc C/D Gain',
     format: 'percent',
   },
   {
     id: OSC_GAIN_C_GAIN,
-    label: 'Osc E|F Gain',
+    label: 'Osc E/F Gain',
     format: 'percent',
   },
   {
@@ -260,7 +260,7 @@ export const POINT_CONFIGS = [
   },
   {
     id: HIPASS_FREQUENCY,
-    label: 'Hipass Frequency',
+    label: 'Highpass Frequency',
     format: 'hz',
   },
   {
@@ -270,7 +270,7 @@ export const POINT_CONFIGS = [
   },
   {
     id: LOWPASS_FREQUENCY,
-    label: 'Lowpas Frequency',
+    label: 'Lowpass Frequency',
     format: 'hz',
   },
   {
