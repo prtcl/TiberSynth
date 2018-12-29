@@ -28,7 +28,8 @@ export { SIDEBAR_WIDTH };
 export { SPACING };
 
 export const AUTHOR = 'Cory O\'Brien';
-export const DONATE_LINK = '#';
+export const DONATE_LINK
+  = 'https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=4KML9FARYJCGW&item_name=TiberSynth&currency_code=USD&source=url';
 export const GITHUB_ISSUES_LINK = 'https://github.com/prtcl/tibersynth/issues';
 export const GITHUB_LINK = 'https://github.com/prtcl/tibersynth';
 export const PRTCL_LINK = 'http://prtcl.cc';
