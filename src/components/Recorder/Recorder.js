@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import ControlBar from '../ControlBar';
 import Text from '../Text';
-import { MODES } from './lib/constants';
+import { RECORDER_MODES } from './hoc/withMediaRecorder';
 import stylesheet from './Recorder.less';
 
 const getControlActions = ({
@@ -13,7 +13,7 @@ const getControlActions = ({
   onRecord,
   recordingMode,
 }) => {
-  if (recordingMode === MODES.EMPTY) {
+  if (recordingMode === RECORDER_MODES.EMPTY) {
     return [
       {
         type: 'record',
@@ -23,7 +23,7 @@ const getControlActions = ({
     ];
   }
 
-  if (recordingMode === MODES.PAUSED) {
+  if (recordingMode === RECORDER_MODES.PAUSED) {
     return [
       { type: 'close', onClick: onClear },
       { type: 'play', onClick: onPlay },
@@ -32,7 +32,7 @@ const getControlActions = ({
     ];
   }
 
-  if (recordingMode === MODES.PLAYING) {
+  if (recordingMode === RECORDER_MODES.PLAYING) {
     return [
       { type: 'close', onClick: onClear },
       { type: 'pause', onClick: onPause },
@@ -41,7 +41,7 @@ const getControlActions = ({
     ];
   }
 
-  if (recordingMode === MODES.RECORDING) {
+  if (recordingMode === RECORDER_MODES.RECORDING) {
     return [
       {
         type: 'recording',
@@ -57,7 +57,7 @@ const getControlActions = ({
 const Recorder = props => {
   const { recordingMode } = props;
   const actions = getControlActions(props);
-  const isRecording = recordingMode === MODES.RECORDING;
+  const isRecording = recordingMode === RECORDER_MODES.RECORDING;
 
   const classes = classNames([
     stylesheet.container,
