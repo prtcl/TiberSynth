@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import Mousetrap from '../../lib/mousetrap';
 import { CSSTransition } from 'react-transition-group';
 import Button from '../Button';
@@ -102,7 +103,12 @@ export default class Modal extends Component {
   }
 
   render () {
-    const { children, isOpen, width } = this.props;
+    const { children, isOpen, width, type } = this.props;
+
+    const containerClasses = classNames([
+      stylesheet.container,
+      type === 'error' && stylesheet.error,
+    ]);
 
     return (
       <CSSTransition
@@ -117,7 +123,7 @@ export default class Modal extends Component {
             className={stylesheet.overlay}
             onClick={this.handleOutsideClick}
           />
-          <div className={stylesheet.container} style={{ maxWidth: width }}>
+          <div className={containerClasses} style={{ maxWidth: width }}>
             {this.renderHeader()}
             {this.renderTitle()}
             <div className={stylesheet.content}>{children}</div>

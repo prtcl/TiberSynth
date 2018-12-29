@@ -1,12 +1,14 @@
 import React, { Fragment } from 'react';
 import About, { NAME as ABOUT } from './components/About';
-import Sidebar from './components/Sidebar';
 import PlayingSurface from '../../components/PlayingSurface';
+import Sidebar from './components/Sidebar';
+import Unsupported, { NAME as UNSUPPORTED } from './components/Unsupported';
 import stylesheet from './TiberSynth.less';
 
 const Modals = ({ currentModal, onCloseModal }) => (
   <Fragment>
     <About isOpen={currentModal === ABOUT} onClose={onCloseModal} />
+    <Unsupported isOpen={currentModal === UNSUPPORTED} onClose={onCloseModal} />
   </Fragment>
 );
 

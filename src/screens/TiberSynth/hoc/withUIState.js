@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NAME as UNSUPPORTED } from '../components/Unsupported';
 
 const withUIState = () => Comp =>
   class WithUIState extends Component {
@@ -6,6 +7,14 @@ const withUIState = () => Comp =>
       currentModal: null,
       shouldShowMenu: false,
     };
+
+    componentDidMount () {
+      const { isCompatibleBrowser } = this.props;
+
+      if (!isCompatibleBrowser) {
+        this.setState({ currentModal: UNSUPPORTED });
+      }
+    }
 
     openMenu = () => {
       this.setState({ shouldShowMenu: true });
