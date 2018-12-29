@@ -1,17 +1,32 @@
 ## TiberSynth
 
-The original TiberSynth was a real-time performance synthesizer built with Max/MSP, 3Dconnextion SpaceNavigator and Wacom Tablet. It sounded awesome, but required a backpack full of gear and a room full of willing audience members.
+TiberSynth is an experimental audio synthesizer that runs in your web browser. It is a gesture-based instrument that allows you to navigate a complex multi-dimensional sound-space using simple movements. It is built with ES6, [React](https://reactjs.org/), and the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API).
 
-Technology has changed, and we now have all kinds of craziness like the [Web Audio API](http://webaudio.github.io/web-audio-api/) that allow us to do things like, say, porting a complex gestural performance instrument to run in a web browser.
+To play the instrument just head to [tibersynth.cc](http://tibersynth.cc/). For more information check out the [manual](http://tibersynth.cc/manual).
 
-In place of the physical controllers in the original TiberSynth, there is now a 2D playing surface which is mapped to a 2D random parameter space. The circles on the playing surface represent individual synthesis parameters, which scale based on your distance from them. Each sound-space is stored in a history collection, allowing for revisiting of particularly interesting spaces. A set of specially tuned tone controls round out the instrument. 
+## Changes
 
-## Contributions / Bugs
+Version 2 is a complete rewrite from version 1. Here's a few things that have changed:
 
-Code contributions and pull requests are welcome. This is a spare-time project, which means that details are missing, code is weird, etc. If you have feature suggestions, please post an issue on GitHub.
+- Improved synthesis engine and sound quality
+- New sample recorder that captures main output
+- Completely redesigned UI
+- Complete code rewrite
+- SSR for fast initial render and SEO
+- There is now a manual!!
 
-To run the synth locally for development, just clone this repo, run `npm install` and `bower install`, then start the dev server with `grunt develop`. 
+## Development
 
-## Play
+```
+git clone https://github.com/prtcl/tibersynth.git
+cd ./tibersynth
+npm i
+npm run dev
+```
 
-The synth is currently running at [tibersynth.cc](http://tibersynth.cc/). You will need a modern web browser and a relatively fast computer to play the instrument. Decent speakers/headphones and a high volume level are recommended. 
+You should now have a node server running at `localhost:3000`, as well as webpack running in watch mode.
+
+## License
+
+MIT
+Copyright © 2012-2019 [Cory O'Brien](http://prtcl.cc/)

@@ -3,8 +3,8 @@ module.exports = {
     title: 'TiberSynth',
     description:
       'TiberSynth is an experimental audio synthesizer that runs in your web browser',
-    url: 'http: //tibersynth.prtcl.cc',
-    image: 'http://tibersynth.prtcl.cc/static/img/tibersynth-screenshot-01.png',
+    url: 'http://tibersynth.cc',
+    image: 'http://tibersynth.cc/assets/tibersynth-screenshot-01.png',
     author: 'Cory O\'Brien',
     analyticsId: 'UA-47948701-3',
   },

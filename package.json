@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "tibersynth",
+  "name": "TiberSynth",
   "version": "2.0.0",
   "description": "TiberSynth is an experimental audio synthesizer that runs in your web browser",
   "repository": {
@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/prtcl/tibersynth/issues"
   },
-  "homepage": "https://github.com/prtcl/tibersynth",
+  "homepage": "http://tibersynth.cc",
   "scripts": {
     "build": "npm run clean ; npm i ; npm run webpack",
     "clean": "rm -rf ./node_modules | true ; rm -r ./dist | true",
