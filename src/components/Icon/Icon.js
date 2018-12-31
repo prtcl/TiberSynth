@@ -88,6 +88,7 @@ export default class Icon extends Component {
     return (
       <a
         onMouseDown={this.handleMouseDown}
+        onMouseLeave={this.handleMouseUp}
         onMouseUp={this.handleMouseUp}
         className={classes}
       >
