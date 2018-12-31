@@ -74,6 +74,11 @@ const DEFAULT_CONFIG = {
         to: '[name].[ext]',
         toType: 'template',
       },
+      {
+        from: path.join(__dirname, 'images'),
+        to: '[name].[ext]',
+        toType: 'template',
+      },
     ]),
   ],
 };
