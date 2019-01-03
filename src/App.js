@@ -5,6 +5,7 @@ import compose from './lib/compose';
 import routes from './config/routes';
 import { withParameterSpaceProvider } from './hoc/withParameterSpace';
 import { withSynthesisEngineProvider } from './hoc/withSynthesisEngine';
+import { withViewportProvider } from './hoc/withViewport';
 
 const App = ({ context, routerComponent: Router, location }) => (
   <Router {...(location ? { context, location } : {})}>
@@ -18,7 +19,8 @@ const App = ({ context, routerComponent: Router, location }) => (
 
 const enhance = compose(
   withParameterSpaceProvider(),
-  withSynthesisEngineProvider()
+  withSynthesisEngineProvider(),
+  typeof window !== 'undefined' ? withViewportProvider() : Comp => Comp
 );
 
 export default enhance(App);

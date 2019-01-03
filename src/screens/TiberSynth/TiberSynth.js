@@ -5,10 +5,14 @@ import Sidebar from './components/Sidebar';
 import Unsupported, { NAME as UNSUPPORTED } from './components/Unsupported';
 import stylesheet from './TiberSynth.less';
 
-const Modals = ({ currentModal, onCloseModal }) => (
+const Modals = ({ currentModal, onCloseModal, isMobile }) => (
   <Fragment>
     <About isOpen={currentModal === ABOUT} onClose={onCloseModal} />
-    <Unsupported isOpen={currentModal === UNSUPPORTED} onClose={onCloseModal} />
+    <Unsupported
+      isMobile={isMobile}
+      isOpen={currentModal === UNSUPPORTED}
+      onClose={onCloseModal}
+    />
   </Fragment>
 );
 

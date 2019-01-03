@@ -9,9 +9,9 @@ const withUIState = () => Comp =>
     };
 
     componentDidMount () {
-      const { isCompatibleBrowser } = this.props;
+      const { isCompatibleBrowser, isMobile } = this.props;
 
-      if (!isCompatibleBrowser) {
+      if (isMobile || !isCompatibleBrowser) {
         this.setState({ currentModal: UNSUPPORTED });
       }
     }

@@ -27,6 +27,8 @@ export { ICON_SIZE };
 export { SIDEBAR_WIDTH };
 export { SPACING };
 
+export const MOBILE_BREAKPOINT = 600;
+
 export const AUTHOR = 'Cory O\'Brien';
 export const DONATE_LINK
   = 'https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=4KML9FARYJCGW&item_name=TiberSynth&currency_code=USD&source=url';
