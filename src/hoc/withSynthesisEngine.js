@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import sentry from '../lib/sentry';
 import SynthEngine, { isCompatibleBrowser } from '../lib/SynthEngine';
 
 const { Consumer, Provider } = React.createContext();
@@ -12,9 +13,12 @@ const DEFAULT_STATE = {
 
 const getSynthEngine = () => {
   if (!isCompatibleBrowser()) {
+    const error = new Error('Browser does not support the Web Audio API');
+    sentry.logError(error);
+
     return {
       ...DEFAULT_STATE,
-      synthEngineError: new Error('Browser does not support the Web Audio API'),
+      synthEngineError: error,
     };
   }
 
@@ -22,12 +26,13 @@ const getSynthEngine = () => {
 
   try {
     synthEngine = new SynthEngine();
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    sentry.logError(error);
+    console.error(error);
 
     return {
       ...DEFAULT_STATE,
-      synthEngineError: err,
+      synthEngineError: error,
     };
   }
 

@@ -13,4 +13,8 @@ module.exports = {
     analyticsId: 'UA-47948701-3',
   },
   styles: ['https://fonts.googleapis.com/css?family=Lato'],
+  sentry: {
+    src: 'https://browser.sentry-cdn.com/4.4.2/bundle.min.js',
+    dsn: 'https://bf2313957c7840728cbc7596a17ac868@sentry.io/1364768',
+  },
 };

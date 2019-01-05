@@ -1,6 +1,10 @@
 const path = require('path');
 const getManifests = require('./getManifests');
-const { meta, styles: contextStyles } = require('../data/templateContext');
+const {
+  meta,
+  styles: contextStyles,
+  sentry,
+} = require('../data/templateContext');
 
 const { client, server } = getManifests();
 
@@ -21,6 +25,6 @@ module.exports = {
     const styles = getClientStyles();
     const { content } = renderReact(ctx.url);
 
-    return ctx.render('app', { content, meta, scripts, styles });
+    return ctx.render('app', { content, meta, scripts, styles, sentry });
   },
 };

@@ -17,6 +17,10 @@
   {{#each styles}}
   <link href="{{{.}}}" rel="stylesheet" />
   {{/each}}
+  <script src="{{sentry.src}}" crossorigin="anonymous"></script>
+  <script>
+    Sentry.init({ dsn: '{{sentry.dsn}}' });
+  </script>
   {{#each scripts}}
   <script src="{{{.}}}"></script>
   {{/each}}
