@@ -52,6 +52,7 @@ const SpaceControls = ({
 }) => (
   <Separator bottom={true}>
     <FieldWrapper
+      help="This is some help text"
       label="Space Controls"
       right={`${historyIndex + 1}/${history.length}`}
     >
@@ -84,11 +85,17 @@ const ParameterSliders = ({
       <Slider
         key={id}
         {...rangeProps}
+        help="This is some help text"
         onChange={value => onUpdateRangeValue(value, id)}
       />
     ))}
     <Separator top={true} bottom={true}>
-      <Slider label="Volume" onChange={onChangeVolume} value={volume} />
+      <Slider
+        help="This is some help text"
+        label="Volume"
+        onChange={onChangeVolume}
+        value={volume}
+      />
     </Separator>
   </div>
 );

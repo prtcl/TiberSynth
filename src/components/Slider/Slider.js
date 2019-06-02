@@ -73,13 +73,13 @@ export default class Slider extends Component {
   };
 
   render () {
-    const { label, step } = this.props;
+    const { label, step, help } = this.props;
     const value = this.getValue();
     const domain = this.getDomain();
     const formattedValue = this.getFormattedValue();
 
     return (
-      <FieldWrapper label={label} right={formattedValue}>
+      <FieldWrapper label={label} right={formattedValue} help={help}>
         <div className={stylesheet.sliderContainer}>
           <RCSlider
             className={stylesheet.slider}
