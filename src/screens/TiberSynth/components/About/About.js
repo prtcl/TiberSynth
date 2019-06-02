@@ -13,7 +13,7 @@ import {
 
 export const NAME = 'ABOUT';
 
-const WIDTH = SPACING * 34;
+const WIDTH = SPACING * 36;
 
 const Author = () => (
   <Link to={PRTCL_LINK} color="white" bold={true}>
