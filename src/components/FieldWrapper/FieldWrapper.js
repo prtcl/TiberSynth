@@ -1,12 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import classNames from 'classnames';
-import Link from '../Link';
 import Modal from '../Modal';
 import Text from '../Text';
 import { SPACING } from '../../lib/constants';
 import stylesheet from './FieldWrapper.less';
 
-const HELP_WIDTH = SPACING * 36;
+const HELP_WIDTH = SPACING * 34;
 
 class FieldWrapper extends Component {
   state = {
@@ -32,11 +31,11 @@ class FieldWrapper extends Component {
             <Text className={stylesheet.label} color="white">
               {label}
               {help && (
-                <Link onClick={this.showHelpModal}>
+                <a onClick={this.showHelpModal}>
                   <Text className={stylesheet.help} color="gray">
                     ?
                   </Text>
-                </Link>
+                </a>
               )}
             </Text>
             {right && (

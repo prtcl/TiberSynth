@@ -4,7 +4,7 @@ import stylesheet from './Separator.less';
 
 const Separator = ({ children, top, bottom }) => (
   <div
-    className={classNames(stylesheet.separator, {
+    className={classNames(stylesheet.container, {
       [stylesheet.top]: top,
       [stylesheet.bottom]: bottom,
     })}
