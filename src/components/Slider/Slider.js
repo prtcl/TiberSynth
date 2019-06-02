@@ -5,7 +5,7 @@ import {
   Slider as RCSlider,
   Tracks as RCTracks,
 } from 'react-compound-slider';
-import Text from '../Text';
+import FieldWrapper from '../FieldWrapper';
 import stylesheet from './Slider.less';
 
 const Handle = ({ percent, ...props }) => (
@@ -72,82 +72,60 @@ export default class Slider extends Component {
     this.setState({ value });
   };
 
-  renderLabel () {
-    const { label } = this.props;
-    const value = this.getFormattedValue();
-
-    return (
-      <div className={stylesheet.labelContainer}>
-        <Text className={stylesheet.label} color="white">
-          {label}
-        </Text>
-        <Text className={stylesheet.value} color="gray">
-          {value}
-        </Text>
-      </div>
-    );
-  }
-
-  renderSlider () {
-    const { step } = this.props;
+  render () {
+    const { label, step } = this.props;
     const value = this.getValue();
     const domain = this.getDomain();
+    const formattedValue = this.getFormattedValue();
 
     return (
-      <div className={stylesheet.sliderContainer}>
-        <RCSlider
-          className={stylesheet.slider}
-          domain={domain}
-          onChange={this.handleChange}
-          onUpdate={this.handleUpdate}
-          step={step}
-          values={value}
-        >
-          <RCRail>
-            {({ getRailProps }) => (
-              <div {...getRailProps()} className={stylesheet.railContainer}>
-                <div className={stylesheet.rail} />
-              </div>
-            )}
-          </RCRail>
-          <RCTracks right={false}>
-            {({ tracks, getTrackProps }) => (
-              <Fragment>
-                {tracks.map(({ id, source, target }) => (
-                  <Track
-                    {...getTrackProps()}
-                    key={id}
-                    source={source}
-                    target={target}
-                  />
-                ))}
-              </Fragment>
-            )}
-          </RCTracks>
-          <RCHandles>
-            {({ handles, getHandleProps }) => (
-              <Fragment>
-                {handles.map(handle => (
-                  <Handle
-                    key={handle.id}
-                    {...handle}
-                    {...getHandleProps(handle.id)}
-                  />
-                ))}
-              </Fragment>
-            )}
-          </RCHandles>
-        </RCSlider>
-      </div>
-    );
-  }
-
-  render () {
-    return (
-      <div className={stylesheet.container}>
-        {this.renderLabel()}
-        {this.renderSlider()}
-      </div>
+      <FieldWrapper label={label} right={formattedValue}>
+        <div className={stylesheet.sliderContainer}>
+          <RCSlider
+            className={stylesheet.slider}
+            domain={domain}
+            onChange={this.handleChange}
+            onUpdate={this.handleUpdate}
+            step={step}
+            values={value}
+          >
+            <RCRail>
+              {({ getRailProps }) => (
+                <div {...getRailProps()} className={stylesheet.railContainer}>
+                  <div className={stylesheet.rail} />
+                </div>
+              )}
+            </RCRail>
+            <RCTracks right={false}>
+              {({ tracks, getTrackProps }) => (
+                <Fragment>
+                  {tracks.map(({ id, source, target }) => (
+                    <Track
+                      {...getTrackProps()}
+                      key={id}
+                      source={source}
+                      target={target}
+                    />
+                  ))}
+                </Fragment>
+              )}
+            </RCTracks>
+            <RCHandles>
+              {({ handles, getHandleProps }) => (
+                <Fragment>
+                  {handles.map(handle => (
+                    <Handle
+                      key={handle.id}
+                      {...handle}
+                      {...getHandleProps(handle.id)}
+                    />
+                  ))}
+                </Fragment>
+              )}
+            </RCHandles>
+          </RCSlider>
+        </div>
+      </FieldWrapper>
     );
   }
 }
