@@ -5,12 +5,13 @@ import ControlBar from '../../../../components/ControlBar';
 import FieldWrapper from '../../../../components/FieldWrapper';
 import Menu from '../../../../components/Menu';
 import Recorder from '../../../../components/Recorder';
-import Slider from '../../../../components/Slider';
 import Separator from '../../../../components/Separator';
+import Slider from '../../../../components/Slider';
 import Text from '../../../../components/Text';
 import { ANALYSER_HEIGHT, GITHUB_ISSUES_LINK } from '../../../../lib/constants';
 import { NAME as ABOUT } from '../About';
 import { ROUTES } from '../../../../config/routes';
+import HELP_TEXT from './data/helpText';
 import stylesheet from './Sidebar.less';
 
 const Spacer = () => <div className={stylesheet.spacer} />;
@@ -52,7 +53,7 @@ const SpaceControls = ({
 }) => (
   <Separator bottom={true}>
     <FieldWrapper
-      help="This is some help text"
+      help={HELP_TEXT.SPACE_CONTROLS}
       label="Space Controls"
       right={`${historyIndex + 1}/${history.length}`}
     >
@@ -85,27 +86,27 @@ const ParameterSliders = ({
       <Slider
         key={id}
         {...rangeProps}
-        help="This is some help text"
+        help={HELP_TEXT[id]}
         onChange={value => onUpdateRangeValue(value, id)}
       />
     ))}
     <Separator top={true} bottom={true}>
-      <Slider
-        help="This is some help text"
-        label="Volume"
-        onChange={onChangeVolume}
-        value={volume}
-      />
+      <Slider label="Volume" onChange={onChangeVolume} value={volume} />
     </Separator>
   </div>
 );
 
-const Title = () => (
+const Title = ({ onShowModal }) => (
   <div className={stylesheet.block}>
     <div className={stylesheet.title}>
       <Text color="white" type="title">
         TiberSynth
       </Text>
+      <a onClick={() => onShowModal(ABOUT)}>
+        <Text className={stylesheet.titleHelp} color="gray">
+          ?
+        </Text>
+      </a>
     </div>
   </div>
 );
@@ -124,7 +125,7 @@ const Sidebar = props => (
     <OutputRecorder />
     <SpaceControls {...props} />
     <ParameterSliders {...props} />
-    <Title />
+    <Title {...props} />
     <Visualizer />
   </div>
 );
