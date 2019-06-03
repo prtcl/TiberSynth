@@ -69,11 +69,12 @@ const SpaceControls = ({
   </Separator>
 );
 
-const OutputRecorder = () => (
-  <div className={stylesheet.block}>
-    <Recorder />
-  </div>
-);
+// we are taking this out for now due to issues with MediaRecorder support
+// const OutputRecorder = () => (
+//   <div className={stylesheet.block}>
+//     <Recorder />
+//   </div>
+// );
 
 const ParameterSliders = ({
   onChangeVolume,
@@ -122,7 +123,6 @@ const Sidebar = props => (
     <NavMenu {...props} />
     <Navigation {...props} />
     <Spacer />
-    <OutputRecorder />
     <SpaceControls {...props} />
     <ParameterSliders {...props} />
     <Title {...props} />
