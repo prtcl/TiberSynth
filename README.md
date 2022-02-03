@@ -9,7 +9,6 @@ To play the instrument just head to [tibersynth.cc](http://tibersynth.cc/). For 
 Version 2 is a complete rewrite from version 1. Here's a few things that have changed:
 
 - Improved synthesis engine and sound quality
-- New sample recorder that captures main output
 - Completely redesigned UI
 - Complete code rewrite
 - SSR for fast initial render and SEO

@@ -65,16 +65,6 @@ const DEFAULT_CONFIG = {
     }),
     new CopyWebpackPlugin([
       {
-        from: path.join(
-          __dirname,
-          'node_modules',
-          'opus-media-recorder',
-          'dist'
-        ),
-        to: '[name].[ext]',
-        toType: 'template',
-      },
-      {
         from: path.join(__dirname, 'images'),
         to: '[name].[ext]',
         toType: 'template',

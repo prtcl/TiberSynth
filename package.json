@@ -14,11 +14,12 @@
   },
   "homepage": "http://tibersynth.cc",
   "scripts": {
-    "build": "npm run clean ; npm i ; npm run webpack",
+    "build": "npm run setup ; npm run webpack",
     "clean": "rm -rf ./node_modules | true ; rm -r ./dist | true",
     "dev": "$(npm bin)/parallelshell 'npm run webpack:watch' 'npm run server:dev'",
     "server": "NODE_ENV=production PORT=8989 node ./server/index.js",
     "server:dev": "NODE_ENV=development PORT=3000 nodemon ./server/index.js",
+    "setup": "npm run clean ; npm i",
     "start": "npm run build && npm run server",
     "webpack": "NODE_ENV=production $(npm bin)/webpack --mode=production",
     "webpack:watch": "NODE_ENV=development $(npm bin)/webpack --watch --mode=development"
@@ -70,7 +71,6 @@
     "moment": "^2.23.0",
     "moment-duration-format": "^2.2.2",
     "mousetrap": "^1.6.2",
-    "opus-media-recorder": "^0.7.0",
     "react": "^16.6.3",
     "react-compound-slider": "^0.16.3",
     "react-dom": "^16.6.3",

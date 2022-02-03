@@ -4,7 +4,6 @@ import Analyser from '../../../../components/Analyser';
 import ControlBar from '../../../../components/ControlBar';
 import FieldWrapper from '../../../../components/FieldWrapper';
 import Menu from '../../../../components/Menu';
-import Recorder from '../../../../components/Recorder';
 import Separator from '../../../../components/Separator';
 import Slider from '../../../../components/Slider';
 import Text from '../../../../components/Text';
@@ -68,13 +67,6 @@ const SpaceControls = ({
     </FieldWrapper>
   </Separator>
 );
-
-// we are taking this out for now due to issues with MediaRecorder support
-// const OutputRecorder = () => (
-//   <div className={stylesheet.block}>
-//     <Recorder />
-//   </div>
-// );
 
 const ParameterSliders = ({
   onChangeVolume,
