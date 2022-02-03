@@ -28,17 +28,19 @@
 
   .spacer {
     flex: 1 1 auto;
-    margin: 0 0 @spacing 0;
-  }
-
-  .separator {
-    border-bottom: 1px solid @colorDarkGray;
-    border-top: 1px solid @colorDarkGray;
-    margin: @spacing * 2 0 @spacing / 2 0;
-    padding: @spacing / 2 0;
   }
 
   .navMenu {
     width: @sidebarWidth - @spacing;
+  }
+
+  .title {
+    display: flex;
+    flex-direction: row;
+
+    .titleHelp {
+      cursor: pointer;
+      margin: 0 0 0 @spacing / 2;
+    }
   }
 }

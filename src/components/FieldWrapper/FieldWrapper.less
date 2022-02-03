@@ -1,0 +1,27 @@
+@import "../../less/variables.less";
+
+:local {
+  .container {
+    margin: @spacing / 2 0;
+  }
+
+  .label,
+  .labelContainer {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .label,
+  .right {
+    flex: 1;
+  }
+
+  .right {
+    text-align: right;
+  }
+
+  .help {
+    cursor: pointer;
+    margin: 0 0 0 @spacing / 2;
+  }
+}

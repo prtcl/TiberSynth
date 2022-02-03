@@ -1,21 +1,20 @@
 import React from 'react';
 import classNames from 'classnames';
-import { NAME as ABOUT } from '../About';
 import Analyser from '../../../../components/Analyser';
 import ControlBar from '../../../../components/ControlBar';
+import FieldWrapper from '../../../../components/FieldWrapper';
 import Menu from '../../../../components/Menu';
+import Recorder from '../../../../components/Recorder';
+import Separator from '../../../../components/Separator';
 import Slider from '../../../../components/Slider';
 import Text from '../../../../components/Text';
-import Recorder from '../../../../components/Recorder';
 import { ANALYSER_HEIGHT, GITHUB_ISSUES_LINK } from '../../../../lib/constants';
+import { NAME as ABOUT } from '../About';
 import { ROUTES } from '../../../../config/routes';
+import HELP_TEXT from './data/helpText';
 import stylesheet from './Sidebar.less';
 
 const Spacer = () => <div className={stylesheet.spacer} />;
-
-const Separator = ({ children }) => (
-  <div className={stylesheet.separator}>{children}</div>
-);
 
 const NavMenu = ({ shouldShowMenu, onCloseNavMenu, onShowModal }) => (
   <Menu
@@ -34,25 +33,48 @@ const NavMenu = ({ shouldShowMenu, onCloseNavMenu, onShowModal }) => (
   />
 );
 
-const SpaceControls = ({ onRandomize, onUndo, onRedo, onOpenNavMenu }) => (
+const Navigation = ({ onOpenNavMenu }) => (
   <div className={classNames([stylesheet.block, stylesheet.block__margin])}>
     <ControlBar
       actions={[
         { type: 'menu', color: 'white', onClick: onOpenNavMenu },
         { type: 'spacer' },
-        { type: 'refresh', color: 'white', onClick: onRandomize },
-        { type: 'back', color: 'white', onClick: onUndo },
-        { type: 'forward', color: 'white', onClick: onRedo },
       ]}
     />
   </div>
 );
 
-const OutputRecorder = () => (
-  <div className={stylesheet.block}>
-    <Recorder />
-  </div>
+const SpaceControls = ({
+  history,
+  historyIndex,
+  onRandomize,
+  onRedo,
+  onUndo,
+}) => (
+  <Separator bottom={true}>
+    <FieldWrapper
+      help={HELP_TEXT.SPACE_CONTROLS}
+      label="Space Controls"
+      right={`${historyIndex + 1}/${history.length}`}
+    >
+      <ControlBar
+        actions={[
+          { type: 'refresh', color: 'white', onClick: onRandomize },
+          { type: 'spacer' },
+          { type: 'back', color: 'white', onClick: onUndo },
+          { type: 'forward', color: 'white', onClick: onRedo },
+        ]}
+      />
+    </FieldWrapper>
+  </Separator>
 );
+
+// we are taking this out for now due to issues with MediaRecorder support
+// const OutputRecorder = () => (
+//   <div className={stylesheet.block}>
+//     <Recorder />
+//   </div>
+// );
 
 const ParameterSliders = ({
   onChangeVolume,
@@ -65,21 +87,27 @@ const ParameterSliders = ({
       <Slider
         key={id}
         {...rangeProps}
+        help={HELP_TEXT[id]}
         onChange={value => onUpdateRangeValue(value, id)}
       />
     ))}
-    <Separator>
+    <Separator top={true} bottom={true}>
       <Slider label="Volume" onChange={onChangeVolume} value={volume} />
     </Separator>
   </div>
 );
 
-const Title = () => (
+const Title = ({ onShowModal }) => (
   <div className={stylesheet.block}>
     <div className={stylesheet.title}>
       <Text color="white" type="title">
         TiberSynth
       </Text>
+      <a onClick={() => onShowModal(ABOUT)}>
+        <Text className={stylesheet.titleHelp} color="gray">
+          ?
+        </Text>
+      </a>
     </div>
   </div>
 );
@@ -93,11 +121,11 @@ const Visualizer = () => (
 const Sidebar = props => (
   <div className={stylesheet.container}>
     <NavMenu {...props} />
-    <SpaceControls {...props} />
+    <Navigation {...props} />
     <Spacer />
-    <OutputRecorder />
+    <SpaceControls {...props} />
     <ParameterSliders {...props} />
-    <Title />
+    <Title {...props} />
     <Visualizer />
   </div>
 );
