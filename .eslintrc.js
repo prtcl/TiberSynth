@@ -9,7 +9,7 @@ module.exports = {
   globals: {
     __DEV__: true,
   },
-  extends: ['prettier', 'eslint:recommended', 'plugin:react/recommended'],
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'prettier'],
   parser: 'babel-eslint',
   parserOptions: {
     sourceType: 'module',
