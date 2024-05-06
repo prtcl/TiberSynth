@@ -1,5 +1,8 @@
-## TiberSynth
+### 🗒️ Note 
 
+A new version of TiberSynth is in development which includes many of the feature requests and improvements that have been asked for over the years. This repo serves as reference for the core synthesis engine and overall architecture, but will not be updated outside of critical bug fixes.
+
+## TiberSynth 
 TiberSynth is an experimental audio synthesizer that runs in your web browser. It is a gesture-based instrument that allows you to navigate a complex multi-dimensional sound-space using simple movements. It is built with ES6, [React](https://reactjs.org/), and the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API).
 
 To play the instrument just head to [tibersynth.cc](http://tibersynth.cc/). For more information check out the [manual](http://tibersynth.cc/manual).
